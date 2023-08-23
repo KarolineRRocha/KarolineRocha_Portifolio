@@ -1,0 +1,25 @@
+.scroll-to-top {
+  display: flex;
+  justify-content: center;
+  opacity: 0;
+  transition: all 0.2s ease-in-out;
+}
+
+.show-scrollTop {
+  opacity: 1;
+  transition: all 0.2s ease-in-out;
+}
+
+button {
+  width: 8.5em;
+  height: 4.5em;
+  border-radius: 100px 100px 0 0;
+  border: 0.2px solid rgb(231, 231, 231);
+  border-bottom: none;
+  background-color: rgb(247, 247, 247);
+  transition: all 0.3s ease-in-out;
+}
+
+button:hover {
+  transform: scaleY(1.08);
+}

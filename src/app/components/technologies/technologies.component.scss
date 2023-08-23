@@ -1,0 +1,113 @@
+#welcome-section {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  height: 25vh;
+}
+
+#titles {
+  font-size: 2.5rem;
+  font-weight: 600;
+  text-align: center;
+  margin: 3em auto;
+  margin-bottom: -0.5em;
+}
+
+.wrapper {
+  width: 80%;
+  margin: 3em auto;
+  text-align: center;
+}
+
+.badge {
+  margin: 1.5em;
+  width: 4.4em;
+  height: 4.4em;
+  border-radius: 20%;
+  display: inline-block;
+  top: 0;
+  transition: all 0.2s ease;
+  box-shadow: 8px 10px 12px 3px rgba(0, 0, 0, 0.43);
+}
+
+.rounded {
+  width: 50px;
+  height: 50px;
+  background: white;
+  position: absolute;
+  margin: 11px 10px auto;
+  z-index: 10;
+  border-radius: 30%;
+  box-shadow: 8px 8px 8px 2px rgba(0, 0, 0, 0.23);
+
+  i.fab {
+    font-size: 2.6em;
+  }
+}
+
+.blue {
+  background: dodgerblue;
+  color: deepskyblue;
+
+  img {
+    width: 75%;
+    padding: 0.20em;
+  }
+}
+
+.orange {
+  background: darkorange;
+  color: orange;
+}
+
+.gold {
+  background: gold;
+  color: gold;
+}
+
+.red {
+  background: red;
+  color: red;
+
+  img {
+    width: 75%;
+    height: 80%;
+    padding: 0.4em;
+  }
+}
+
+.purple {
+  background: mediumpurple;
+  color: slategray;
+}
+
+.green {
+  background: yellowgreen;
+  color: darkslategray;
+}
+
+.crimson {
+  background: crimson;
+  color: firebrick;
+}
+
+.steel {
+  background: steelblue;
+  color: gold;
+}
+
+.pink {
+  background: hotpink;
+  color: palevioletred;
+}
+
+.rebecca {
+  background: rebeccapurple;
+  color: rebeccapurple;
+}
+
+.gainsboro {
+  background: gainsboro;
+  color: orangered;
+}
