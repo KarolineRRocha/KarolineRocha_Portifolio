@@ -57,7 +57,7 @@ img {
   align-items: center;
   left: 0;
   right: 0;
-  margin-bottom: 6.5em;
+  margin-bottom: 6.7em;
 }
 
 #hr {
@@ -116,14 +116,14 @@ img {
 @media (max-width: 700px) {
   .row {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
     text-align: center;
-    margin-top: 1em;
+    padding-left: 1.5em;
   }
 
   .left {
-    margin-top: -1em;
+    margin-top: -3em;
     font-size: 40px;
     font-weight: 600;
     line-height: 1.4em;
@@ -132,16 +132,16 @@ img {
 
   .right {
     width: 100%;
-    margin-top: -6em;
+    margin-top: -15em;
   }
 
-  .terminal {
+  /* .terminal {
     display:flex;
     flex-direction: column;
     justify-content: center;
     width: 100%;
     height: 100%;
-  }
+  } */
 
   img {
     width: 65%;
@@ -165,8 +165,8 @@ img {
   #lkIn_logo,
   #github_logo {
     padding: 0.3em;
-    width: 1.5em;
-    height: 1.5em;
+    width: 2em;
+    height: 2em;
     box-shadow: -6px 5px 10px 0px rgba(0, 0, 0, 0.25);
 
     img {

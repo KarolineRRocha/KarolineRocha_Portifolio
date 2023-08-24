@@ -115,6 +115,7 @@
     font-size: 46px;
     font-weight: 600;
     margin-bottom: 1em;
+    margin-top: 1em;
   }
 
   h2 {
@@ -194,7 +195,6 @@
     transform: scale(1.02);
     background-color: rgb(32, 32, 32);
     cursor: pointer;
-    border: none;
   }
 
   #send:disabled {
