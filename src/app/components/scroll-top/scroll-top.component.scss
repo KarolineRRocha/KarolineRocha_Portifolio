@@ -23,3 +23,7 @@ button {
 button:hover {
   transform: scaleY(1.08);
 }
+
+button:focus {
+  outline: none;
+}

@@ -90,7 +90,7 @@
 }
 
 .formEmail {
-  margin-top: 0.5em;
+  margin-top: 0.2em;
   display: flex;
   flex-direction: row;
   text-align: center;
@@ -110,14 +110,14 @@
     display: flex;
     flex-direction: row;
     justify-content: left;
-    width: 75%;
+    width: 78%;
     align-items: center;
-    font-size: 38px;
-    font-weight: 100;
-    margin-bottom: 0.5em;
+    font-size: 46px;
+    font-weight: 600;
+    margin-bottom: 1em;
   }
 
-  h3 {
+  h2 {
     display: flex;
     flex-direction: row;
     justify-content: left;
@@ -125,6 +125,7 @@
     align-items: center;
     font-weight: 100;
     margin-bottom: -0.2em;
+    margin-left: 2.2em;
   }
 
   input {
@@ -137,6 +138,9 @@
     margin-bottom: 2em;
     background-color: white;
     padding: 0.3em;
+    padding-left: 0.6em;
+    font-size: 18px;
+    margin-left: 4em;
   }
 }
 
@@ -145,22 +149,22 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-top: 5.5em;
+  margin-top: 5em;
 
-  h3 {
+  h2 {
     display: flex;
     flex-direction: row;
     justify-content: left;
     width: 100%;
     align-items: center;
     font-weight: 100;
-    margin-top: 1.1em;
+    margin-top: 2.5em;
     margin-bottom: -0.2em;
   }
 
   textarea {
     width: 70%;
-    height: 145px;
+    height: 170px;
     margin: 0;
     line-height: 1.7;
     margin-top: 0.5em;
@@ -168,18 +172,84 @@
     border: 1px solid #777777;
     background-color: white;
     padding: 0.3em;
+    padding-left: 0.6em;
+    font-size: 18px;
   }
 
-  button {
+  #send {
     margin-top: 1.5em;
     width: 8em;
     height: 2.5em;
     border-radius: 5px;
-    background-color: rgb(32, 32, 32);
+    background-color: rgb(52, 52, 52);
     color: white;
     font-size: 20px;
     letter-spacing: 0.1em;
     font-weight: bold;
-    margin-right: 9em;
+    margin-right: -4.2em;
+    border: none;
   }
+
+  #send:hover {
+    transform: scale(1.02);
+    background-color: rgb(32, 32, 32);
+    cursor: pointer;
+  }
+
+  #send:disabled {
+    background-color: rgb(127, 127, 127);
+    cursor: default;
+  }
+}
+
+.modal-confirm .modal-content {
+	padding: 20px;
+	font-size: 16px;
+	border-radius: 5px;
+	border: none;
+}
+
+.modal-confirm .modal-header {
+	background: #47c9a2;
+	border-bottom: none;
+	position: relative;
+	text-align: center;
+	margin: -20px -20px 0;
+	border-radius: 5px 5px 0 0;
+	padding: 35px;
+}
+
+.modal-confirm h4 {
+	text-align: center;
+	font-size: 36px;
+	margin: 10px 0;
+}
+
+.modal-confirm .form-control, .modal-confirm .btn {
+	min-height: 40px;
+	border-radius: 3px;
+}
+.modal-confirm .close {
+	position: absolute;
+	top: 0.5px;
+	right: 15px;
+	color: #fff;
+  font-size: 38px;
+  cursor: pointer;
+}
+
+.modal-confirm .icon-box {
+	color: #fff;
+	width: 95px;
+	height: 95px;
+	display: inline-block;
+	border-radius: 50%;
+	z-index: 9;
+	border: 5px solid #fff;
+	padding: 15px;
+	text-align: center;
+}
+.modal-confirm .icon-box i {
+	font-size: 64px;
+	margin: -4px 0 0 -4px;
 }

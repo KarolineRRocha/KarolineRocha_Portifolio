@@ -22,17 +22,65 @@
   </div>
 </div>
 
-<div class="formEmail">
-  <div class="leftForm">
-    <p>Send me an email</p>
-    <h3>Name</h3>
-    <input [required]="true">
-    <h3>Email</h3>
-    <input [required]="true">
+<form [formGroup]="form" action="javascript:void(0)" (submit)="send()">
+  <div class="formEmail">
+    <div class="leftForm">
+      <p>Send me an email</p>
+      <h2>Name</h2>
+      <input formControlName="from_name" type="text" name="name" id="name" placeholder="Name">
+
+      <div *ngIf="form.get('from_name')?.errors?.['required'] && form.get('from_name')?.touched"
+        style="color: red; font-weight: bold; margin-left: 4.4em; margin-top: -1.8em; margin-bottom: 1.8em;">Name is
+        required!
+      </div>
+
+      <h2>Email</h2>
+      <input formControlName="from_email" type="email" name="email" id="email" placeholder="Email"
+        placeholder="Enter your email.">
+
+      <div *ngIf="form.get('from_email')?.errors?.['required'] && form.get('from_email')?.touched"
+        style="color: red; font-weight: bold; margin-left: 4.4em; margin-top: -1.8em; margin-bottom: 1.8em;">
+        Email is required!
+      </div>
+
+      <div *ngIf="form.get('from_email')?.errors?.['pattern'] && notEmpity"
+        style="color: red; font-weight: bold; margin-left: 4.4em; margin-top: -1.8em; margin-bottom: 1.8em;">
+        Please enter valid email address!
+      </div>
+    </div>
+
+    <div class="rightForm">
+      <h2>Message</h2>
+      <textarea formControlName="message" name="message" id="message" rows="10" cols="40"
+        placeholder="Type your message."></textarea>
+
+      <div *ngIf="form.get('message')?.errors?.['required'] && form.get('message')?.touched"
+        style="color: red; font-weight: bold; margin-left: 0; margin-top: 0.5em;">Message is required!
+      </div>
+
+      <a href="#myModal" data-toggle="modal">
+        <button id="send" type="submit" [disabled]="!form.valid">Send</button>
+      </a>
+
+    </div>
   </div>
-  <div class="rightForm">
-    <h3>Message</h3>
-    <textarea name="message" [required]="true" rows="10" cols="40"></textarea>
-    <button>Send</button>
+</form>
+
+
+<!-- Modal HTML -->
+<div id="myModal" class="modal fade">
+  <div class="modal-dialog modal-confirm">
+    <div class="modal-content">
+      <div class="modal-header justify-content-center">
+        <div class="icon-box">
+          <svg xmlns="http://www.w3.org/2000/svg" height="4em" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><style>svg{fill:white}</style><path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z" style="margin-top: -0.5em;"/></svg>
+        </div>
+        <div class="close" data-dismiss="modal">&times;</div>
+      </div>
+      <div class="modal-body text-center">
+        <h4>Great!</h4>
+        <p style="font-size: 24px;">Your email has been sent successfully.</p>
+      </div>
+    </div>
   </div>
 </div>
