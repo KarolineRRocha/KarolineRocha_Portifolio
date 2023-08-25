@@ -6,7 +6,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
-import { AboutComponent } from './components/about/about.component';
 import { TechnologiesComponent } from './components/technologies/technologies.component';
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { FooterComponent } from './components/footer/footer.component';
@@ -21,7 +20,6 @@ import { ContactPageComponent } from './pages/contact-page/contact-page.componen
     AppComponent,
     TopnavComponent,
     HeaderComponent,
-    AboutComponent,
     TechnologiesComponent,
     HomePageComponent,
     FooterComponent,
