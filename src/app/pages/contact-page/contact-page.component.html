@@ -57,11 +57,9 @@
       <div *ngIf="form.get('message')?.errors?.['required'] && form.get('message')?.touched"
         style="color: red; font-weight: bold; margin-left: 0; margin-top: 0.5em;">Message is required!
       </div>
-
-      <a href="#myModal" data-toggle="modal">
+      <!-- <a href="#myModal" data-toggle="modal"> -->
         <button id="send" type="submit" [disabled]="!form.valid">Send</button>
-      </a>
-
+      <!-- </a> -->
     </div>
   </div>
 </form>

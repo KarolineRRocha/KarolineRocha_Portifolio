@@ -18,9 +18,10 @@ export class ContactPageComponent {
     message: ['', Validators.required]
   });
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder) {}
 
   async send() {
+    console.log('entrei aqui!')
     emailjs.init('ssxlTwO2Ygo7ZPE-0');
     let response = await emailjs.send("service_bmdnfpt", "template_285h8vc", {
       from_name: this.form.value.from_name,
@@ -28,8 +29,6 @@ export class ContactPageComponent {
       from_email: this.form.value.from_email,
       message: this.form.value.message,
     });
-
-    /* alert('Message has been sent.'); */
     this.form.reset();
   }
 }
