@@ -16,6 +16,6 @@ export class LoadingPageComponent implements OnInit {
       setTimeout(() => {
         this.showSplash = !this.showSplash;
       }, -100);
-    }, 3000);
+    }, 1500);
   }
 }
