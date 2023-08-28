@@ -255,7 +255,7 @@
   margin: -4px 0 0 -4px;
 }
 
-@media (max-width: 768px) and (min-width: 699px) {
+@media (max-width: 912px) and (min-width: 699px) {
   .contact {
     height: 25em;
   }
@@ -304,10 +304,10 @@
   .formEmail {
     height: 30em;
     margin-bottom: 4em;
-    padding: 0;
   }
 
   .leftForm {
+    margin: 0;
     margin-left: 2em;
 
     p {
@@ -329,6 +329,95 @@
 
     textarea {
       width: 80%;
+    }
+  }
+}
+
+@media (max-width: 700px) {
+  .contact {
+    height: 22em;
+  }
+
+  .left {
+    p {
+      font-size: 72px;
+      font-weight: 600;
+    }
+
+    h3 {
+      margin-top: -1em;
+      font-size: 24px;
+    }
+
+    .socialMedias {
+      margin-left: 4em;
+    }
+
+    #card {
+      width: 30%;
+      height: 2em;
+      margin: 1.5em;
+      margin-top: -0.5em;
+
+      img {
+        width: 2.3em !important;
+      }
+
+      h4 {
+        width: 60%;
+        text-align: left;
+        margin-left: 0.5em;
+        font-size: 20px;
+        margin-top: 0.4em;
+      }
+    }
+  }
+
+  .right {
+    img {
+      height: 85%;
+    }
+  }
+
+  .formEmail {
+    flex-direction: column;
+    width: 100%;
+    height: 45em;
+    padding-top: 2em;
+    margin-bottom: 3em;
+  }
+
+  .leftForm {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+
+    h2 {
+      margin-left: 1.1em;
+    }
+
+    input {
+      margin-left: 2em;
+    }
+  }
+
+  .rightForm {
+    width: 90%;
+    padding: 0;
+    margin: -5em 0 0 0;
+
+    h2 {
+      margin-left: 1.1em;
+    }
+
+    textarea {
+      margin: 2em;
+      width: 85%;
+    }
+
+    #send {
+      margin-top: -0.5em;
+      margin-left: 1.8em;
     }
   }
 }
