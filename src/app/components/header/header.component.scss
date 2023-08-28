@@ -118,8 +118,9 @@ img {
   box-shadow: 0 0 5px 6px rgba(188, 188, 188, 0.647);
 }
 
-@media (max-width: 768px) and (min-width: 699px) {
+@media (max-width: 912px) and (min-width: 699px) {
   .row {
+    height: 27em;
     margin-top: 0;
   }
 
@@ -150,9 +151,9 @@ img {
   }
 
   .left {
-    padding: 0;
-    margin-top: -3em;
-    font-size: 36px;
+    padding: 0.5em;
+    margin-top: -3.5em;
+    font-size: 32px;
     font-weight: 600;
     line-height: 1.4em;
     width: 100%;
@@ -160,7 +161,7 @@ img {
 
   .right {
     width: 100%;
-    margin-top: -15em;
+    margin-top: -17em;
   }
 
   img {
@@ -170,7 +171,7 @@ img {
   .links {
     width: 90%;
     padding: 1em;
-    margin-top: -2em;
+    margin-top: -5em;
   }
 
   #github_logo {
