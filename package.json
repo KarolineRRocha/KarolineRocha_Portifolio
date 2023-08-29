@@ -7,7 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "deploy:ghdocs": "ng build --configuration=production --output-path karoline-rocha-portifolio --base-href /karoline-rocha-portifolio/"
+    "deploy:ghdocs": "ng build --configuration=production --output-path docs --base-href /karoline-rocha-portifolio/"
   },
   "private": true,
   "dependencies": {
