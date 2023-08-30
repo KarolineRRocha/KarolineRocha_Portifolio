@@ -31,22 +31,20 @@
         <h2>Name</h2>
         <input formControlName="from_name" type="text" name="name" id="name" placeholder="Name">
 
-        <div *ngIf="form.get('from_name')?.errors?.['required'] && form.get('from_name')?.touched"
-          style="color: red; font-weight: bold; margin-left: 2.4em; margin-top: -1.8em; margin-bottom: 1.8em;">Name is
-          required!
+        <div id="messageError" *ngIf="form.get('from_name')?.errors?.['required'] && form.get('from_name')?.touched">
+          Name is required!
         </div>
 
         <h2>Email</h2>
         <input formControlName="from_email" type="email" name="email" id="email" placeholder="Email"
           placeholder="Enter your email.">
 
-        <div *ngIf="form.get('from_email')?.errors?.['required'] && form.get('from_email')?.touched"
-          style="color: red; font-weight: bold; margin-left: 4.4em; margin-top: -1.8em; margin-bottom: 1.8em;">
+        <div id="messageError"
+          *ngIf="form.get('from_email')?.errors?.['required'] && form.get('from_email')?.touched">
           Email is required!
         </div>
 
-        <div *ngIf="form.get('from_email')?.errors?.['pattern'] && notEmpity"
-          style="color: red; font-weight: bold; margin-left: 4.4em; margin-top: -1.8em; margin-bottom: 1.8em;">
+        <div id="messageError" *ngIf="form.get('from_email')?.errors?.['pattern'] && notEmpity">
           Please enter valid email address!
         </div>
       </div>
@@ -56,8 +54,8 @@
         <textarea formControlName="message" name="message" id="message" rows="10" cols="40"
           placeholder="Type your message."></textarea>
 
-        <div *ngIf="form.get('message')?.errors?.['required'] && form.get('message')?.touched"
-          style="color: red; font-weight: bold; margin-left: 0; margin-top: 0.5em;">Message is required!
+        <div id="messageErrorType" *ngIf="form.get('message')?.errors?.['required'] && form.get('message')?.touched">
+          Message is required!
         </div>
         <!-- <a href="#myModal" data-toggle="modal"> -->
         <button id="send" type="submit" [disabled]="!form.valid">Send</button>
