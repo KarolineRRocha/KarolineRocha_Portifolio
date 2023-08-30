@@ -120,7 +120,7 @@ p {
   .container {
     width: 100%;
     margin-top: -2em;
-    padding-top: 4em;
+    padding-top: 3em;
     padding-bottom: 4em;
   }
 
@@ -138,13 +138,13 @@ p {
     height: 33em;
     display: flex;
     flex-wrap: wrap;
-    padding-bottom: 4em;
+    padding-bottom: 3em;
   }
 
   #card {
-    width: 40%;
+    width: 42%;
     margin: 0.9em;
-    height: 13em;
+    height: 11.5em;
   }
 
   img {
@@ -156,5 +156,18 @@ p {
     line-height: 0.6em;
     width: 100%;
     padding: 0;
+  }
+
+  .photo {
+    height: 7em;
+  }
+
+  label {
+    font-size: 18px;
+    padding-left: 0.5em;
+  }
+
+  p {
+    padding: 0.3em 0 0 0.7em;
   }
 }
