@@ -1,10 +1,6 @@
 .app-splash-screen {
   background: black;
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -12,37 +8,53 @@
   height: 100%;
   transition: bottom 0.2ms;
   z-index: 1;
-}
 
-.app-label {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  margin-top: 0.8em;
-  color: #fff;
-  font-size: 1.5em;
-  font-family: "Pacifico", cursive;
-}
+  .app-label {
+    padding: 0 2em 0 2em;
 
-.app-splash-inner {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
+    p {
+      color: #fff;
+      font-size: 26px;
+      font-family: "Pacifico", cursive;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      text-align: center;
+      width: 100%;
+    }
+  }
 
-.app-loader {
-  background-repeat: no-repeat;
-  max-width: 100%;
-  background-position: center;
-  background-size: contain;
-  width: 80px;
-  height: 80px;
-  margin-top: 80px;
+  .app-splash-inner {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .app-loader {
+    background-repeat: no-repeat;
+    max-width: 100%;
+    background-position: center;
+    background-size: contain;
+    width: 80px;
+    height: 80px;
+    margin-top: 80px;
+  }
 }
 
 @media (max-width: 700px) {
   .app-label {
-    font-size: 1em;
+    margin-top: 1em;
+    padding: 0 0.5em 0.5 0.5em;
+
+    p {
+      padding-bottom: 0.4em;
+      font-size: 24px;
+    }
+  }
+
+  .app-loader {
+    display: flex;
+    justify-content: center;
   }
 }
