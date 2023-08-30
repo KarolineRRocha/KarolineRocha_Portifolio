@@ -40,3 +40,9 @@
   height: 80px;
   margin-top: 80px;
 }
+
+@media (max-width: 700px) {
+  .app-label {
+    font-size: 1em;
+  }
+}
