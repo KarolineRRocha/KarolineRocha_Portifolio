@@ -107,6 +107,21 @@
   background: linear-gradient(rgb(251, 251, 251), white);
 }
 
+#messageError {
+  color: red;
+  font-weight: bold;
+  margin-left: 4.4em;
+  margin-top: -1.8em;
+  margin-bottom: 1.8em;
+}
+
+#messageErrorType {
+  color: red;
+  font-weight: bold;
+  margin-left: 0;
+  margin-top: 0.5em;
+}
+
 .leftForm {
   width: 50%;
   display: flex;
@@ -413,6 +428,15 @@
     margin-bottom: 3em;
   }
 
+  #messageError {
+    margin-left: 2.4em;
+  }
+
+  #messageErrorType {
+    margin-left: 2.4em;
+    margin-top: -1.5em;
+  }
+
   .leftForm {
     width: 100%;
     margin: 0;
@@ -442,7 +466,7 @@
     }
 
     #send {
-      margin-top: -0.5em;
+      margin-top: 0.8em;
       margin-left: 1.8em;
     }
   }
