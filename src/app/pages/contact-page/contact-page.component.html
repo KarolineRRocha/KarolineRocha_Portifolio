@@ -37,7 +37,7 @@
 
         <h2>Email</h2>
         <input formControlName="from_email" type="email" name="email" id="email" placeholder="Email"
-          placeholder="Enter your email.">
+          placeholder="Enter your email">
 
         <div id="messageError"
           *ngIf="form.get('from_email')?.errors?.['required'] && form.get('from_email')?.touched">
