@@ -10,14 +10,19 @@
   transition: all 0.2s ease-in-out;
 }
 
+
 button {
-  width: 6.5em;
-  height: 3.5em;
-  border-radius: 100px 100px 0 0;
+  width: 7.5rem;
+  height: 3.5rem;
+  border-radius: 3.5rem 3.5rem 0 0;
   border: 0.2px solid rgb(231, 231, 231);
   border-bottom: none;
   background-color: rgb(247, 247, 247);
   transition: all 0.3s ease-in-out;
+
+  i {
+    margin-top: 0.2em;
+  }
 }
 
 button:hover {
