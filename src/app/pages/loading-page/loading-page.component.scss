@@ -15,7 +15,10 @@
 }
 
 .app-label {
-  margin-top: 32px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 0.8em;
   color: #fff;
   font-size: 1.5em;
   font-family: "Pacifico", cursive;
