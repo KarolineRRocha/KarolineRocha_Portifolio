@@ -1,4 +1,3 @@
-import { TopnavComponent } from './components/topnav/topnav.component';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -14,6 +13,9 @@ import { ScrollTopComponent } from './components/scroll-top/scroll-top.component
 import { LoadingPageComponent } from './pages/loading-page/loading-page.component';
 import { AboutPageComponent } from './pages/about-page/about-page.component';
 import { ContactPageComponent } from './pages/contact-page/contact-page.component';
+import { ProjectPageComponent } from './project-page/project-page.component';
+import { DetailsProjectPageComponent } from './project-page/details-project-page/details-project-page.component';
+import { TopnavComponent } from './components/topnav/topnav.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,9 @@ import { ContactPageComponent } from './pages/contact-page/contact-page.componen
     ScrollTopComponent,
     LoadingPageComponent,
     AboutPageComponent,
-    ContactPageComponent
+    ContactPageComponent,
+    ProjectPageComponent,
+    DetailsProjectPageComponent
   ],
   imports: [
     BrowserModule,
