@@ -14,8 +14,9 @@ import { LoadingPageComponent } from './pages/loading-page/loading-page.componen
 import { AboutPageComponent } from './pages/about-page/about-page.component';
 import { ContactPageComponent } from './pages/contact-page/contact-page.component';
 import { ProjectPageComponent } from './project-page/project-page.component';
-import { DetailsProjectPageComponent } from './project-page/details-project-page/details-project-page.component';
 import { TopnavComponent } from './components/topnav/topnav.component';
+import { UploadProjectComponent } from './project-page/details-project/upload-project/upload-project.component';
+import { TheyDevelopAndCookProjectComponent } from './project-page/details-project/they-develop-and-cook-project/they-develop-and-cook-project.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { TopnavComponent } from './components/topnav/topnav.component';
     AboutPageComponent,
     ContactPageComponent,
     ProjectPageComponent,
-    DetailsProjectPageComponent
+    UploadProjectComponent,
+    TheyDevelopAndCookProjectComponent
   ],
   imports: [
     BrowserModule,
