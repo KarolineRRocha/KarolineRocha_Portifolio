@@ -9,6 +9,7 @@ import { UploadProjectComponent } from './project-page/details-project/upload-pr
 
 const routes: Routes = [
   { path: '', component: HomePageComponent },
+  { path: 'home', component: HomePageComponent },
   { path: 'about', component: AboutPageComponent },
   { path: 'contact', component: ContactPageComponent },
   { path: 'projects', component: ProjectPageComponent },
