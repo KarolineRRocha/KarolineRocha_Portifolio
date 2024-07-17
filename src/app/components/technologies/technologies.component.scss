@@ -1,9 +1,8 @@
-#welcome-section {
+.badges {
+  min-height: 40em;
   display: flex;
-  flex-direction: row;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
-  height: 25vh;
 }
 
 #titles {
@@ -35,7 +34,7 @@
   width: 50px;
   height: 50px;
   background: white;
-  position: absolute;
+  // position: absolute;
   margin: 11px 10px auto;
   z-index: 10;
   border-radius: 30%;
