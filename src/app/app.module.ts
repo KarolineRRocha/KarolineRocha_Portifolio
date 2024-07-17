@@ -13,10 +13,11 @@ import { ScrollTopComponent } from './components/scroll-top/scroll-top.component
 import { LoadingPageComponent } from './pages/loading-page/loading-page.component';
 import { AboutPageComponent } from './pages/about-page/about-page.component';
 import { ContactPageComponent } from './pages/contact-page/contact-page.component';
-import { ProjectPageComponent } from './project-page/project-page.component';
+import { ProjectPageComponent } from './pages/project-page/project-page.component';
 import { TopnavComponent } from './components/topnav/topnav.component';
-import { UploadProjectComponent } from './project-page/details-project/upload-project/upload-project.component';
-import { TheyDevelopAndCookProjectComponent } from './project-page/details-project/they-develop-and-cook-project/they-develop-and-cook-project.component';
+import { UploadProjectComponent } from './pages/project-page/details-project/upload-project/upload-project.component';
+import { TheyDevelopAndCookProjectComponent } from './pages/project-page/details-project/they-develop-and-cook-project/they-develop-and-cook-project.component';
+import { TechnologiesPageComponent } from './technologies-page/technologies-page.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { TheyDevelopAndCookProjectComponent } from './project-page/details-proje
     ContactPageComponent,
     ProjectPageComponent,
     UploadProjectComponent,
-    TheyDevelopAndCookProjectComponent
+    TheyDevelopAndCookProjectComponent,
+    TechnologiesPageComponent
   ],
   imports: [
     BrowserModule,

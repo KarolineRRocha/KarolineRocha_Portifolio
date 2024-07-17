@@ -57,16 +57,16 @@
         <div id="messageErrorType" *ngIf="form.get('message')?.errors?.['required'] && form.get('message')?.touched">
           Message is required!
         </div>
-        <!-- <a href="#myModal" data-toggle="modal"> -->
+        <a href="#myModal" data-toggle="modal">
         <button id="send" type="submit" [disabled]="!form.valid">Send</button>
-        <!-- </a> -->
+        </a>
       </div>
     </div>
   </form>
 </div>
 
 <!-- Modal HTML -->
-<!-- <div id="myModal" class="modal fade">
+<div id="myModal" class="modal fade">
   <div class="modal-dialog modal-confirm">
     <div class="modal-content">
       <div class="modal-header justify-content-center">
@@ -81,4 +81,4 @@
       </div>
     </div>
   </div>
-</div> -->
+</div>
