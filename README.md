@@ -2,8 +2,6 @@
 
 <div align="center">
 
-![Portfolio Banner](src/assets/codeBanner.svg)
-
 **Modern Full-Stack Developer Portfolio**  
 *Crafting Digital Experiences with Elegance & Innovation*
 
