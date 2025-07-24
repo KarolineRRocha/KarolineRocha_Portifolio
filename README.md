@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![Portfolio Banner](src/assets/portifolioBanner.JPG)
+![Portfolio Banner](src/assets/codeBanner.svg)
 
 **Modern Full-Stack Developer Portfolio**  
 *Crafting Digital Experiences with Elegance & Innovation*
@@ -13,7 +13,7 @@
 [![Responsive](https://img.shields.io/badge/Responsive-Design-4CAF50?style=for-the-badge&logo=responsive)](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Responsive_Design)
 [![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Live%20Demo-222222?style=for-the-badge&logo=github)](https://karolinerrocha.github.io/karoline-rocha-portifolio/)
 
-[🌐 **Live Demo**](https://karolinerrocha.github.io/karoline-rocha-portifolio/) • [📧 **Contact**](mailto:karoline.rrocha@gmail.com) • [💼 **LinkedIn**](https://www.linkedin.com/in/karoline-rrocha/)
+[🌐 **Live Demo**](https://karolinerrocha.github.io/karoline-rocha-portifolio/) • [📧 **Contact**](mailto:emaildakarolineribeiro@gmail.com) • [💼 **LinkedIn**](https://www.linkedin.com/in/karoline-rrocha/)
 
 </div>
 
@@ -94,32 +94,32 @@ A **modern, responsive portfolio website** built with **Angular 16** and **TypeS
 <div align="center">
 
 ### 🏠 **Home Page - Hero Section**
-![Home Page Hero](docs/screenshots/home-hero.png)
+![Home Page Hero](src/assets/portifolioBanner.JPG)
 
 *Modern hero section with interactive code window and floating elements*
 
 ### 💻 **Interactive Code Display**
-![Code Window](docs/screenshots/code-window.png)
+![Code Window](src/assets/codingGirl.png)
 
 *Terminal-style code display with typing animations*
 
 ### 📱 **Mobile Responsive Design**
-![Mobile View](docs/screenshots/mobile-view.png)
+![Mobile View](src/assets/terminalBanner.png)
 
 *Optimized mobile experience with touch-friendly interactions*
 
 ### 🎨 **Projects Section**
-![Projects Section](docs/screenshots/projects-section.png)
+![Projects Section](src/assets/upLoadImage.png)
 
 *Timeline-style project showcase with hover effects*
 
 ### 📧 **Contact Form**
-![Contact Form](docs/screenshots/contact-form.png)
+![Contact Form](src/assets/emailIcon.png)
 
 *Integrated contact form with EmailJS*
 
 ### 🔧 **Admin Dashboard**
-![Admin Dashboard](docs/screenshots/admin-dashboard.png)
+![Admin Dashboard](src/assets/KLogo.png)
 
 *Secure admin interface for project management*
 
@@ -354,7 +354,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 **Karoline Rocha**  
 *Frontend Developer*
 
-[![Email](https://img.shields.io/badge/Email-karoline.rrocha@gmail.com-D14836?style=for-the-badge&logo=gmail)](mailto:karoline.rrocha@gmail.com)
+[![Email](https://img.shields.io/badge/Email-emaildakarolineribeiro@gmail.com-D14836?style=for-the-badge&logo=gmail)](mailto:emaildakarolineribeiro@gmail.com)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Karoline%20Rocha-0077B5?style=for-the-badge&logo=linkedin)](https://www.linkedin.com/in/karoline-rrocha/)
 [![GitHub](https://img.shields.io/badge/GitHub-KarolineRRocha-181717?style=for-the-badge&logo=github)](https://github.com/KarolineRRocha)
 
