@@ -23,7 +23,6 @@
 
 - [✨ Overview](#-overview)
 - [🎯 Features](#-features)
-- [🖼️ Screenshots](#️-screenshots)
 - [🛠️ Tech Stack](#️-tech-stack)
 - [🚀 Getting Started](#-getting-started)
 - [🏗️ Architecture](#️-architecture)
@@ -86,44 +85,6 @@ A **modern, responsive portfolio website** built with **Angular 16** and **TypeS
 | **Project Management** | CRUD operations for projects |
 | **Image Handling** | Upload and manage project images |
 | **Real-time Updates** | Instant UI synchronization |
-
----
-
-## 🖼️ Screenshots
-
-<div align="center">
-
-### 🏠 **Home Page - Hero Section**
-![Home Page Hero](src/assets/portifolioBanner.JPG)
-
-*Modern hero section with interactive code window and floating elements*
-
-### 💻 **Interactive Code Display**
-![Code Window](src/assets/codingGirl.png)
-
-*Terminal-style code display with typing animations*
-
-### 📱 **Mobile Responsive Design**
-![Mobile View](src/assets/terminalBanner.png)
-
-*Optimized mobile experience with touch-friendly interactions*
-
-### 🎨 **Projects Section**
-![Projects Section](src/assets/upLoadImage.png)
-
-*Timeline-style project showcase with hover effects*
-
-### 📧 **Contact Form**
-![Contact Form](src/assets/emailIcon.png)
-
-*Integrated contact form with EmailJS*
-
-### 🔧 **Admin Dashboard**
-![Admin Dashboard](src/assets/KLogo.png)
-
-*Secure admin interface for project management*
-
-</div>
 
 ---
 
