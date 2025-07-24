@@ -1,4 +1,4 @@
-# 🚀 Karoline Rocha - Portfolio
+# 🚀 Karoline Rocha - Frontend Developer Portfolio
 
 <div align="center">
 
@@ -11,6 +11,7 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-4.9.5-3178C6?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
 [![SCSS](https://img.shields.io/badge/SCSS-Styling-CC6699?style=for-the-badge&logo=sass)](https://sass-lang.com/)
 [![Responsive](https://img.shields.io/badge/Responsive-Design-4CAF50?style=for-the-badge&logo=responsive)](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Responsive_Design)
+[![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Live%20Demo-222222?style=for-the-badge&logo=github)](https://karolinerrocha.github.io/karoline-rocha-portifolio/)
 
 [🌐 **Live Demo**](https://karolinerrocha.github.io/karoline-rocha-portifolio/) • [📧 **Contact**](mailto:karoline.rrocha@gmail.com) • [💼 **LinkedIn**](https://www.linkedin.com/in/karoline-rrocha/)
 
@@ -93,24 +94,34 @@ A **modern, responsive portfolio website** built with **Angular 16** and **TypeS
 <div align="center">
 
 ### 🏠 **Home Page - Hero Section**
-![Home Page](src/assets/portifolioBanner.JPG)
+![Home Page Hero](docs/screenshots/home-hero.png)
 
 *Modern hero section with interactive code window and floating elements*
 
 ### 💻 **Interactive Code Display**
-![Code Window](src/assets/codingGirl.png)
+![Code Window](docs/screenshots/code-window.png)
 
-*Terminal-style code window with typing animations*
+*Terminal-style code display with typing animations*
 
-### 📂 **Projects Showcase**
-![Projects](src/assets/upLoad.JPG)
+### 📱 **Mobile Responsive Design**
+![Mobile View](docs/screenshots/mobile-view.png)
 
-*Responsive project grid with admin management capabilities*
+*Optimized mobile experience with touch-friendly interactions*
 
-### 🛠️ **Technologies Stack**
-![Technologies](src/assets/terminalBanner.png)
+### 🎨 **Projects Section**
+![Projects Section](docs/screenshots/projects-section.png)
 
-*Comprehensive technology showcase with categorized display*
+*Timeline-style project showcase with hover effects*
+
+### 📧 **Contact Form**
+![Contact Form](docs/screenshots/contact-form.png)
+
+*Integrated contact form with EmailJS*
+
+### 🔧 **Admin Dashboard**
+![Admin Dashboard](docs/screenshots/admin-dashboard.png)
+
+*Secure admin interface for project management*
 
 </div>
 
@@ -119,46 +130,24 @@ A **modern, responsive portfolio website** built with **Angular 16** and **TypeS
 ## 🛠️ Tech Stack
 
 ### **Frontend Framework**
-<div align="center">
-
-![Angular](https://img.shields.io/badge/Angular-16.1.0-DD0031?style=for-the-badge&logo=angular) ![TypeScript](https://img.shields.io/badge/TypeScript-4.9.5-3178C6?style=for-the-badge&logo=typescript)
-
-**Angular 16** - Modern web framework with TypeScript  
-**TypeScript** - Type-safe JavaScript development
-
-</div>
+- **[Angular 16](https://angular.io/)** - Modern web framework
+- **[TypeScript](https://www.typescriptlang.org/)** - Type-safe JavaScript
+- **[SCSS](https://sass-lang.com/)** - Advanced CSS preprocessing
 
 ### **Styling & Design**
-<div align="center">
-
-![SCSS](https://img.shields.io/badge/SCSS-Styling-CC6699?style=for-the-badge&logo=sass) ![CSS3](https://img.shields.io/badge/CSS3-Styling-1572B6?style=for-the-badge&logo=css3) ![HTML5](https://img.shields.io/badge/HTML5-Markup-E34F26?style=for-the-badge&logo=html5)
-
-**SCSS** - Advanced CSS preprocessing  
-**CSS3** - Modern styling features  
-**HTML5** - Semantic markup structure
-
-</div>
-
-### **Backend & Integration**
-<div align="center">
-
-![Laravel](https://img.shields.io/badge/Laravel-Framework-FF2D20?style=for-the-badge&logo=laravel) ![EmailJS](https://img.shields.io/badge/EmailJS-Integration-4CAF50?style=for-the-badge&logo=email)
-
-**Laravel** - PHP backend framework  
-**EmailJS** - Client-side email integration
-
-</div>
+- **CSS Grid & Flexbox** - Modern layout techniques
+- **CSS Animations** - Smooth transitions and effects
+- **Responsive Design** - Mobile-first approach
+- **Custom Design System** - Consistent UI components
 
 ### **Development Tools**
-<div align="center">
+- **[Angular CLI](https://cli.angular.io/)** - Development and build tools
+- **[Git](https://git-scm.com/)** - Version control
+- **[GitHub Pages](https://pages.github.com/)** - Hosting and deployment
 
-![Git](https://img.shields.io/badge/Git-Version%20Control-F05032?style=for-the-badge&logo=git) ![GitHub](https://img.shields.io/badge/GitHub-Hosting-181717?style=for-the-badge&logo=github) ![Angular CLI](https://img.shields.io/badge/Angular%20CLI-Tooling-DD0031?style=for-the-badge&logo=angular)
-
-**Git** - Version control system  
-**GitHub** - Code hosting and collaboration  
-**Angular CLI** - Development and build tools
-
-</div>
+### **External Services**
+- **[EmailJS](https://www.emailjs.com/)** - Contact form integration
+- **[GitHub API](https://developer.github.com/v3/)** - Project data sync
 
 ---
 
@@ -167,54 +156,34 @@ A **modern, responsive portfolio website** built with **Angular 16** and **TypeS
 ### **Prerequisites**
 - Node.js (v16 or higher)
 - npm or yarn package manager
-- Git version control
+- Git
 
-### **Installation Steps**
+### **Installation**
 
-#### **1. Clone the Repository**
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/KarolineRRocha/karoline-rocha-portifolio.git
+   cd karoline-rocha-portifolio
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Start development server**
+   ```bash
+   ng serve
+   ```
+
+4. **Open your browser**
+   ```
+   Navigate to http://localhost:4200
+   ```
+
+### **Build for Production**
 ```bash
-git clone https://github.com/KarolineRRocha/karoline-rocha-portifolio.git
-cd karoline-rocha-portifolio
-```
-
-#### **2. Install Dependencies**
-```bash
-npm install
-```
-
-#### **3. Environment Configuration**
-Create environment files for your configuration:
-
-```typescript
-// src/environments/environment.ts
-export const environment = {
-  production: false,
-  adminCredentials: {
-    username: 'your-admin-username',
-    password: 'your-admin-password'
-  },
-  emailjsConfig: {
-    serviceId: 'your-emailjs-service-id',
-    templateId: 'your-emailjs-template-id',
-    publicKey: 'your-emailjs-public-key'
-  },
-  githubConfig: {
-    username: string,
-    apiUrl: string
-  }
-};
-```
-
-#### **4. Start Development Server**
-```bash
-npm start
-```
-
-Navigate to `http://localhost:4200/` to view the application.
-
-#### **5. Build for Production**
-```bash
-npm run build
+ng build --configuration production
 ```
 
 ---
@@ -225,38 +194,22 @@ npm run build
 ```
 src/
 ├── app/
-│   ├── components/              # Reusable UI components
-│   │   ├── header/             # Hero section component
-│   │   ├── footer/             # Footer component
-│   │   ├── topnav/             # Navigation component
-│   │   ├── technologies/       # Tech stack display
-│   │   ├── latest-projects/    # Featured projects
-│   │   └── scroll-top/         # Scroll to top button
-│   ├── pages/                  # Main page components
-│   │   ├── home-page/          # Landing page
-│   │   ├── about-page/         # About section
-│   │   ├── project-page/       # Projects showcase
-│   │   ├── technologies-page/  # Tech stack page
-│   │   └── contact-page/       # Contact form
-│   ├── core/                   # Core services and guards
-│   │   ├── services/           # Application services
-│   │   │   ├── auth.service.ts
-│   │   │   ├── projects.service.ts
-│   │   │   ├── notification.service.ts
-│   │   │   └── github.service.ts
-│   │   └── guards/             # Route guards
-│   └── shared/                 # Shared modules and components
-│       ├── components/         # Shared UI components
-│       └── modules/            # Feature modules
-├── assets/                     # Static assets (images, icons)
-└── styles/                     # Global styles and variables
+│   ├── components/          # Reusable UI components
+│   ├── pages/              # Main page components
+│   ├── services/           # Business logic and API calls
+│   ├── models/             # TypeScript interfaces
+│   ├── constants/          # Application constants
+│   └── shared/             # Shared utilities and pipes
+├── assets/                 # Static assets (images, icons)
+├── environments/           # Environment configurations
+└── styles/                 # Global styles and variables
 ```
 
 ### **Component Architecture**
-- **Modular Design** - Each feature is a separate module
-- **Service Layer** - Business logic separated from UI
-- **Reactive Programming** - RxJS for state management
-- **Type Safety** - Full TypeScript implementation
+- **Smart Components** - Handle business logic and state
+- **Presentational Components** - Focus on UI rendering
+- **Service Layer** - Centralized data management
+- **Route Guards** - Secure navigation and access control
 
 ---
 
@@ -265,111 +218,91 @@ src/
 ### **Color Palette**
 ```scss
 // Primary Colors
-$primary-purple: #2d1b69;      // Deep Purple
-$secondary-blue: #4a90e2;      // Blue
-$accent-orange: #f39c12;       // Orange
+--color-primary: #00d4ff;      // Bright cyan
+--color-accent: #ff1493;       // Deep pink
+--color-dark: #1a1a1a;         // Dark gray
+--color-light: #f8f9fa;        // Light gray
 
-// Neutral Colors
-$background-light: #f8f9fa;    // Light Gray
-$text-dark: #2c3e50;           // Dark Gray
-$text-light: #6c757d;          // Medium Gray
-
-// Semantic Colors
-$success: #28a745;             // Green
-$warning: #ffc107;             // Yellow
-$error: #dc3545;               // Red
+// Gradients
+--gradient-primary: linear-gradient(135deg, #00d4ff, #ff1493);
+--gradient-light: linear-gradient(135deg, #f8f9fa, #e9ecef);
 ```
 
 ### **Typography**
 ```scss
 // Font Families
-$font-primary: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-$font-mono: 'Fira Code', 'Monaco', 'Consolas', monospace;
+--font-family-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+--font-family-mono: 'JetBrains Mono', 'Fira Code', monospace;
 
 // Font Sizes
-$font-size-xs: 0.75rem;        // 12px
-$font-size-sm: 0.875rem;       // 14px
-$font-size-base: 1rem;         // 16px
-$font-size-lg: 1.125rem;       // 18px
-$font-size-xl: 1.25rem;        // 20px
-$font-size-2xl: 1.5rem;        // 24px
-$font-size-3xl: 1.875rem;      // 30px
+--font-size-xs: 0.75rem;      // 12px
+--font-size-sm: 0.875rem;     // 14px
+--font-size-base: 1rem;       // 16px
+--font-size-lg: 1.125rem;     // 18px
+--font-size-xl: 1.25rem;      // 20px
+--font-size-2xl: 1.5rem;      // 24px
 ```
 
 ### **Spacing System**
 ```scss
-// Spacing Scale
-$spacing-xs: 0.25rem;          // 4px
-$spacing-sm: 0.5rem;           // 8px
-$spacing-md: 1rem;             // 16px
-$spacing-lg: 1.5rem;           // 24px
-$spacing-xl: 2rem;             // 32px
-$spacing-2xl: 3rem;            // 48px
+--spacing-xs: 0.25rem;        // 4px
+--spacing-sm: 0.5rem;         // 8px
+--spacing-md: 1rem;           // 16px
+--spacing-lg: 1.5rem;         // 24px
+--spacing-xl: 2rem;           // 32px
+--spacing-2xl: 3rem;          // 48px
+--spacing-3xl: 4rem;          // 64px
 ```
 
 ---
 
 ## 📱 Responsive Design
 
-### **Breakpoint Strategy**
+### **Breakpoints**
 ```scss
-// Standard Breakpoints
-$breakpoints: (
-  'large-desktop': 1200px,     // Large Desktop
-  'desktop': 1024px,           // Desktop
-  'tablet-landscape': 900px,   // Tablet Landscape
-  'tablet-portrait': 768px,    // Tablet Portrait
-  'mobile': 480px,             // Mobile
-  'mobile-small': 360px        // Small Mobile
-);
+// Mobile First Approach
+$mobile: 480px;
+$tablet: 768px;
+$desktop: 1024px;
+$large: 1200px;
+$xl: 1440px;
 ```
 
-### **Mobile-First Approach**
-- **Base styles** for mobile devices
-- **Progressive enhancement** for larger screens
-- **Touch-friendly** interactions
-- **Optimized performance** for mobile networks
-
 ### **Responsive Features**
-- **Flexible grids** that adapt to screen size
-- **Scalable typography** using relative units
-- **Optimized images** with responsive sizing
-- **Touch targets** sized for mobile interaction
+- **Mobile-First Design** - Optimized for small screens
+- **Flexible Grid System** - Adapts to different screen sizes
+- **Touch-Friendly Interactions** - Optimized for mobile devices
+- **Progressive Enhancement** - Enhanced features on larger screens
 
 ---
 
 ## 🔧 Configuration
 
 ### **Environment Setup**
+Create environment files for different deployment stages:
+
 ```typescript
-// Environment Configuration
+// environment.ts
 export const environment = {
-  production: boolean,
-  adminCredentials: {
-    username: string,
-    password: string
+  production: false,
+  github: {
+    username: 'your-github-username',
+    apiUrl: 'https://api.github.com'
   },
-  emailjsConfig: {
-    serviceId: string,
-    templateId: string,
-    publicKey: string
-  },
-  githubConfig: {
-    username: string,
-    apiUrl: string
+  email: {
+    serviceId: 'your-emailjs-service-id',
+    templateId: 'your-emailjs-template-id',
+    userId: 'your-emailjs-user-id'
   }
 };
 ```
 
-### **Build Configuration**
-```json
-{
-  "scripts": {
-    "start": "ng serve",
-    "build": "ng build",
-    "build:prod": "ng build --configuration=production",
-    "deploy:ghdocs": "ng build --configuration=production --output-path docs --base-href /karoline-rocha-portifolio/"
-  }
+### **Admin Configuration**
+Set up admin credentials in environment files:
+```typescript
+admin: {
+  defaultUsername: 'your-admin-email',
+  defaultPassword: 'your-secure-password'
 }
 ```
 
@@ -378,46 +311,39 @@ export const environment = {
 ## 🚀 Deployment
 
 ### **GitHub Pages Deployment**
-```bash
-# Build for GitHub Pages
-npm run deploy:ghdocs
+1. **Build the project**
+   ```bash
+   ng build --configuration production
+   ```
 
-# Deploy to GitHub Pages
-git add docs/
-git commit -m "Deploy to GitHub Pages"
-git push origin main
-```
+2. **Deploy to GitHub Pages**
+   ```bash
+   ng deploy --base-href=https://yourusername.github.io/your-repo/
+   ```
 
-### **Other Hosting Platforms**
-1. **Build the project**: `npm run build:prod`
-2. **Upload `dist/` folder** to your hosting provider
-3. **Configure domain** and SSL certificates
-4. **Set up environment variables** for production
-
-### **Performance Optimization**
-- **Code splitting** for faster initial load
-- **Image optimization** and lazy loading
-- **Minification** and compression
-- **CDN integration** for static assets
+### **Custom Domain Setup**
+1. Add custom domain in repository settings
+2. Configure DNS records
+3. Update base href in build configuration
 
 ---
 
 ## 🤝 Contributing
 
-We welcome contributions! Please follow these steps:
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-### **Development Workflow**
-1. **Fork** the repository
-2. **Create** a feature branch: `git checkout -b feature/amazing-feature`
-3. **Commit** your changes: `git commit -m 'Add amazing feature'`
-4. **Push** to the branch: `git push origin feature/amazing-feature`
-5. **Open** a Pull Request
+### **Development Guidelines**
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-### **Code Standards**
-- Follow **Angular style guide**
-- Use **TypeScript** for type safety
-- Write **unit tests** for new features
-- Update **documentation** as needed
+### **Code Style**
+- Follow Angular style guide
+- Use TypeScript strict mode
+- Write meaningful commit messages
+- Add tests for new features
 
 ---
 
@@ -425,12 +351,14 @@ We welcome contributions! Please follow these steps:
 
 <div align="center">
 
-**Let's Connect!** 🤝
+**Karoline Rocha**  
+*Frontend Developer*
 
-[![Email](https://img.shields.io/badge/Email-karoline.rrocha%40gmail.com-D14836?style=for-the-badge&logo=gmail)](mailto:karoline.rrocha@gmail.com)
+[![Email](https://img.shields.io/badge/Email-karoline.rrocha@gmail.com-D14836?style=for-the-badge&logo=gmail)](mailto:karoline.rrocha@gmail.com)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Karoline%20Rocha-0077B5?style=for-the-badge&logo=linkedin)](https://www.linkedin.com/in/karoline-rrocha/)
 [![GitHub](https://img.shields.io/badge/GitHub-KarolineRRocha-181717?style=for-the-badge&logo=github)](https://github.com/KarolineRRocha)
-[![Portfolio](https://img.shields.io/badge/Portfolio-Live%20Demo-4CAF50?style=for-the-badge&logo=portfolio)](https://karolinerrocha.github.io/karoline-rocha-portifolio/)
+
+**Let's connect and build something amazing together! 🚀**
 
 </div>
 
@@ -440,13 +368,8 @@ We welcome contributions! Please follow these steps:
 
 **Made with ❤️ by Karoline Rocha**
 
-[![GitHub stars](https://img.shields.io/github/stars/KarolineRRocha/karoline-rocha-portifolio?style=social)](https://github.com/KarolineRRocha/karoline-rocha-portifolio)
-[![GitHub forks](https://img.shields.io/github/forks/KarolineRRocha/karoline-rocha-portifolio?style=social)](https://github.com/KarolineRRocha/karoline-rocha-portifolio)
-[![GitHub issues](https://img.shields.io/github/issues/KarolineRRocha/karoline-rocha-portifolio)](https://github.com/KarolineRRocha/karoline-rocha-portifolio/issues)
-[![GitHub license](https://img.shields.io/github/license/KarolineRRocha/karoline-rocha-portifolio)](https://github.com/KarolineRRocha/karoline-rocha-portifolio/blob/main/LICENSE)
-
----
-
-**⭐ Star this repository if you found it helpful!**
+[![Angular](https://img.shields.io/badge/Angular-16.1.0-DD0031?style=flat-square&logo=angular)](https://angular.io/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-4.9.5-3178C6?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
+[![SCSS](https://img.shields.io/badge/SCSS-Styling-CC6699?style=flat-square&logo=sass)](https://sass-lang.com/)
 
 </div> 

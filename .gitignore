@@ -370,6 +370,11 @@ environment.*.ts
 *.tgz
 *.tar.gz
 
+# Screenshots (until actual screenshots are added)
+docs/screenshots/*.png
+docs/screenshots/*.jpg
+docs/screenshots/*.jpeg
+
 # =============================================================================
 # IDE and editor files
 # =============================================================================
