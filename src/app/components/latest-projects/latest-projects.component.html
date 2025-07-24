@@ -1,37 +1,67 @@
-<div class="div">
-  <div class="container">
-    <hr>
-    <h4>LATEST PROJECTS</h4>
-    <hr>
+<section class="projects-section" id="projects">
+  <div class="section-header">
+    <h2 class="section-title">Featured Projects</h2>
+    <p class="section-subtitle">
+      A showcase of my latest work, demonstrating frontend development skills,
+      responsive design, and modern web technologies.
+    </p>
   </div>
 
-  <div class="cards">
-    <div id="card">
-      <a routerLink="upload-project">
-        <div class="photo">
-          <img src="./assets/upLoadImage.png">
+  <div class="timeline-container">
+    <div class="timeline-line"></div>
+
+    <div class="timeline-projects">
+      <div class="timeline-project" *ngFor="let project of projects; let i = index" [class.left]="i % 2 === 0" [class.right]="i % 2 === 1">
+
+        <div class="timeline-node">
+          <div class="node-circle">
+            <span class="node-icon">💻</span>
+          </div>
         </div>
-        <label>Upload</label>
-        <p>Video sharing platform.<span><img src="./assets/arrowPage.JPG"></span></p>
-      </a>
-    </div>
-    <div id="card">
-      <a href="https://karolinerrocha.github.io/JogoQuatroEmLinha/" target="_blank">
-        <div class="photo">
-          <img src="./assets/mundoDosJogos.JPG">
+
+        <div class="project-timeline-card">
+          <div class="project-image">
+            <img [src]="project.imageUrl" [alt]="project.name + ' preview'">
+            <div class="project-overlay">
+              <div class="overlay-icon">💻</div>
+              <div class="overlay-text">View Project</div>
+            </div>
+          </div>
+
+          <div class="project-content">
+            <div class="project-header">
+              <h3 class="project-title">{{ project.name }}</h3>
+              <div class="project-badge">{{ project.category }}</div>
+            </div>
+
+            <p class="project-description">{{ project.description }}</p>
+
+            <div class="project-tech">
+              <span class="tech-pill" *ngFor="let tech of project.technologies">{{ tech }}</span>
+            </div>
+
+            <div class="project-footer">
+              <a [href]="project.demoUrl || project.projectUrl" target="_blank" class="project-link-btn" *ngIf="project.demoUrl || project.projectUrl">
+                <span>{{ project.demoUrl ? 'View Demo' : 'View Code' }}</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+              </a>
+            </div>
+          </div>
         </div>
-        <label>Mundo dos Jogos</label>
-        <p>Page with games.<span><img src="./assets/arrowPage.JPG"></span></p>
-      </a>
-    </div>
-    <div id="card">
-      <a href="https://karolinerrocha.github.io/cookbook-page/index.html" target="_blank">
-        <div class="photo">
-          <img src="./assets/cookbookPageBanner.png">
-        </div>
-        <label>They develop and cook</label>
-        <p>Cookbook colaboration page.<span><img src="./assets/arrowPage.JPG"></span></p>
-      </a>
+      </div>
     </div>
   </div>
-</div>
+
+  <!-- Show More Button -->
+  <div class="show-more-container" *ngIf="showMoreButton">
+    <button class="show-more-btn" (click)="toggleShowMore()">
+      <span class="btn-text">{{ buttonText }}</span>
+      <svg class="btn-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M6 9l6 6 6-6" *ngIf="!showAllProjects"></path>
+        <path d="M18 15l-6-6-6 6" *ngIf="showAllProjects"></path>
+      </svg>
+    </button>
+  </div>
+</section>

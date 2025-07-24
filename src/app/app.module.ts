@@ -1,47 +1,46 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './components/header/header.component';
 import { TechnologiesComponent } from './components/technologies/technologies.component';
 import { HomePageComponent } from './pages/home-page/home-page.component';
-import { FooterComponent } from './components/footer/footer.component';
 import { LatestProjectsComponent } from './components/latest-projects/latest-projects.component';
-import { ScrollTopComponent } from './components/scroll-top/scroll-top.component';
-import { LoadingPageComponent } from './pages/loading-page/loading-page.component';
 import { AboutPageComponent } from './pages/about-page/about-page.component';
 import { ContactPageComponent } from './pages/contact-page/contact-page.component';
-import { ProjectPageComponent } from './pages/project-page/project-page.component';
-import { TopnavComponent } from './components/topnav/topnav.component';
-import { UploadProjectComponent } from './pages/project-page/details-project/upload-project/upload-project.component';
-import { TheyDevelopAndCookProjectComponent } from './pages/project-page/details-project/they-develop-and-cook-project/they-develop-and-cook-project.component';
-import { TechnologiesPageComponent } from './technologies-page/technologies-page.component';
+import { TechnologiesPageComponent } from './pages/technologies-page/technologies-page.component';
+import { GlobalNotificationsComponent } from './shared/components/global-notifications/global-notifications.component';
+
+// Shared Module
+import { SharedModule } from './shared/shared.module';
+
+// Core Module
+import { CoreModule } from './core/core.module';
+
+// Feature Modules
+import { ProjectModule } from './pages/project-page/project.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    TopnavComponent,
-    HeaderComponent,
     TechnologiesComponent,
     HomePageComponent,
-    FooterComponent,
     LatestProjectsComponent,
-    ScrollTopComponent,
-    LoadingPageComponent,
     AboutPageComponent,
     ContactPageComponent,
-    ProjectPageComponent,
-    UploadProjectComponent,
-    TheyDevelopAndCookProjectComponent,
-    TechnologiesPageComponent
+    TechnologiesPageComponent,
+    GlobalNotificationsComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    HttpClientModule,
     AppRoutingModule,
-    ReactiveFormsModule,
+    CoreModule,
+    SharedModule,
+    ProjectModule
   ],
   providers: [],
   bootstrap: [AppComponent]

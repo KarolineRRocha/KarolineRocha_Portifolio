@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./they-develop-and-cook-project.component.scss']
 })
 export class TheyDevelopAndCookProjectComponent {
-
+  // Component logic will be added here
 }

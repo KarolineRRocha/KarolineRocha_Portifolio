@@ -1,5 +1,131 @@
-<div class="aboutPage">
-  <h1 class="lightSpeedIn">
-    Page in progress!
-  </h1>
+<section class="about-section">
+  <div class="about-background">
+    <div class="floating-elements">
+      <div class="floating-element" data-speed="0.5">
+        <div class="code-bracket">&lt;/&gt;</div>
+      </div>
+      <div class="floating-element" data-speed="0.3">
+        <div class="code-bracket">{{ '{' }} {{ '}' }}</div>
+      </div>
+      <div class="floating-element" data-speed="0.7">
+        <div class="code-bracket">[ ]</div>
+      </div>
+      <div class="floating-element" data-speed="0.4">
+        <div class="code-bracket">( )</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="about-container">
+    <div class="about-header">
+      <h1 class="about-title">
+        <span class="title-line">
+          <span class="code-bracket">&lt;</span>
+          <span class="title-text">About Me</span>
+          <span class="code-bracket">/&gt;</span>
+        </span>
+      </h1>
+      <h2 class="title-subtitle">Curious by nature. Developer by choice.</h2>
+    </div>
+
+    <div class="about-content">
+      <div class="about-hero">
+        <div class="hero-text">
+          <div class="hero-greeting">
+            <span class="greeting-icon">👋</span>
+            <h2 class="hero-title">Hello! I'm Karoline</h2>
+          </div>
+          <p class="hero-description">
+            I'm a web developer in training, fueled by curiosity, purpose, and plenty of good cups of coffee. I like to understand what I'm doing, not just make it work — even if that means investigating bugs like they're part of a suspense series.
+          </p>
+        </div>
+        <div class="hero-image">
+          <div class="image-container">
+            <img src="./assets/KAROLImageSemBack.png" alt="Karoline Rocha - Web Developer">
+            <div class="image-border"></div>
+            <div class="image-shadow"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-sections">
+        <div class="section-card">
+          <div class="section-icon">💻</div>
+          <h3 class="section-title">My Tech Stack</h3>
+          <p class="section-text">
+            I work with Angular, Laravel, TypeScript, PHP, HTML, Tailwind CSS, Git, and Vite. I write code like I organize ideas: with logic, clarity, and a bit of stubbornness until everything works (including that one bug that "made no sense at all").
+          </p>
+        </div>
+
+        <div class="section-card">
+          <div class="section-icon">🌱</div>
+          <h3 class="section-title">Beyond the Screen</h3>
+          <p class="section-text">
+            Off the screen, I nurture other passions: cooking like I'm programming recipes, tending my plants and garden like I'm versioning nature, binge-watching series (preferably without streaming bugs), and enjoying simple moments with my husband — my steady partner, even when the Wi-Fi fails. And whenever I can, I recharge my mind with the smell of the sea — my favorite breakpoint between deploy cycles.
+          </p>
+        </div>
+
+        <div class="section-card">
+          <div class="section-icon">🎯</div>
+          <h3 class="section-title">My Values</h3>
+          <p class="section-text">
+            I value well-thought-out solutions, intuitive interfaces, and code that my "future self" can read without freaking out. For me, developing is about combining knowledge, creativity, and sensitivity into something that truly makes sense — and, ideally, doesn't break after deployment.
+          </p>
+        </div>
+      </div>
+
+      <!-- Let's Work Together CTA Section -->
+      <div class="about-cta-section">
+        <div class="about-cta-background">
+          <div class="about-cta-pattern"></div>
+        </div>
+
+        <div class="about-cta-content">
+          <h4>Let's Work Together</h4>
+          <p class="about-cta-description">
+            Ready to bring your ideas to life? I'm always excited to work on new projects
+            and collaborate with amazing teams.
+          </p>
+
+          <div class="about-cta-buttons">
+            <a href="mailto:karoline.rrocha&#64;gmail.com" class="btn btn-primary">
+              <span class="btn-icon">💬</span>
+              Start a Project
+            </a>
+            <button class="btn btn-secondary" (click)="openCvModal()">
+              <span class="btn-icon">📋</span>
+              Request Resume
+            </button>
+          </div>
+
+          <div class="about-availability-status">
+            <div class="about-status-indicator available"></div>
+            <span class="about-status-text">Available for new opportunities</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CV Download Modal -->
+<div class="cv-modal" *ngIf="showCvModal" (click)="closeCvModal($event)">
+  <div class="cv-modal-content">
+    <div class="cv-modal-header">
+      <h3>Download CV</h3>
+      <button class="cv-modal-close" (click)="closeCvModal($event)">×</button>
+    </div>
+    <div class="cv-modal-body">
+      <p>Would you like to download my CV?</p>
+      <div class="cv-modal-buttons">
+        <button class="btn btn-primary" (click)="downloadCv()">
+          <span class="btn-icon">📥</span>
+          Yes, Download CV
+        </button>
+        <button class="btn btn-secondary" (click)="closeCvModal($event)">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
 </div>

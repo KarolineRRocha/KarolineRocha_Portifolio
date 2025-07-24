@@ -1,108 +1,278 @@
-/* .badges {
-  min-height: 40em;
+/* ==========================================================================
+   Technologies Component - Modern Design
+   ========================================================================== */
+
+.technologies-grid {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
+  gap: var(--spacing-3xl);
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-#titles {
-  font-size: 2.5rem;
-  font-weight: 600;
-  text-align: center;
-  margin: 3em auto;
-  margin-bottom: -0.5em;
+.tech-category {
+  background: var(--color-white);
+  border-radius: var(--radius-xl);
+  padding: var(--spacing-3xl);
+  box-shadow: var(--shadow-medium);
+  border: 1px solid rgba(0, 212, 255, 0.1);
+  transition: all var(--transition-normal);
 }
 
-.wrapper {
-  width: 80%;
-  margin: 3em auto;
-  text-align: center;
+.tech-category:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-heavy);
+  border-color: rgba(0, 212, 255, 0.2);
 }
 
-.badge {
-  margin: 1.5em;
-  width: 4.4em;
-  height: 4.4em;
-  border-radius: 20%;
+.category-title {
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-primary);
+  margin: 0 0 var(--spacing-2xl) 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  position: relative;
   display: inline-block;
-  top: 0;
-  transition: all 0.2s ease;
-  box-shadow: 8px 10px 12px 3px rgba(0, 0, 0, 0.43);
 }
 
-.rounded {
-  width: 50px;
-  height: 50px;
-  background: white;
-  margin: 11px 10px auto;
-  // z-index: 10;
-  border-radius: 30%;
-  box-shadow: 8px 8px 8px 2px rgba(0, 0, 0, 0.23);
+.category-title::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 40px;
+  height: 2px;
+  background: var(--gradient-neon);
+  box-shadow: var(--shadow-glow);
+}
 
-  i.fab {
-    font-size: 2.6em;
+.tech-items {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: var(--spacing-lg);
+}
+
+.tech-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-lg);
+  background: rgba(0, 212, 255, 0.05);
+  border: 1px solid rgba(0, 212, 255, 0.1);
+  transition: all var(--transition-normal);
+  cursor: default;
+  position: relative;
+  overflow: hidden;
+}
+
+.tech-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.1), transparent);
+  transition: left var(--transition-slow);
+}
+
+.tech-item:hover::before {
+  left: 100%;
+}
+
+.tech-item:hover {
+  background: rgba(0, 212, 255, 0.1);
+  border-color: var(--color-primary);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-glow);
+}
+
+.tech-icon {
+  width: 60px;
+  height: 60px;
+  background: var(--gradient-primary);
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-medium);
+  transition: all var(--transition-normal);
+  position: relative;
+  z-index: 1;
+}
+
+.tech-item:hover .tech-icon {
+  transform: scale(1.1);
+  box-shadow: var(--shadow-glow);
+}
+
+.tech-icon i {
+  font-size: 2rem;
+  color: var(--color-white);
+  text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+}
+
+.tech-name {
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-dark);
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Technology-specific colors */
+.tech-item[title="Angular"] .tech-icon {
+  background: linear-gradient(135deg, #dd0031, #c3002f);
+}
+
+.tech-item[title="TypeScript"] .tech-icon {
+  background: linear-gradient(135deg, #3178c6, #235a97);
+}
+
+.tech-item[title="JavaScript"] .tech-icon {
+  background: linear-gradient(135deg, #f7df1e, #f0db4f);
+}
+
+.tech-item[title="Tailwind CSS"] .tech-icon {
+  background: linear-gradient(135deg, #06b6d4, #0891b2);
+}
+
+.tech-item[title="HTML5"] .tech-icon {
+  background: linear-gradient(135deg, #e34f26, #f06529);
+}
+
+.tech-item[title="CSS3"] .tech-icon {
+  background: linear-gradient(135deg, #1572b6, #33a9dc);
+}
+
+.tech-item[title="SCSS"] .tech-icon {
+  background: linear-gradient(135deg, #cf649a, #cc6699);
+}
+
+
+
+.tech-item[title="Laravel"] .tech-icon {
+  background: linear-gradient(135deg, #ff2d20, #e74c3c);
+}
+
+.tech-item[title="MySQL"] .tech-icon {
+  background: linear-gradient(135deg, #00758f, #f29111);
+}
+
+.tech-item[title="PHP"] .tech-icon {
+  background: linear-gradient(135deg, #777bb4, #8892bf);
+}
+
+.tech-item[title="Java"] .tech-icon {
+  background: linear-gradient(135deg, #007396, #ed8b00);
+}
+
+.tech-item[title="Git"] .tech-icon {
+  background: linear-gradient(135deg, #f05032, #ee513b);
+}
+
+.tech-item[title="GitHub"] .tech-icon {
+  background: linear-gradient(135deg, #181717, #333);
+}
+
+.tech-item[title="GitLab"] .tech-icon {
+  background: linear-gradient(135deg, #fc6d26, #e24329);
+}
+
+.tech-item[title="npm"] .tech-icon {
+  background: linear-gradient(135deg, #cb3837, #e53e3e);
+}
+
+.tech-item[title="Figma"] .tech-icon {
+  background: linear-gradient(135deg, #f24e1e, #ff7262);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .tech-items {
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: var(--spacing-md);
+  }
+
+  .tech-icon {
+    width: 50px;
+    height: 50px;
+  }
+
+  .tech-icon i {
+    font-size: 1.5rem;
+}
+}
+
+@media (max-width: 768px) {
+  .technologies-grid {
+    gap: var(--spacing-2xl);
+  }
+
+  .tech-category {
+    padding: var(--spacing-2xl);
+  }
+
+  .category-title {
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--spacing-xl);
+  }
+
+  .tech-items {
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    gap: var(--spacing-sm);
+}
+
+  .tech-item {
+    padding: var(--spacing-md);
+  }
+
+  .tech-icon {
+    width: 45px;
+    height: 45px;
+  }
+
+  .tech-icon i {
+    font-size: 1.3rem;
+  }
+
+  .tech-name {
+    font-size: var(--font-size-xs);
   }
 }
 
-.blue {
-  background: dodgerblue;
-  color: deepskyblue;
-}
+@media (max-width: 480px) {
+  .tech-category {
+    padding: var(--spacing-xl);
+  }
 
-.orange {
-  background: darkorange;
-  color: orange;
-}
+  .tech-items {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-sm);
+  }
 
-.gold {
-  background: gold;
-  color: gold;
-}
+  .tech-item {
+    padding: var(--spacing-sm);
+  }
 
-.red {
-  background: red;
-  color: red;
-}
+  .tech-icon {
+    width: 40px;
+    height: 40px;
+  }
 
-.purple {
-  background: mediumpurple;
-  color: slategray;
-}
+  .tech-icon i {
+    font-size: 1.1rem;
+  }
 
-.green {
-  background: yellowgreen;
-  color: darkslategray;
-}
-
-.crimson {
-  background: crimson;
-  color: firebrick;
-}
-
-.steel {
-  background: steelblue;
-  color: gold;
-}
-
-.pink {
-  background: hotpink;
-  color: palevioletred;
-}
-
-.rebecca {
-  background: rebeccapurple;
-  color: rebeccapurple;
-}
-
-.gainsboro {
-  background: gainsboro;
-  color: orangered;
-} */
-
-
-.technologiesPage {
-  min-height: 40em;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  .tech-name {
+    font-size: var(--font-size-xs);
+  }
 }

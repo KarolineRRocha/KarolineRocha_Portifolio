@@ -502,3 +502,32 @@
     }
   }
 }
+
+@media (max-width: 900px) {
+  .contact-container, .form, .info {
+    flex-direction: column !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 1em !important;
+  }
+  input, textarea, button {
+    width: 100% !important;
+  }
+  h1, h2, h3, h4, p {
+    font-size: 1.1em !important;
+  }
+
+  .modal-confirm h4 {
+    font-size: 24px; /* Reduced from 36px to 24px for mobile */
+  }
+}
+
+@media (max-width: 480px) {
+  .modal-confirm h4 {
+    font-size: 20px; /* Even smaller for very small screens */
+  }
+
+  .modal-confirm .modal-header {
+    padding: 25px;
+  }
+}

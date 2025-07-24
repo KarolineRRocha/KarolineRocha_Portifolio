@@ -1,0 +1,38 @@
+<!-- Global Notifications Container -->
+<div class="notifications-container">
+  <!-- Toast Notifications -->
+  <div class="notifications-list">
+    <div *ngFor="let notification of notifications" class="notification" [class]="'notification--' + notification.type" [@notificationAnimation]>
+      <div class="notification-content">
+        <span class="notification-icon">{{ getNotificationIcon(notification.type) }}</span>
+        <span class="notification-message">{{ notification.message }}</span>
+        <button class="notification-close" (click)="removeNotification(notification.id)" aria-label="Close notification">
+          ×
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Confirmation Dialog -->
+  <div *ngIf="confirmationDialog" class="confirmation-overlay" [@confirmationAnimation]>
+    <div class="confirmation-dialog" [class]="'confirmation-dialog--' + confirmationDialog.type">
+      <div class="confirmation-header">
+        <span class="confirmation-icon">{{ getConfirmationIcon(confirmationDialog.type) }}</span>
+        <h3 class="confirmation-title">{{ confirmationDialog.title }}</h3>
+      </div>
+
+      <div class="confirmation-body">
+        <p class="confirmation-message">{{ confirmationDialog.message }}</p>
+      </div>
+
+      <div class="confirmation-actions">
+        <button class="btn-secondary" (click)="onCancel()">
+          {{ confirmationDialog.cancelLabel || 'Cancel' }}
+        </button>
+        <button class="btn-primary" [class]="'btn-primary--' + confirmationDialog.type" (click)="onConfirm()">
+          {{ confirmationDialog.confirmLabel || 'Confirm' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

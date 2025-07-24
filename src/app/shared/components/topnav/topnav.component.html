@@ -1,0 +1,38 @@
+<div class="nav" id="nav">
+  <input type="checkbox" id="nav-check">
+
+  <div class="nav-logo" (click)="goToHome()">
+    <img src="assets/KLogo.svg" alt="Karoline Rocha - Developer">
+  </div>
+
+  <div class="nav-links">
+    <a routerLink="about" (click)="closeMobileMenu()">
+      <span class="code">&lt;</span>
+      about
+      <span class="code">&#47;&gt;</span>
+    </a>
+    <a routerLink="technologies" (click)="closeMobileMenu()">
+      <span class="code">&lt;</span>
+      technologies
+      <span class="code">&#47;&gt;</span>
+    </a>
+    <a routerLink="projects" (click)="closeMobileMenu()">
+      <span class="code">&lt;</span>
+      projects
+      <span class="code">&#47;&gt;</span>
+    </a>
+    <a routerLink="contact" (click)="closeMobileMenu()">
+      <span class="code">&lt;</span>
+      contact
+      <span class="code">&#47;&gt;</span>
+    </a>
+  </div>
+
+  <div class="nav-btn">
+    <label for="nav-check">
+      <span></span>
+      <span></span>
+      <span></span>
+    </label>
+  </div>
+</div>

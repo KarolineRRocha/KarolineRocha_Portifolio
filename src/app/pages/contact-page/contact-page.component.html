@@ -36,29 +36,26 @@
         </div>
 
         <h2>Email</h2>
-        <input formControlName="from_email" type="email" name="email" id="email" placeholder="Email"
-          placeholder="Enter your email">
+        <input formControlName="from_email" type="email" name="email" id="email" placeholder="Email" placeholder="Enter your email">
 
-        <div id="messageError"
-          *ngIf="form.get('from_email')?.errors?.['required'] && form.get('from_email')?.touched">
+        <div id="messageError" *ngIf="form.get('from_email')?.errors?.['required'] && form.get('from_email')?.touched">
           Email is required!
         </div>
 
-        <div id="messageError" *ngIf="form.get('from_email')?.errors?.['pattern'] && notEmpity">
+        <div id="messageError" *ngIf="form.get('from_email')?.errors?.['pattern'] && form.get('from_email')?.touched">
           Please enter valid email address!
         </div>
       </div>
 
       <div class="rightForm">
         <h2>Message</h2>
-        <textarea formControlName="message" name="message" id="message" rows="10" cols="40"
-          placeholder="Type your message."></textarea>
+        <textarea formControlName="message" name="message" id="message" rows="10" cols="40" placeholder="Type your message."></textarea>
 
         <div id="messageErrorType" *ngIf="form.get('message')?.errors?.['required'] && form.get('message')?.touched">
           Message is required!
         </div>
         <a href="#myModal" data-toggle="modal">
-        <button id="send" type="submit" [disabled]="!form.valid">Send</button>
+          <button id="send" type="submit" [disabled]="!form.valid">Send</button>
         </a>
       </div>
     </div>
@@ -71,7 +68,14 @@
     <div class="modal-content">
       <div class="modal-header justify-content-center">
         <div class="icon-box">
-          <svg xmlns="http://www.w3.org/2000/svg" height="4em" viewBox="0 0 448 512"><style>svg{fill:white}</style><path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z" style="margin-top: -0.5em;"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" height="4em" viewBox="0 0 448 512">
+            <style>
+              svg {
+                fill: white
+              }
+            </style>
+            <path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z" style="margin-top: -0.5em;" />
+          </svg>
         </div>
         <div class="close" data-dismiss="modal">&times;</div>
       </div>
