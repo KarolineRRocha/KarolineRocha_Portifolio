@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-about-page',
@@ -7,6 +8,8 @@ import { Component } from '@angular/core';
 })
 export class AboutPageComponent {
   showCvModal = false;
+
+  constructor(private router: Router) { }
 
   openCvModal(): void {
     this.showCvModal = true;
@@ -21,6 +24,31 @@ export class AboutPageComponent {
     this.enableScroll();
   }
 
+  // Handle quick link clicks and scroll to top
+  onQuickLinkClick(): void {
+    // Scroll to top after navigation
+    setTimeout(() => {
+      this.scrollToTop();
+    }, 100);
+  }
+
+  // Navigate to contact page and scroll to contact form
+  navigateToContactForm(): void {
+    // Navigate to contact page
+    this.router.navigate(['/contact']).then(() => {
+      // Wait for the page to load, then scroll to the contact form
+      setTimeout(() => {
+        const contactForm = document.getElementById('contact-form');
+        if (contactForm) {
+          contactForm.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      }, 300); // Give the page time to render
+    });
+  }
+
   private preventScroll(): void {
     document.body.style.overflow = 'hidden';
     document.body.style.position = 'fixed';
@@ -31,6 +59,16 @@ export class AboutPageComponent {
     document.body.style.overflow = '';
     document.body.style.position = '';
     document.body.style.width = '';
+  }
+
+  // Private method to scroll to top of the page
+  private scrollToTop(): void {
+    // Smooth scroll to top
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    });
   }
 
   downloadCv(): void {

@@ -1,14 +1,39 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-topnav',
   templateUrl: './topnav.component.html',
   styleUrls: ['./topnav.component.scss']
 })
-export class TopnavComponent {
+export class TopnavComponent implements OnInit {
+  activeRoute: string = '';
 
   constructor(private router: Router) { }
+
+  ngOnInit(): void {
+    // Subscribe to router events to detect current route
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe((event: any) => {
+      this.activeRoute = event.url;
+    });
+
+    // Set initial active route
+    this.activeRoute = this.router.url;
+  }
+
+  isActiveRoute(route: string): boolean {
+    if (route === 'home') {
+      return this.activeRoute === '/home' || this.activeRoute === '/';
+    }
+    return this.activeRoute === `/${route}`;
+  }
+
+  hasActiveRoute(): boolean {
+    return this.activeRoute !== '/home' && this.activeRoute !== '/';
+  }
 
   goToHome(): void {
     this.router.navigate(['/home']).then(() => {

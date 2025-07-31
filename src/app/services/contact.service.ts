@@ -35,7 +35,8 @@ export class ContactService {
         this.errorHandler.handleWarning('Contact form submitted successfully', 'ContactService');
         return true;
       } else {
-        this.notificationService.error(ERROR_MESSAGES.CONTACT.SEND_FAILED);
+        // Use the specific error message from the email service
+        this.notificationService.error(response.message);
         this.errorHandler.handleError(new Error(response.message), 'ContactService');
         return false;
       }

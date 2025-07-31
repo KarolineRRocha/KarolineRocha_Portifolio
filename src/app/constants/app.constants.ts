@@ -4,7 +4,8 @@ export const APP_CONSTANTS = {
     USER_ID: 'ssxlTwO2Ygo7ZPE-0',
     SERVICE_ID: 'service_bmdnfpt',
     TEMPLATE_ID: 'template_285h8vc',
-    DEFAULT_TO_NAME: 'Admin'
+    DEFAULT_TO_NAME: 'Karoline Rocha',
+    DEFAULT_TO_EMAIL: 'emaildakarolineribeiro@gmail.com'
   },
 
   // Form Validation

@@ -2,29 +2,41 @@
   min-height: 100vh;
   width: 100%;
   overflow-x: hidden;
+  padding-top: var(--header-height);
 }
 
 @media (max-width: 900px) {
   .homePage {
-    padding: 0;
+    padding-top: var(--header-height-mobile);
   }
-  .container, .cards, .header, .left, .right {
+
+  .container,
+  .cards,
+  .header,
+  .left,
+  .right {
     flex-direction: column !important;
     width: 100% !important;
     margin: 0 !important;
     padding: 0 1em !important;
   }
+
   img {
     width: 100% !important;
     height: auto !important;
   }
-  h1, h2, h3, h4, p {
+
+  h1,
+  h2,
+  h3,
+  h4,
+  p {
     font-size: 1.1em !important;
   }
 }
 
 @media (max-width: 700px) {
   .homePage {
-    padding: 0;
+    padding-top: var(--header-height-mobile);
   }
 }

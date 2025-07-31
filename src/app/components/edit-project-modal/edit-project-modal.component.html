@@ -14,28 +14,43 @@
         </div>
 
         <div class="form-group">
-          <label for="projectDescription">Description *</label>
-          <textarea id="projectDescription" class="form-textarea" [(ngModel)]="editedProject.description" placeholder="Enter project description"></textarea>
+          <label for="projectDescription">Description</label>
+          <textarea id="projectDescription" class="form-textarea" [(ngModel)]="editedProject.description" placeholder="Enter project description (optional)"></textarea>
         </div>
 
         <div class="form-group">
           <label>Technologies</label>
           <div class="technologies-container">
             <div class="technology-tags">
-              <span class="tech-tag" *ngFor="let tech of editedProject.technologies; let i = index">
-                {{ tech }}
+              <span class="tech-tag" *ngFor="let tech of editedProject.technologies; let i = index" [class.editing]="editingTechIndex === i">
+                <div class="tech-controls">
+                  <button class="move-tech-btn move-left" (click)="moveTechnology(i, 'left')" [disabled]="i === 0" title="Move left">
+                    ←
+                  </button>
+                  <button class="move-tech-btn move-right" (click)="moveTechnology(i, 'right')" [disabled]="i === editedProject.technologies!.length - 1" title="Move right">
+                    →
+                  </button>
+                </div>
+                <span *ngIf="editingTechIndex !== i" (click)="startEditingTech(i, tech)">{{ tech }}</span>
+                <input *ngIf="editingTechIndex === i" type="text" class="edit-tech-input" [(ngModel)]="editingTechValue" (keyup.enter)="saveEditedTech()" (keyup.escape)="cancelEditingTech()" (blur)="saveEditedTech()">
                 <button class="remove-tech" (click)="removeTechnology(i)">&times;</button>
               </span>
             </div>
-            <div class="add-tech-section">
-              <button class="btn-add-tech" (click)="addTechnology()">+ Add Technology</button>
+            <div class="add-tech-section" *ngIf="!isAddingTech">
+              <button class="btn-add-tech" (click)="startAddingTech()">+ Add Technology</button>
+            </div>
+            <div class="add-tech-input" *ngIf="isAddingTech">
+              <input type="text" class="form-input" [(ngModel)]="newTech" placeholder="Enter technology name" (keyup.enter)="addTechnology()">
+              <button class="btn-confirm-tech" (click)="addTechnology()">Add</button>
+              <button class="btn-cancel-tech" (click)="cancelAddingTech()">Cancel</button>
             </div>
           </div>
         </div>
 
         <div class="form-group">
-          <label for="projectImage">Image URL</label>
-          <input type="url" id="projectImage" class="form-input" [(ngModel)]="editedProject.imageUrl" placeholder="Enter image URL">
+          <label for="projectImage">Image URL (opcional)</label>
+          <input type="url" id="projectImage" class="form-input" [(ngModel)]="editedProject.imageUrl" placeholder="Enter image URL" (input)="onImageUrlChange()">
+          <small class="form-help">Ou faça upload de uma imagem abaixo</small>
         </div>
 
         <div class="form-group">
@@ -54,22 +69,26 @@
         <h3>Preview</h3>
 
         <div class="preview-image">
-          <img [src]="editedProject.imageUrl || 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjVGNUY1Ii8+CjxwYXRoIGQ9Ik04MCAxMDBDODAgODkuNTQ0NCA4OC41NDQ0IDgxIDEwMCA4MUMxMTEuNDU2IDgxIDEyMCA4OS41NDQ0IDEyMCAxMEMxMjAgMTEwLjQ1NiAxMTEuNDU2IDEyMCAxMDAgMTIwQzg4LjU0NDQgMTIwIDgwIDExMC40NTYgODAgMTAwWiIgZmlsbD0iI0NDQ0NDQyIvPgo8cGF0aCBkPSJNMTAwIDExMEMxMDUuNTIzIDExMCAxMTAgMTA1LjUyMyAxMTAgMTAwQzExMCA5NC40NzcyIDEwNS41MjMgOTAgMTAwIDkwQzk0LjQ3NzIgOTAgOTAgOTQuNDc3MiA5MCAxMEM5MCAxMDUuNTIzIDk0LjQ3NzIgMTEwIDEwMCAxMTBaIiBmaWxsPSIjOTk5OTk5Ii8+Cjwvc3ZnPgo='" [alt]="editedProject.name + ' preview'" id="project-image-preview" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjVGNUY1Ii8+CjxwYXRoIGQ9Ik04MCAxMDBDODAgODkuNTQ0NCA4OC41NDQ0IDgxIDEwMCA4MUMxMTEuNDU2IDgxIDEyMCA4OS41NDQ0IDEyMCAxMEMxMjAgMTEwLjQ1NiAxMTEuNDU2IDEyMCAxMDAgMTIwQzg4LjU0NDQgMTIwIDgwIDExMC40NTYgODAgMTAwWiIgZmlsbD0iI0NDQ0NDQyIvPgo8cGF0aCBkPSJNMTAwIDExMEMxMDUuNTIzIDExMCAxMTAgMTA1LjUyMyAxMTAgMTAwQzExMCA5NC40NzcyIDEwNS41MjMgOTAgMTAwIDkwQzk0LjQ3NzIgOTAgOTAgOTQuNDc3MiA5MCAxMEM5MCAxMDUuNTIzIDk0LjQ3NzIgMTEwIDEwMCAxMTBaIiBmaWxsPSIjOTk5OTk5Ii8+Cjwvc3ZnPgo='">
+          <img [src]="editedProject.uploadedImage || editedProject.imageUrl || 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjVGNUY1Ii8+CjxwYXRoIGQ9Ik04MCAxMDBDODAgODkuNTQ0NCA4OC41NDQ0IDgxIDEwMCA4MUMxMTEuNDU2IDgxIDEyMCA4OS41NDQ0IDEyMCAxMEMxMjAgMTEwLjQ1NiAxMTEuNDU2IDEyMCAxMDAgMTIwQzg4LjU0NDQgMTIwIDgwIDExMC40NTYgODAgMTAwWiIgZmlsbD0iI0NDQ0NDQyIvPgo8cGF0aCBkPSJNMTAwIDExMEMxMDUuNTIzIDExMCAxMTAgMTA1LjUyMyAxMTAgMTAwQzExMCA5NC40NzcyIDEwNS41MjMgOTAgMTAwIDkwQzk0LjQ3NzIgOTAgOTAgOTQuNDc3MiA5MCAxMEM5MCAxMDUuNTIzIDk0LjQ3NzIgMTEwIDEwMCAxMTBaIiBmaWxsPSIjOTk5OTk5Ii8+Cjwvc3ZnPgo='" [alt]="editedProject.name + ' preview'" id="project-image-preview" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjVGNUY1Ii8+CjxwYXRoIGQ9Ik04MCAxMDBDODAgODkuNTQ0NCA4OC41NDQ0IDgxIDEwMCA4MUMxMTEuNDU2IDgxIDEyMCA4OS41NDQ0IDEyMCAxMEMxMjAgMTEwLjQ1NiAxMTEuNDU2IDEyMCAxMDAgMTIwQzg4LjU0NDQgMTIwIDgwIDExMC40NTYgODAgMTAwWiIgZmlsbD0iI0NDQ0NDQyIvPgo8cGF0aCBkPSJNMTAwIDExMEMxMDUuNTIzIDExMCAxMTAgMTA1LjUyMyAxMTAgMTAwQzExMCA5NC40NzcyIDEwNS41MjMgOTAgMTAwIDkwQzk0LjQ3NzIgOTAgOTAgOTQuNDc3MiA5MCAxMEM5MCAxMDUuNTIzIDk0LjQ3NzIgMTEwIDEwMCAxMTBaIiBmaWxsPSIjOTk5OTk5Ii8+Cjwvc3ZnPgo='">
         </div>
 
-        <!-- File Upload Link Below Image -->
+        <!-- File Upload Section -->
         <div class="file-upload-section">
+          <p class="upload-info">📁 Upload de Imagem (recomendado)</p>
           <input type="file" id="editPreviewImageFileInput" (change)="onFileSelected($event)" accept="image/*" class="file-input">
           <label for="editPreviewImageFileInput" class="file-upload-label">
-            Escolher Ficheiro
+            <span *ngIf="!selectedFileName">📤 Escolher Imagem</span>
+            <span *ngIf="selectedFileName">✅ {{ selectedFileName }}</span>
           </label>
+          <button *ngIf="selectedFileName" class="btn-remove-file" (click)="removeUploadedImage()">🗑️ Remover</button>
+          <small class="upload-help">Formatos aceitos: JPG, PNG, GIF, WebP (máx. 5MB)</small>
         </div>
       </div>
     </div>
 
     <div class="modal-actions">
       <button class="btn-secondary" (click)="onCancel()">Cancel</button>
-      <button class="btn-primary" (click)="onSave()" [disabled]="!editedProject.name || !editedProject.description">Save Changes</button>
+      <button class="btn-primary" (click)="onSave()" [disabled]="!editedProject.name">Save Changes</button>
     </div>
   </div>
 </div>

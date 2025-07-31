@@ -13,8 +13,9 @@ export class AddProjectModalComponent implements OnInit, OnDestroy {
   newProject: NewProjectData = {
     name: '',
     description: '',
-    technologies: '',
+    technologies: [],
     imageUrl: '',
+    uploadedImage: undefined,
     demoUrl: '',
     projectUrl: '',
     category: 'completed'
@@ -46,11 +47,36 @@ export class AddProjectModalComponent implements OnInit, OnDestroy {
   }
 
   onSave() {
-    if (this.newProject.name && this.newProject.description) {
-      // Convert technologies array to comma-separated string
-      this.newProject.technologies = this.technologies.join(', ');
-      this.save.emit(this.newProject);
+    console.log('📝 onSave called');
+    console.log('📝 Project data:', this.newProject);
+    console.log('📝 Technologies:', this.technologies);
+
+    // Validate required fields
+    if (!this.newProject.name || this.newProject.name.trim() === '') {
+      alert('Project name is required');
+      return;
     }
+
+
+
+
+
+    // Use technologies array directly
+    this.newProject.technologies = [...this.technologies];
+
+    // Create clean project data
+    const projectData = {
+      name: this.newProject.name.trim(),
+      description: this.newProject.description || '',
+      technologies: this.technologies || [],
+      imageUrl: this.newProject.imageUrl || '',
+      demoUrl: this.newProject.demoUrl || '',
+      projectUrl: this.newProject.projectUrl || '',
+      category: this.newProject.category || 'completed'
+    };
+
+    console.log('📝 Emitting project data:', projectData);
+    this.save.emit(projectData);
   }
 
   onCancel() {
@@ -82,32 +108,54 @@ export class AddProjectModalComponent implements OnInit, OnDestroy {
   onImageUrlChange() {
     // Trigger image preview update
     const img = document.getElementById('new-project-image-preview') as HTMLImageElement;
-    if (img && this.newProject.imageUrl) {
-      img.src = this.newProject.imageUrl;
+    if (img) {
+      img.src = this.newProject.uploadedImage || this.newProject.imageUrl || '';
     }
   }
 
   onFileSelected(event: any) {
     const file = event.target.files[0];
     if (file) {
+      // Validate file size (5MB limit)
+      const maxSize = 5 * 1024 * 1024; // 5MB in bytes
+      if (file.size > maxSize) {
+        alert('Arquivo muito grande! O tamanho máximo é 5MB.');
+        return;
+      }
+
+      // Validate file type
+      const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+      if (!allowedTypes.includes(file.type)) {
+        alert('Tipo de arquivo não suportado! Use JPG, PNG, GIF ou WebP.');
+        return;
+      }
+
       this.selectedFileName = file.name;
 
       // Create a local URL for preview
       const reader = new FileReader();
       reader.onload = (e: any) => {
-        this.newProject.imageUrl = e.target.result;
+        this.newProject.uploadedImage = e.target.result;
         this.onImageUrlChange();
+        console.log('📁 Image uploaded successfully:', file.name, 'Size:', (file.size / 1024 / 1024).toFixed(2) + 'MB');
       };
       reader.readAsDataURL(file);
     }
+  }
+
+  removeUploadedImage() {
+    this.newProject.uploadedImage = undefined;
+    this.selectedFileName = '';
+    this.onImageUrlChange();
   }
 
   resetForm() {
     this.newProject = {
       name: '',
       description: '',
-      technologies: '',
+      technologies: [],
       imageUrl: '',
+      uploadedImage: undefined,
       demoUrl: '',
       projectUrl: '',
       category: 'completed'

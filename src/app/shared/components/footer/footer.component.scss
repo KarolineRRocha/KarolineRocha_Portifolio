@@ -135,6 +135,8 @@
   text-shadow: 0 0 8px rgba(255, 20, 147, 0.6);
 }
 
+/* Focus styles removed - now handled globally */
+
 .contact-text {
   color: var(--color-gray);
   font-family: var(--font-family-sans);
@@ -162,17 +164,7 @@
   border: none;
 }
 
-.footer-link:focus {
-  outline: none !important;
-  border: none !important;
-  box-shadow: none !important;
-}
-
-.footer-link:active {
-  outline: none !important;
-  border: none !important;
-  box-shadow: none !important;
-}
+/* Focus styles removed - now handled globally */
 
 .footer-link::before {
   content: '→';
@@ -362,10 +354,13 @@
 }
 
 @keyframes pulse {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 1;
     transform: scale(1);
   }
+
   50% {
     opacity: 0.7;
     transform: scale(1.1);
@@ -416,17 +411,7 @@
   border: none;
 }
 
-.footer-links .footer-link:focus {
-  outline: none !important;
-  border: none !important;
-  box-shadow: none !important;
-}
-
-.footer-links .footer-link:active {
-  outline: none !important;
-  border: none !important;
-  box-shadow: none !important;
-}
+/* Focus styles removed - now handled globally */
 
 .footer-links .footer-link::before {
   display: none;

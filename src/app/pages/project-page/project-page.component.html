@@ -1,4 +1,6 @@
+<!-- Projects Page -->
 <section class="projects-section">
+  <!-- Animated Background -->
   <div class="projects-background">
     <div class="floating-elements">
       <div class="floating-element" data-speed="0.5">
@@ -17,6 +19,7 @@
   </div>
 
   <div class="projects-container">
+    <!-- Projects Header -->
     <div class="projects-header">
       <h1 class="projects-title">
         <span class="title-line">
@@ -25,6 +28,32 @@
           <span class="code-bracket">/&gt;</span>
         </span>
       </h1>
+
+      <!-- GitHub Sync Status (Admin Only) -->
+      <div class="github-sync-status" *ngIf="isAdmin">
+        <div class="sync-info">
+          <span class="sync-status-text">{{ syncStatusText }}</span>
+          <div class="sync-actions">
+            <button class="sync-btn" (click)="manualGitHubSync()" [disabled]="isSyncing" title="Sync with GitHub">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 2v6h-6"></path>
+                <path d="M3 12a9 9 0 0 1 15-6.7L21 8"></path>
+                <path d="M3 22v-6h6"></path>
+                <path d="M21 12a9 9 0 0 1-15 6.7L3 16"></path>
+              </svg>
+              {{ isSyncing ? 'Syncing...' : 'Sync GitHub' }}
+            </button>
+            <button class="sync-reset-btn" (click)="resetSyncData()" [disabled]="isSyncing" title="Reset sync data">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 12a9 9 0 0 1 15-6.7L21 8"></path>
+                <path d="M3 22v-6h6"></path>
+                <path d="M21 12a9 9 0 0 1-15 6.7L3 16"></path>
+              </svg>
+              Reset
+            </button>
+          </div>
+        </div>
+      </div>
 
       <div class="projects-description">
         <p class="intro-description">
@@ -37,64 +66,83 @@
     </div>
 
     <div class="projects-content">
-      <!-- Projects Grid -->
-      <div class="projects-grid">
-        <!-- Create New Project Card (Admin Only) -->
-        <article class="project-item create-project-card" *ngIf="isAdmin" (click)="createNewProject()">
-          <div class="project-image">
-            <div class="create-project-overlay">
-              <div class="create-project-icon">+</div>
-            </div>
-          </div>
-          <div class="project-content">
-            <h3>Create New Project</h3>
-            <p>Click to add a new project to your portfolio</p>
-            <div class="project-links">
-              <button class="btn-primary">Add Project</button>
-            </div>
-          </div>
-        </article>
+      <!-- Drag and Drop Info (Admin Only) -->
+      <div class="drag-drop-info" *ngIf="isAdmin">
+        <div class="drag-drop-message">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M8 6h8"></path>
+            <path d="M8 12h8"></path>
+            <path d="M8 18h8"></path>
+          </svg>
+          <span>Drag and drop projects to reorder them</span>
+        </div>
+      </div>
 
-        <article class="project-item" *ngFor="let project of completedProjects.slice(0, showMore ? completedProjects.length : 6)">
-          <!-- Clean Admin Actions - Only show when logged in -->
-          <div class="admin-actions" *ngIf="isAdmin">
-            <button class="admin-btn edit-btn" (click)="editProject(project.id)" title="Edit Project">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" />
-                <path d="m15 5 4 4" />
-              </svg>
-            </button>
-            <button class="admin-btn delete-btn" (click)="deleteProject(project.id)" title="Delete Project">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M3 6h18" />
-                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" />
-                <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
-                <line x1="10" x2="10" y1="11" y2="17" />
-                <line x1="14" x2="14" y1="11" y2="17" />
-              </svg>
-            </button>
-          </div>
-          <div class="project-image">
-            <img [src]="project.imageUrl" [alt]="project.name + ' project preview'">
-          </div>
-          <div class="project-content">
-            <h3>{{ project.name }}</h3>
-            <p>{{ project.description }}</p>
-            <div class="project-tech">
-              <span *ngFor="let tech of project.technologies">{{ tech }}</span>
+      <!-- Projects Grid -->
+      <div class="projects-grid" cdkDropList (cdkDropListDropped)="onProjectDrop($event)">
+        <!-- Project Items (including Create New Project if admin) -->
+        <article class="project-item" [class.create-project-card]="card.type === 'create'" [class.draggable]="isAdmin && card.type === 'project'" cdkDrag [cdkDragDisabled]="!isAdmin || card.type === 'create'" *ngFor="let card of visibleCards; trackBy: trackByProjectId">
+          <ng-container *ngIf="card.type === 'project'; else createCard">
+            <!-- Real project -->
+            <!-- Clean Admin Actions - Only show when logged in -->
+            <div class="admin-actions" *ngIf="isAdmin">
+              <button class="admin-btn edit-btn" (click)="editProject(card.project)" title="Edit Project">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" />
+                  <path d="m15 5 4 4" />
+                </svg>
+              </button>
+              <button class="admin-btn delete-btn" (click)="deleteProject(card.project.id)" title="Delete Project">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 6h18"></path>
+                  <path d="M8 6v12a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2V6"></path>
+                  <path d="M19 6l-2-2H7L5 6"></path>
+                </svg>
+              </button>
             </div>
-            <div class="project-links">
-              <a [href]="project.demoUrl || '#'" target="_blank" class="btn-primary">View Demo</a>
-              <a [href]="project.projectUrl || '#'" target="_blank" class="btn-secondary">View Code</a>
+            <!-- Project content -->
+            <div class="project-image">
+              <img [src]="card.project.uploadedImage || card.project.imageUrl" [alt]="card.project.name" />
             </div>
-          </div>
+            <div class="project-content">
+              <h3>{{ card.project.name }}</h3>
+              <p>{{ card.project.description }}</p>
+              <div class="project-tech">
+                <span *ngFor="let tech of card.project.technologies; trackBy: trackByTechnology">{{ tech }}</span>
+              </div>
+              <div class="project-links">
+                <a *ngIf="card.project.demoUrl" [href]="card.project.demoUrl" class="btn-primary" target="_blank">View Demo</a>
+                <a [href]="card.project.projectUrl" class="btn-secondary" target="_blank">View Code</a>
+              </div>
+            </div>
+          </ng-container>
+          <ng-template #createCard>
+            <!-- Create New Project Card -->
+            <div class="project-image">
+              <div class="create-project-overlay">
+                <div class="create-project-icon">+</div>
+              </div>
+            </div>
+            <div class="project-content">
+              <h3>Create New Project</h3>
+              <p>Click to add a new project to your portfolio</p>
+              <div class="project-links">
+                <button class="btn-primary" (click)="createNewProject()">Add Project</button>
+              </div>
+            </div>
+          </ng-template>
         </article>
       </div>
 
       <!-- Show More Button -->
       <div class="show-more-container" *ngIf="shouldShowMoreButton()">
         <button class="show-more-btn" (click)="toggleShowMore()">
-          {{ getShowMoreButtonText() }}
+          <span class="btn-text">{{ getShowMoreButtonText() }}</span>
+          <span class="btn-icon" [class.rotated]="showMore">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6,9 12,15 18,9"></polyline>
+            </svg>
+          </span>
         </button>
       </div>
     </div>

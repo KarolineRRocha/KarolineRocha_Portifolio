@@ -1,0 +1,14 @@
+{
+  "/api/github/*": {
+    "target": "https://api.github.com",
+    "secure": true,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/api/github": ""
+    },
+    "headers": {
+      "User-Agent": "Portfolio-App/1.0",
+      "Accept": "application/vnd.github.v3+json"
+    }
+  }
+}

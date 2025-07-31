@@ -48,7 +48,8 @@ export class AdminLoginComponent implements OnInit, OnDestroy {
     this.successMessage = '';
 
     // Use AuthService for authentication
-    if (this.authService.login(this.credentials)) {
+    const success = this.authService.login(this.credentials.username, this.credentials.password);
+    if (success) {
       setTimeout(() => {
         this.isLoading = false;
         // Close modal immediately after successful login

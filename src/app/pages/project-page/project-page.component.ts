@@ -1,514 +1,727 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subject, Subscription, interval } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-import { ProjectsService, Project, NewProjectData } from '../../core/services/projects.service';
-import { GitHubService } from '../../core/services/github.service';
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { ProjectsService, Project } from '../../core/services/projects.service';
 import { AuthService } from '../../core/services/auth.service';
-import { AdminCommunicationService } from '../../core/services/admin-communication.service';
 import { NotificationService } from '../../services/notification.service';
+import { GitHubSyncService, SyncStatus } from '../../core/services/github-sync.service';
+import { AdminCommunicationService } from '../../core/services/admin-communication.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-project-page',
   templateUrl: './project-page.component.html',
-  styleUrls: ['./project-page.component.scss']
+  styleUrls: ['./project-page.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProjectPageComponent implements OnInit, OnDestroy {
-  showMore = false;
-  showLoginModal = false;
-  showEditModal = false;
-  showAddModal = false;
-  editingProject: Project | null = null;
-
-  // GitHub configuration
-  githubUsername = 'karolinerrocha'; // Change this to your GitHub username
-  githubUser: any = null;
-  syncStatus: any = {};
-  detailedSyncInfo: any = {};
-  isSyncing = false;
-
-  // Project data
+  projects: Project[] = [];
   completedProjects: Project[] = [];
   comingSoonProjects: Project[] = [];
-  hiddenProjects: Project[] = [];
+  displayedProjects: Project[] = [];
+  visibleCards: Array<{ type: 'project', project: Project } | { type: 'create' }> = [];
+  isAdmin = false;
+  showMore = false;
+  syncStatus: SyncStatus | null = null;
 
-  // New project form
-  newProject: NewProjectData = {
-    name: '',
-    description: '',
-    technologies: '',
-    imageUrl: '',
-    demoUrl: '',
-    projectUrl: '',
-    category: 'completed'
-  };
+  // Modal states
+  showLoginModal = false;
+  showAddModal = false;
+  showEditModal = false;
+  editingProject: Project | null = null;
 
-  isAddingProject = false;
-  showProjectStats = false;
-  showGitHubConfig = false;
-  projectStats: any = {};
+  private projectsSubscription: Subscription;
+  private syncStatusSubscription: Subscription;
+  private adminLoginSubscription: Subscription;
+  private authStateSubscription: Subscription;
 
-  private destroy$ = new Subject<void>();
-  private subscriptions = new Subscription();
-  private syncInterval: any;
 
   constructor(
     private projectsService: ProjectsService,
-    private githubService: GitHubService,
     private authService: AuthService,
+    private notificationService: NotificationService,
+    private githubSyncService: GitHubSyncService,
     private adminCommunicationService: AdminCommunicationService,
-    private notificationService: NotificationService
-  ) { }
+    private cdr: ChangeDetectorRef
+  ) {
+    console.log('🚀 ProjectPageComponent constructor called');
+    this.projectsSubscription = this.projectsService.projects$.subscribe(projects => {
+      console.log('📊 Projects updated in component:', projects.length);
+      console.log('📊 All projects:', projects.map(p => ({ id: p.id, name: p.name, category: p.category, order: p.order })));
+
+      // Ensure projects array is never empty unless there are actually no projects
+      if (projects.length === 0) {
+        console.warn('⚠️ Received empty projects array, checking if this is correct');
+      }
+
+      this.projects = projects;
+      this.completedProjects = this.projectsService.getCompletedProjects();
+      console.log('📊 Completed projects:', this.completedProjects.length);
+      console.log('📊 Completed projects:', this.completedProjects.map(p => ({ id: p.id, name: p.name, category: p.category, order: p.order })));
+
+      this.comingSoonProjects = this.projectsService.getComingSoonProjects();
+      console.log('📊 Coming soon projects:', this.comingSoonProjects.length);
+
+      // Debug: Check if there are projects with undefined or null category
+      const projectsWithInvalidCategory = projects.filter(p => !p.category);
+      if (projectsWithInvalidCategory.length > 0) {
+        console.warn('⚠️ Projects with invalid category:', projectsWithInvalidCategory);
+      }
+
+      // Debug: Check all projects and their categories
+      console.log('🔍 All projects with categories:', projects.map(p => ({ name: p.name, category: p.category, id: p.id })));
+
+      this.updateDisplayedProjects();
+      this.updateVisibleCards();
+      this.cdr.detectChanges(); // Trigger change detection manually
+    });
+
+    this.syncStatusSubscription = this.githubSyncService.syncStatus$.subscribe(status => {
+      this.syncStatus = status;
+      this.cdr.detectChanges(); // Trigger change detection manually
+    });
+
+    // Listen for admin login requests from footer
+    this.adminLoginSubscription = this.adminCommunicationService.adminLoginRequested$.subscribe(() => {
+      this.showLoginModal = true;
+      this.cdr.detectChanges(); // Trigger change detection manually
+    });
+
+    this.authStateSubscription = this.authService.authState$.subscribe(
+      (isAuthenticated: boolean) => {
+        console.log('🔐 ProjectPage: Auth state changed to:', isAuthenticated);
+        console.log('🔐 Previous isAdmin value:', this.isAdmin);
+        this.isAdmin = isAuthenticated;
+        console.log('🔐 New isAdmin value:', this.isAdmin);
+        this.updateVisibleCards(); // Update cards when auth state changes
+        console.log('🔐 Updated visibleCards length:', this.visibleCards.length);
+        console.log('🔐 Visible cards:', this.visibleCards.map(card => card.type === 'project' ? card.project.name : 'create'));
+        this.cdr.detectChanges(); // Force change detection immediately
+        console.log('🔐 Change detection triggered');
+      }
+    );
+  }
 
   ngOnInit(): void {
-    // Force reset to ensure correct project order
-    this.forceResetProjectOrder();
+    // Set initial auth state
+    this.isAdmin = this.authService.isAuthenticated();
+    console.log('🚀 ProjectPageComponent ngOnInit');
+    console.log('🚀 isAdmin:', this.isAdmin);
+    console.log('🚀 Initial projects count:', this.projects.length);
+    console.log('🚀 Initial completed projects count:', this.completedProjects.length);
 
-    // Add FreePlayFinder if it doesn't exist (without resetting everything)
-    this.addFreePlayFinderIfMissing();
-
-    // Load initial data
-    this.loadProjects();
-    this.loadProjectStats();
-    this.loadGitHubStatus();
-
-    // Subscribe to authentication changes
-    this.subscriptions.add(
-      this.authService.isAuthenticated$.subscribe(isAuthenticated => {
-        // Authentication state changed
-      })
-    );
-
-    // Subscribe to admin login requests from footer
-    this.subscriptions.add(
-      this.adminCommunicationService.adminLoginRequested$.subscribe(() => {
-        this.showLogin();
-      })
-    );
-
-    // Clean up any existing duplicates on initialization
-    this.cleanupExistingDuplicates();
-
-    // NO INITIAL GITHUB SYNC - Disabled to preserve manual changes
-    // this.checkGitHubForChanges();
-
-    // Set up automatic hourly syncing
-    this.setupAutomaticSync();
+    // Não iniciar sincronização automática automaticamente
+    // Será iniciada apenas quando admin fizer login
   }
 
-  // Force reset project order to ensure correct sequence
-  private forceResetProjectOrder(): void {
-    const projects = this.projectsService.getProjects();
-
-    // Define the correct order for existing projects
-    const correctOrder = [
-      { id: 'cesaebookspace', order: 1 },
-      { id: 'freeplayfinder', order: 2 },
-      { id: 'ecofab', order: 3 },
-      { id: 'upload', order: 4 },
-      { id: 'jogo-quatro-em-linha', order: 5 },
-      { id: 'they-develop-and-cook', order: 6 }
-    ];
-
-    let hasChanges = false;
-
-    // Only update order for existing projects if they have wrong order
-    correctOrder.forEach(({ id, order }) => {
-      const project = projects.find(p => p.id === id);
-      if (project && project.order !== order) {
-        this.projectsService.updateProject(id, { order });
-        hasChanges = true;
-      }
-    });
-
-    // Only log if there were actual changes
-    if (hasChanges) {
-      console.log('Project order updated to ensure correct sequence');
+  ngOnDestroy(): void {
+    if (this.projectsSubscription) {
+      this.projectsSubscription.unsubscribe();
     }
-  }
-
-  // Add FreePlayFinder if it doesn't exist, without resetting other projects
-  private addFreePlayFinderIfMissing(): void {
-    const projects = this.projectsService.getProjects();
-    const freePlayFinderExists = projects.some(p => p.id === 'freeplayfinder');
-
-    if (!freePlayFinderExists) {
-      // Use the new selective update method
-      const projectData = {
-        id: 'freeplayfinder',
-        name: 'FreePlayFinder',
-        description: 'A gaming discovery platform that helps users find free-to-play games across multiple platforms. Features advanced filtering, user reviews, and personalized recommendations.',
-        technologies: ['Angular', 'TypeScript', 'Node.js'],
-        imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-original.svg',
-        demoUrl: 'https://karolinerrocha.github.io/mundo-dos-jogos/',
-        projectUrl: 'https://karolinerrocha.github.io/mundo-dos-jogos/',
-        category: 'completed' as const,
-        featured: true,
-        order: 2
-      };
-
-      const wasAdded = this.projectsService.ensureProjectExists(projectData);
-
-      if (wasAdded) {
-        console.log('FreePlayFinder project added successfully');
-      }
-    } else {
-      // Project exists, just ensure it has the correct order and demo URL
-      const freePlayFinder = projects.find(p => p.id === 'freeplayfinder');
-      if (freePlayFinder) {
-        const updates: any = {};
-
-        if (freePlayFinder.order !== 2) {
-          updates.order = 2;
-        }
-
-        if (freePlayFinder.demoUrl === '#' || freePlayFinder.projectUrl === '#') {
-          updates.demoUrl = 'https://karolinerrocha.github.io/mundoDosJogos/';
-          updates.projectUrl = 'https://karolinerrocha.github.io/mundoDosJogos/';
-        }
-
-        if (Object.keys(updates).length > 0) {
-          this.projectsService.updateProjectAttributes('freeplayfinder', updates);
-          console.log('FreePlayFinder updated with correct order and demo URL');
-        }
-      }
+    if (this.syncStatusSubscription) {
+      this.syncStatusSubscription.unsubscribe();
+    }
+    if (this.adminLoginSubscription) {
+      this.adminLoginSubscription.unsubscribe();
+    }
+    if (this.authStateSubscription) {
+      this.authStateSubscription.unsubscribe();
     }
 
-    // Fix any other projects with incorrect demo URLs
-    this.updateOnlyChangedAttributes();
+
+    // Parar sincronização automática
+    this.githubSyncService.stopAutoSync();
   }
 
-  // Update only specific attributes that are wrong or have changed in GitHub
-  // This preserves all other data including images, descriptions, etc.
-  private updateOnlyChangedAttributes(): void {
-    const result = this.projectsService.updateOnlyChangedAttributes();
-    if (result.updated > 0) {
-      console.log(`Updated ${result.updated} projects with correct GitHub information`);
-      console.log(`Preserved ${result.preserved} projects unchanged`);
-      this.loadProjects(); // Reload to show updated data
+
+
+  /**
+   * TrackBy function for project cards to optimize rendering
+   */
+  trackByProjectId(index: number, item: { type: 'project', project: Project } | { type: 'create' }): string {
+    if (item.type === 'project') {
+      return item.project.id;
     }
+    return 'create-card';
   }
 
-  // Clean up existing duplicates on component initialization
-  private cleanupExistingDuplicates(): void {
-    const result = this.projectsService.cleanupDuplicateProjects();
-    if (result.removed > 0 || result.reordered > 0) {
-      this.loadProjects(); // Reload projects after cleanup
-    }
+  /**
+   * TrackBy function for project technologies
+   */
+  trackByTechnology(index: number, tech: string): string {
+    return tech;
   }
 
-  loadProjects(): void {
-    const allCompletedProjects = this.projectsService.getCompletedProjects();
-
-    if (this.isAdmin) {
-      // When admin is logged in, show 5 projects + Create New card = 6 total cards
-      // Hide the rest as hidden projects
-      this.completedProjects = allCompletedProjects.slice(0, 5);
-      this.hiddenProjects = allCompletedProjects.slice(5);
-    } else {
-      // When not admin, show 6 projects
-      this.completedProjects = allCompletedProjects.slice(0, 6);
-      this.hiddenProjects = allCompletedProjects.slice(6);
+  /**
+   * Handles drag and drop reordering of projects
+   */
+  onProjectDrop(event: CdkDragDrop<Array<{ type: 'project', project: Project } | { type: 'create' }>>): void {
+    if (!this.isAdmin) {
+      return; // Only admins can reorder
     }
 
-    this.comingSoonProjects = this.projectsService.getComingSoonProjects();
+    console.log('🔄 Project drop event:', event);
+    console.log('🔄 Previous index:', event.previousIndex);
+    console.log('🔄 Current index:', event.currentIndex);
 
-    // Debug: Log current project data to see demo URLs
-    console.log('🔍 Current project data:');
-    this.completedProjects.forEach(project => {
-      console.log(`Project: ${project.name}`);
-      console.log(`  Demo URL: ${project.demoUrl}`);
-      console.log(`  Project URL: ${project.projectUrl}`);
-    });
-  }
-
-  loadProjectStats(): void {
-    const projects = this.projectsService.getProjects();
-    this.projectStats = {
-      total: projects.length,
-      completed: projects.filter(p => p.category === 'completed').length,
-      comingSoon: projects.filter(p => p.category === 'coming-soon').length,
-      hidden: this.hiddenProjects.length,
-      featured: projects.filter(p => p.featured).length
-    };
-  }
-
-  loadGitHubStatus(): void {
-    // Only try to load GitHub info if we have a valid username
-    if (!this.githubUsername || this.githubUsername.trim() === '') {
+    // Don't allow dropping the create card
+    if (event.previousIndex === 0 && this.visibleCards[0].type === 'create') {
+      console.log('⚠️ Cannot move create card');
+      this.notificationService.warning('Cannot move the create project card');
       return;
     }
 
-    this.githubService.getUserInfo(this.githubUsername).subscribe({
-      next: (user) => {
-        this.githubUser = user;
-      },
-      error: (error) => {
-        // Don't show error notification for GitHub API issues
-        // This is expected behavior when offline or rate limited
-        console.warn('GitHub user info not available:', error.message);
-        this.githubUser = null;
-      }
-    });
+    // Don't allow dropping on the create card
+    if (event.currentIndex === 0 && this.visibleCards[0].type === 'create') {
+      console.log('⚠️ Cannot drop on create card');
+      this.notificationService.warning('Cannot drop projects on the create card');
+      return;
+    }
 
-    // Get sync status (this might be a property, not an observable)
-    this.syncStatus = this.githubService.getSyncStatus();
+    // Check if the position actually changed
+    if (event.previousIndex === event.currentIndex) {
+      console.log('🔄 No position change detected');
+      return;
+    }
+
+    console.log('🔄 Moving project from position', event.previousIndex, 'to', event.currentIndex);
+
+    // Move the item in the array
+    moveItemInArray(this.visibleCards, event.previousIndex, event.currentIndex);
+
+    // Force change detection to update the UI immediately
+    this.cdr.markForCheck();
+
+    // Update the order in Firebase for all projects
+    this.updateProjectOrder();
   }
 
-  showLogin(): void {
-    this.showLoginModal = true;
-  }
-
-  hideLogin(): void {
-    this.showLoginModal = false;
-  }
-
-  onLoginSuccess(): void {
-    this.hideLogin();
-  }
-
-  onLoginCancel(): void {
-    this.hideLogin();
-  }
-
-  logout(): void {
-    this.authService.logout();
-    this.notificationService.success('Logged out successfully');
-  }
-
-  autoSyncGitHub(): void {
-    // DISABLED - No sync to prevent any unwanted updates to project data
-    this.notificationService.warning('GitHub sync is disabled to preserve your manual changes. Your projects are safe and unchanged.');
-    console.log('🚫 GitHub sync disabled to preserve manual changes');
-  }
-
-  saveNewProject(projectData: NewProjectData): void {
-    this.isAddingProject = true;
+  /**
+   * Updates the order of projects in Firebase
+   */
+  private async updateProjectOrder(): Promise<void> {
+    if (!this.isAdmin) {
+      return;
+    }
 
     try {
-      const newProject = this.projectsService.addProject(projectData);
-      if (newProject) {
-        this.notificationService.success(`Project "${newProject.name}" created successfully!`);
-        this.loadProjects();
-        this.loadProjectStats();
-      } else {
-        this.notificationService.error('Error creating project. Please try again.');
-      }
-    } catch (error) {
-      this.notificationService.error('Error creating project. Please try again.');
-    } finally {
-      this.showAddModal = false;
-      this.isAddingProject = false;
-    }
-  }
+      console.log('🔄 Updating project order...');
 
-  deleteProject(projectId: string): void {
-    this.notificationService.confirmDelete(
-      'this project',
-      () => {
-        try {
-          const success = this.projectsService.deleteProject(projectId);
-          if (success) {
-            this.notificationService.success('Project deleted successfully!');
-            this.loadProjects();
-            this.loadProjectStats();
-          } else {
-            this.notificationService.error('Error deleting project. Please try again.');
-          }
-        } catch (error) {
-          this.notificationService.error('Error deleting project. Please try again.');
+      // Get only the project cards (exclude create card)
+      const projectCards = this.visibleCards.filter(card => card.type === 'project');
+
+      console.log('🔄 Project cards to update:', projectCards.map(card =>
+        card.type === 'project' ? `${card.project.name} (ID: ${card.project.id})` : 'unknown'
+      ));
+
+      // Update order for each project
+      const updatePromises = projectCards.map((card, index) => {
+        if (card.type === 'project') {
+          const newOrder = index;
+          console.log(`🔄 Updating ${card.project.name} to order ${newOrder}`);
+          return this.projectsService.updateProject(card.project.id, { order: newOrder });
         }
-      }
-    );
-  }
+        return Promise.resolve();
+      });
 
-  updateProject(projectId: string, updates: Partial<Project>): void {
-    try {
-      const updatedProject = this.projectsService.updateProject(projectId, updates);
-      if (updatedProject) {
-        this.loadProjects();
-        this.loadProjectStats();
-      } else {
-        this.notificationService.error('Error updating project. Please try again.');
-      }
+      await Promise.all(updatePromises);
+
+      console.log('✅ Project order updated successfully');
+      this.notificationService.success(`Project order updated successfully! ${projectCards.length} projects reordered.`);
+
+      // The Firebase service will automatically update the projects through the observable
+      // No need to manually refresh as the subscription will handle it
+
     } catch (error) {
-      this.notificationService.error('Error updating project. Please try again.');
+      console.error('❌ Error updating project order:', error);
+      this.notificationService.error('Failed to update project order. Please try again.');
+
+      // Revert the visual change if the update failed
+      this.updateVisibleCards();
     }
   }
 
-  toggleProjectFeatured(projectId: string): void {
-    const projects = this.projectsService.getProjects();
-    const project = projects.find(p => p.id === projectId);
-    if (project) {
-      this.updateProject(projectId, { featured: !project.featured });
-      // Removed success notification - no longer showing featured status message
-    }
-  }
-
-  cleanupProjects(): void {
-    const result = this.projectsService.cleanupDuplicateProjects();
-
-    if (result.removed > 0 || result.reordered > 0) {
-      let message = `Cleanup completed! Removed: ${result.removed}, Reordered: ${result.reordered}`;
-
-      this.notificationService.success(message);
-    } else {
-      this.notificationService.success('No duplicates found! All projects are already properly organized.');
-    }
-
-    this.loadProjects();
-    this.loadProjectStats();
-  }
-
-  listAllProjects(): void {
-    const projects = this.projectsService.getProjects();
-    const message = `Total projects: ${projects.length}\n` +
-      `Completed: ${projects.filter(p => p.category === 'completed').length}\n` +
-      `Coming Soon: ${projects.filter(p => p.category === 'coming-soon').length}\n` +
-      `Featured: ${projects.filter(p => p.featured).length}`;
-
-    this.notificationService.info(message);
-  }
-
-  // Debug method to reset projects to default state
-  resetToDefaultProjects(): void {
-    if (confirm('This will reset all projects to their default state. Are you sure?')) {
-      this.projectsService.resetToDefaultProjects();
-      this.loadProjects();
-      this.notificationService.success('Projects reset to default state');
-    }
-  }
-
-  // Authentication methods
-  get isAdmin(): boolean {
-    return this.authService.isAuthenticated();
-  }
-
-  // UI methods
-  toggleShowMore(): void {
-    this.showMore = !this.showMore;
-
-    const allCompletedProjects = this.projectsService.getCompletedProjects();
+  /**
+   * Updates the displayed projects based on showMore state
+   */
+  private updateDisplayedProjects(): void {
+    // Excludes the create project card from count
+    const realProjects = this.completedProjects || [];
+    console.log('🔄 updateDisplayedProjects called with:', realProjects.length, 'projects');
 
     if (this.showMore) {
-      // Show all projects
-      this.completedProjects = allCompletedProjects;
-      this.hiddenProjects = [];
+      this.displayedProjects = realProjects;
     } else {
-      // Show limited projects based on admin status
+      this.displayedProjects = realProjects.slice(0, 6);
+    }
+
+    console.log('🔄 Displayed projects updated:', this.displayedProjects.length);
+
+    // Update visible cards
+    this.updateVisibleCards();
+  }
+
+  /**
+   * Toggles between showing more or fewer projects
+   */
+  toggleShowMore(): void {
+    this.showMore = !this.showMore;
+    this.updateDisplayedProjects();
+    this.updateVisibleCards();
+  }
+
+  /**
+   * Updates visible cards based on projects and current state
+   */
+  private updateVisibleCards(): void {
+    const cards: Array<{ type: 'project', project: Project } | { type: 'create' }> = [];
+
+    // Ensure completedProjects is always an array
+    const safeCompletedProjects = this.completedProjects || [];
+
+    console.log('🔍 updateVisibleCards called:');
+    console.log('🔍 isAdmin:', this.isAdmin);
+    console.log('🔍 showMore:', this.showMore);
+    console.log('🔍 completedProjects.length:', safeCompletedProjects.length);
+
+    if (this.showMore) {
+      // If "show more" is active, show all projects + create card if admin
       if (this.isAdmin) {
-        // When admin is logged in, show 5 projects + Create New card = 6 total cards
-        this.completedProjects = allCompletedProjects.slice(0, 5);
-        this.hiddenProjects = allCompletedProjects.slice(5);
+        cards.push({ type: 'create' }); // Card de criar sempre primeiro
+        cards.push(...safeCompletedProjects.map(project => ({ type: 'project' as const, project })));
       } else {
-        // When not admin, show 6 projects
-        this.completedProjects = allCompletedProjects.slice(0, 6);
-        this.hiddenProjects = allCompletedProjects.slice(6);
+        cards.push(...safeCompletedProjects.map(project => ({ type: 'project' as const, project })));
       }
+    } else {
+      // Se "show more" não está ativo, mostrar exatamente 6 cards
+      if (this.isAdmin) {
+        // Admin: 1 create card + up to 5 projects = 6 total cards
+        cards.push({ type: 'create' }); // Card de criar sempre primeiro
+        const projectsToShow = safeCompletedProjects.slice(0, 5);
+        console.log('🔍 Admin mode - projectsToShow:', projectsToShow.length);
+        cards.push(...projectsToShow.map(project => ({ type: 'project' as const, project })));
+      } else {
+        // Not admin: up to 6 projects
+        const projectsToShow = safeCompletedProjects.slice(0, 6);
+        console.log('🔍 Non-admin mode - projectsToShow:', projectsToShow.length);
+        cards.push(...projectsToShow.map(project => ({ type: 'project' as const, project })));
+      }
+    }
+
+    console.log('🔍 Cards to display:', cards.length);
+    console.log('🔍 Cards:', cards.map(card => card.type === 'project' ? card.project.name : 'create'));
+
+    this.visibleCards = cards;
+  }
+
+  /**
+   * Verifica se deve mostrar o botão "mostrar mais"
+   */
+  shouldShowMoreButton(): boolean {
+    // Só mostrar o botão se houver mais de 6 cards possíveis
+    if (this.isAdmin) {
+      // Admin: 5 projects + 1 create card = 6 cards
+      // If there are more than 5 projects, show button
+      return this.completedProjects.length > 5;
+    } else {
+      // Not admin: 6 projects
+      // If there are more than 6 projects, show button
+      return this.completedProjects.length > 6;
     }
   }
 
+  /**
+   * Gets the "show more" button text
+   */
   getShowMoreButtonText(): string {
     return this.showMore ? 'Show Less' : 'Show More Projects';
   }
 
-  shouldShowMoreButton(): boolean {
-    // Get all completed projects (not just the displayed ones)
-    const allCompletedProjects = this.projectsService.getCompletedProjects();
-    // Show button if there are more than 6 completed projects total
-    // OR if admin is logged in and we have 6+ projects (since Create New card makes it 7+ total)
-    return allCompletedProjects.length > 6 || (this.isAdmin && allCompletedProjects.length >= 6);
+  /**
+   * Mostra modal de login
+   */
+  showLogin(): void {
+    this.showLoginModal = true;
   }
 
-  // Project management methods
+  /**
+   * Esconde modal de login
+   */
+  hideLogin(): void {
+    this.showLoginModal = false;
+  }
+
+  /**
+   * Callback quando login é bem-sucedido
+   */
+  onLoginSuccess(): void {
+    // isAdmin will be automatically updated via auth state subscription
+    this.showLoginModal = false;
+    this.githubSyncService.startAutoSync();
+    this.notificationService.success('Login successful! Welcome back!');
+    this.cdr.detectChanges(); // Force update after login
+
+    // Mostrar status atual da sincronização
+    const currentStatus = this.githubSyncService.getCurrentStatus();
+    if (currentStatus.isFirstSync) {
+      this.notificationService.info('First sync will add all GitHub projects to the database');
+    } else {
+      this.notificationService.info('Subsequent syncs will only update changed attributes');
+    }
+  }
+
+  /**
+   * Callback quando login é cancelado
+   */
+  onLoginCancel(): void {
+    this.showLoginModal = false;
+  }
+
+  /**
+   * Shows project creation modal
+   */
   createNewProject(): void {
     this.showAddModal = true;
   }
 
+  /**
+   * Hides project creation modal
+   */
   cancelAddProject(): void {
     this.showAddModal = false;
   }
 
-  editProject(projectId: string): void {
-    const project = this.projectsService.getProjects().find(p => p.id === projectId);
-    if (!project) {
-      this.notificationService.error('Project not found!');
-      return;
-    }
-
-    this.editingProject = project;
+  /**
+   * Shows project edit modal
+   */
+  editProject(project: Project): void {
+    this.editingProject = { ...project };
     this.showEditModal = true;
   }
 
-  saveProjectEdit(updatedData: Partial<Project>): void {
-    if (!this.editingProject) return;
-
-    try {
-      const updatedProject = this.projectsService.updateProject(this.editingProject.id, updatedData);
-      if (updatedProject) {
-        this.loadProjects();
-        this.loadProjectStats();
-      } else {
-        this.notificationService.error('Error updating project. Please try again.');
-      }
-    } catch (error) {
-      this.notificationService.error('Error updating project. Please try again.');
-    } finally {
-      this.showEditModal = false;
-      this.editingProject = null;
-    }
-  }
-
+  /**
+   * Hides project edit modal
+   */
   cancelProjectEdit(): void {
+    console.log('🔧 Canceling project edit, closing modal');
     this.showEditModal = false;
     this.editingProject = null;
+    this.cdr.markForCheck(); // Force change detection to update the view
   }
 
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-    this.subscriptions.unsubscribe();
-    clearInterval(this.syncInterval); // Clear the interval on component destruction
-  }
+  async saveNewProject(projectData: any): Promise<void> {
+    console.log('🚀 saveNewProject called with data:', projectData);
+    console.log('🚀 Is admin:', this.isAdmin);
 
-  // Set up automatic syncing every hour
-  private setupAutomaticSync(): void {
-    // COMPLETELY DISABLED - No automatic sync to prevent any unwanted updates
-    // Only manual sync will be available when explicitly requested
-    console.log('🕐 Automatic GitHub sync COMPLETELY DISABLED - No automatic updates');
-  }
+    if (!this.isAdmin) {
+      console.error('❌ User is not authenticated as admin');
+      this.notificationService.error('You must be logged in as admin to create projects');
+      return;
+    }
 
-  // Check GitHub repositories in real-time to see if project attributes have changed
-  private async checkGitHubForChanges(): Promise<void> {
+    // Validate that we have at least a name
+    if (!projectData.name || projectData.name.trim() === '') {
+      console.error('❌ Project name is required');
+      this.notificationService.error('Project name is required');
+      return;
+    }
+
     try {
-      this.isSyncing = true;
-      console.log('Checking GitHub for project changes...');
-      const result = await this.projectsService.checkGitHubForChanges();
+      console.log('🚀 Calling projectsService.addProject...');
+      const newProject = await this.projectsService.addProject(projectData);
+      console.log('🚀 addProject result:', newProject);
 
-      if (result.rateLimited) {
-        console.log('⚠️ GitHub API rate limit exceeded. Will retry on next sync.');
-        return;
-      }
-
-      if (result.updated > 0) {
-        console.log(`✅ Updated ${result.updated} projects with changes from GitHub`);
-        console.log(`✅ Preserved ${result.preserved} projects unchanged`);
-        if (result.errors > 0) {
-          console.log(`⚠️ ${result.errors} projects had errors during GitHub check`);
-        }
-        // DO NOT call loadProjects() - this would refresh everything
-        // Only the specific attributes were updated, no need to reload
-        this.notificationService.success(`Updated ${result.updated} projects from GitHub`);
+      if (newProject !== null) {
+        console.log('🚀 Project created successfully:', newProject.name);
+        this.notificationService.success(`Project "${newProject.name}" created successfully!`);
+        this.showAddModal = false;
+        this.cdr.markForCheck(); // Force change detection to update the view
       } else {
-        console.log(`✅ All projects are up to date with GitHub (${result.preserved} checked)`);
-        if (result.errors > 0) {
-          console.log(`⚠️ ${result.errors} projects had errors during GitHub check`);
+        console.error('❌ addProject returned null');
+        this.notificationService.error('Failed to create project - null result');
+      }
+    } catch (error: any) {
+      console.error('❌ Error creating project:', error);
+      console.error('❌ Error details:', {
+        message: error?.message,
+        code: error?.code,
+        stack: error?.stack
+      });
+
+      // Provide more specific error messages based on error code
+      if (error?.code === 'permission-denied') {
+        this.notificationService.error('Permission denied. Please check your authentication.');
+      } else if (error?.code === 'unavailable') {
+        this.notificationService.error('Firebase service is unavailable. Please try again later.');
+      } else if (error?.code === 'invalid-argument') {
+        this.notificationService.error('Invalid project data. Please check all fields.');
+      } else {
+        this.notificationService.error(`Failed to create project: ${error?.message || 'Unknown error'}`);
+      }
+    }
+  }
+
+  async deleteProject(id: string): Promise<void> {
+    const project = this.projects.find(p => p.id === id);
+    if (!project) return;
+
+    const confirmed = confirm(`Are you sure you want to delete the project "${project.name}"? This action cannot be undone.`);
+
+    if (confirmed) {
+      try {
+        const success = await this.projectsService.deleteProject(id);
+        if (success) {
+          this.notificationService.success('Project deleted successfully!');
+        } else {
+          this.notificationService.error('Failed to delete project');
         }
+      } catch (error) {
+        console.error('Error deleting project:', error);
+        this.notificationService.error('Failed to delete project');
+      }
+    }
+  }
+
+  async updateProject(id: string, updates: Partial<Project>): Promise<void> {
+    try {
+      const updatedProject = await this.projectsService.updateProject(id, updates);
+      if (updatedProject !== null) {
+        this.notificationService.success(`Project "${updatedProject.name}" updated successfully!`);
+      } else {
+        this.notificationService.error('Failed to update project');
       }
     } catch (error) {
-      console.error('Error checking GitHub for changes:', error);
-    } finally {
-      this.isSyncing = false;
+      console.error('Error updating project:', error);
+      this.notificationService.error('Failed to update project');
     }
+  }
+
+  async toggleProjectFeatured(id: string): Promise<void> {
+    try {
+      const success = await this.projectsService.toggleFeatured(id);
+      if (success) {
+        this.notificationService.success('Project featured status updated!');
+      } else {
+        this.notificationService.error('Failed to update featured status');
+      }
+    } catch (error) {
+      console.error('Error toggling featured status:', error);
+      this.notificationService.error('Failed to update featured status');
+    }
+  }
+
+  async saveProjectEdit(updatedData: Partial<Project>): Promise<void> {
+    console.log('🔧 saveProjectEdit called with:', updatedData);
+    console.log('🔧 editingProject:', this.editingProject);
+
+    if (!this.editingProject?.id) {
+      console.error('❌ No project selected for editing');
+      this.notificationService.error('No project selected for editing');
+      return;
+    }
+
+    // Store current projects count for verification
+    const currentProjectsCount = this.completedProjects.length;
+    console.log('🔧 Current projects count before update:', currentProjectsCount);
+
+    try {
+      console.log('🔧 Updating project with ID:', this.editingProject.id);
+      const updatedProject = await this.projectsService.updateProject(this.editingProject.id, updatedData);
+      console.log('🔧 Update result:', updatedProject);
+
+      if (updatedProject !== null) {
+        // Wait a bit for Firebase to update and trigger the subscription
+        await new Promise(resolve => setTimeout(resolve, 500));
+
+        // Verify that projects are still available
+        const newProjectsCount = this.completedProjects.length;
+        console.log('🔧 Projects count after update:', newProjectsCount);
+
+        if (newProjectsCount === 0 && currentProjectsCount > 0) {
+          console.warn('⚠️ Projects disappeared after update, triggering manual refresh');
+          // Force a manual refresh by triggering change detection
+          this.cdr.markForCheck();
+        }
+
+        this.notificationService.success(`Project "${updatedProject.name}" updated successfully!`);
+        console.log('🔧 Closing modal after successful update');
+        this.showEditModal = false;
+        this.editingProject = null;
+        this.cdr.markForCheck(); // Force change detection to update the view
+      } else {
+        console.error('❌ Update returned null');
+        this.notificationService.error('Failed to update project');
+        // Close modal even on error
+        this.showEditModal = false;
+        this.editingProject = null;
+        this.cdr.markForCheck(); // Force change detection to update the view
+      }
+    } catch (error) {
+      console.error('❌ Error updating project:', error);
+      this.notificationService.error('Failed to update project');
+      // Close modal even on error
+      this.showEditModal = false;
+      this.editingProject = null;
+      this.cdr.markForCheck(); // Force change detection to update the view
+    }
+  }
+
+
+
+  /**
+ * Sincronização manual com GitHub
+ * Sempre verifica se há atualizações no GitHub
+ */
+  async manualGitHubSync(): Promise<void> {
+    console.log('🔄 Manual GitHub sync requested - always checking for updates');
+    try {
+      // Use manual full sync that always checks for updates
+      const status = await this.githubSyncService.manualFullSync().toPromise();
+      console.log('🔄 Manual sync completed:', status);
+
+      if (status) {
+        const message = status.newRepos > 0
+          ? `Sync completed: ${status.newRepos} new repositories added`
+          : 'Sync completed: No new repositories found';
+        this.notificationService.success(message);
+      }
+    } catch (error) {
+      console.error('Manual sync error:', error);
+      this.notificationService.error('Manual sync failed: ' + error);
+    }
+  }
+
+  /**
+   * Reset sync data (useful for testing)
+   */
+  resetSyncData(): void {
+    this.githubSyncService.clearSyncData();
+    this.notificationService.info('Sync data reset. Next sync will be treated as first sync.');
+  }
+
+  /**
+   * Force first sync mode
+   */
+  forceFirstSync(): void {
+    this.githubSyncService.forceFirstSync();
+    this.notificationService.info('Force sync mode activated. Next sync will re-sync all projects from GitHub.');
+  }
+
+  /**
+   * Test sync functionality
+   */
+  async testSync(): Promise<void> {
+    console.log('🧪 Test sync started');
+    try {
+      // Test direct sync without rate limit check
+      console.log('🧪 Testing direct sync...');
+      const status = await this.githubSyncService.syncWithGitHub().toPromise();
+      console.log('🧪 Test sync completed:', status);
+      if (status) {
+        const message = status.newRepos > 0
+          ? `Test sync completed: ${status.newRepos} new repositories added`
+          : 'Test sync completed: No new repositories found';
+        this.notificationService.success(message);
+      } else {
+        this.notificationService.warning('Test sync completed but no status returned');
+      }
+    } catch (error) {
+      console.error('🧪 Test sync failed:', error);
+      this.notificationService.error('Test sync failed: ' + error);
+    }
+  }
+
+  /**
+   * Test Firebase connection
+   */
+  async testFirebaseConnection(): Promise<void> {
+    try {
+      console.log('🧪 Testing Firebase connection...');
+      const result = await this.projectsService.testFirebaseConnection();
+      console.log('🧪 Firebase connection test result:', result);
+      if (result) {
+        this.notificationService.success('Firebase connection test successful');
+      } else {
+        this.notificationService.error('Firebase connection test failed');
+      }
+    } catch (error: any) {
+      console.error('Error testing Firebase connection:', error);
+      this.notificationService.error('Firebase connection test failed');
+    }
+  }
+
+  /**
+ * Test creating a minimal project
+ */
+  async testCreateMinimalProject(): Promise<void> {
+    try {
+      console.log('🧪 Testing minimal project creation...');
+      const testData = {
+        name: 'Test Project',
+        description: 'Test description',
+        technologies: ['Test'],
+        imageUrl: '',
+        demoUrl: '',
+        projectUrl: '',
+        category: 'completed' as const
+      };
+
+      console.log('🧪 Test data:', testData);
+      const result = await this.projectsService.addProject(testData);
+      console.log('🧪 Minimal project created:', result);
+      this.notificationService.success('Minimal project created successfully');
+    } catch (error: any) {
+      console.error('Error creating minimal project:', error);
+      this.notificationService.error(`Minimal project creation failed: ${error?.message}`);
+    }
+  }
+
+  /**
+   * Test method for drag and drop functionality
+   */
+  testDragAndDrop(): void {
+    console.log('🧪 Testing drag and drop functionality...');
+    console.log('🧪 Current visible cards:', this.visibleCards.length);
+    console.log('🧪 Cards:', this.visibleCards.map(card =>
+      card.type === 'project' ? card.project.name : 'create'
+    ));
+    console.log('🧪 isAdmin:', this.isAdmin);
+    console.log('🧪 completedProjects:', this.completedProjects.length);
+
+    this.notificationService.info(`Drag and drop test: ${this.visibleCards.length} cards available, ${this.completedProjects.length} projects loaded`);
+  }
+
+  /**
+   * Formata data para exibição
+   */
+  formatDate(date: Date | null): string {
+    if (!date) return 'Never';
+    return new Date(date).toLocaleString();
+  }
+
+  /**
+   * Verifica se está sincronizando
+   */
+  get isSyncing(): boolean {
+    return this.syncStatus?.isSyncing || false;
+  }
+
+  /**
+   * Obtém status da sincronização
+   */
+  get syncStatusText(): string {
+    if (!this.syncStatus) return 'No sync data';
+
+    if (this.syncStatus.isSyncing) return 'Syncing with GitHub...';
+    if (this.syncStatus.error) return `Error: ${this.syncStatus.error}`;
+
+    const syncType = this.syncStatus.isFirstSync ? 'First sync' : 'Check for new repos';
+    const lastSync = this.formatDate(this.syncStatus.lastSync);
+    const reposInfo = `Repos: ${this.syncStatus.totalRepos}`;
+    const stats = this.syncStatus.newRepos > 0
+      ? ` | New: ${this.syncStatus.newRepos}`
+      : '';
+
+    return `${syncType} | Last: ${lastSync} | ${reposInfo}${stats}`;
   }
 }
 

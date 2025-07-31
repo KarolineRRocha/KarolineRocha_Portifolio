@@ -6,22 +6,22 @@
   </div>
 
   <div class="nav-links">
-    <a routerLink="about" (click)="closeMobileMenu()">
+    <a routerLink="about" (click)="closeMobileMenu()" [class.active]="isActiveRoute('about')">
       <span class="code">&lt;</span>
-      about
+      about me
       <span class="code">&#47;&gt;</span>
     </a>
-    <a routerLink="technologies" (click)="closeMobileMenu()">
+    <a routerLink="technologies" (click)="closeMobileMenu()" [class.active]="isActiveRoute('technologies')">
       <span class="code">&lt;</span>
       technologies
       <span class="code">&#47;&gt;</span>
     </a>
-    <a routerLink="projects" (click)="closeMobileMenu()">
+    <a routerLink="projects" (click)="closeMobileMenu()" [class.active]="isActiveRoute('projects')">
       <span class="code">&lt;</span>
       projects
       <span class="code">&#47;&gt;</span>
     </a>
-    <a routerLink="contact" (click)="closeMobileMenu()">
+    <a routerLink="contact" (click)="closeMobileMenu()" [class.active]="isActiveRoute('contact')">
       <span class="code">&lt;</span>
       contact
       <span class="code">&#47;&gt;</span>

@@ -1,55 +1,84 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ProjectsService, Project } from '../../core/services/projects.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-latest-projects',
   templateUrl: './latest-projects.component.html',
   styleUrls: ['./latest-projects.component.scss']
 })
-export class LatestProjectsComponent implements OnInit {
+export class LatestProjectsComponent implements OnInit, OnDestroy {
   allProjects: Project[] = [];
   displayedProjects: Project[] = [];
-  showAllProjects = false;
-  maxInitialProjects = 6;
+  maxProjects = 3; // Always show only 3 projects
+  private projectsSubscription!: Subscription;
 
   constructor(private projectsService: ProjectsService) { }
 
   ngOnInit() {
     console.log('LatestProjectsComponent initialized');
     this.loadProjects();
+
+    // Subscribe to projects changes for automatic updates
+    this.projectsSubscription = this.projectsService.projects$.subscribe(projects => {
+      console.log('Projects updated, reloading latest projects');
+      this.loadProjects();
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.projectsSubscription) {
+      this.projectsSubscription.unsubscribe();
+    }
   }
 
   loadProjects() {
-    // Get featured projects from the service
-    this.allProjects = this.projectsService.getFeaturedProjects();
+    // Get all projects and sort by creation date (newest first)
+    let projects = this.projectsService.getProjects();
+
+    // Sort by creation date (newest first)
+    projects.sort((a, b) => {
+      const dateA = new Date(a.createdAt).getTime();
+      const dateB = new Date(b.createdAt).getTime();
+      return dateB - dateA; // Newest first
+    });
+
+    this.allProjects = projects;
     console.log('Loaded projects from service:', this.allProjects.map(p => p.name));
     console.log('Total projects:', this.allProjects.length);
     this.updateDisplayedProjects();
   }
 
   updateDisplayedProjects() {
-    this.displayedProjects = this.showAllProjects
-      ? this.allProjects
-      : this.allProjects.slice(0, this.maxInitialProjects);
-
-    console.log('Displayed projects:', this.displayedProjects.map(p => p.name));
-    console.log('Show more button should appear:', this.showMoreButton);
-  }
-
-  toggleShowMore() {
-    this.showAllProjects = !this.showAllProjects;
-    this.updateDisplayedProjects();
-  }
-
-  get showMoreButton() {
-    return this.allProjects.length > this.maxInitialProjects;
-  }
-
-  get buttonText() {
-    return this.showAllProjects ? 'Show Less' : 'Show More';
+    // Always show only the 3 most recent projects
+    this.displayedProjects = this.allProjects.slice(0, this.maxProjects);
+    console.log('Displayed projects (3 most recent):', this.displayedProjects.map(p => p.name));
   }
 
   get projects() {
     return this.displayedProjects;
+  }
+
+  // Timeline circle hover control methods
+  onProjectImageHover(projectIndex: number, isHovering: boolean) {
+    const timelineNode = document.querySelector(`.timeline-project:nth-child(${projectIndex + 1}) .node-circle`) as HTMLElement;
+    if (timelineNode) {
+      if (isHovering) {
+        timelineNode.classList.add('timeline-circle-hover');
+      } else {
+        timelineNode.classList.remove('timeline-circle-hover');
+      }
+    }
+  }
+
+  onProjectCardHover(projectIndex: number, isHovering: boolean) {
+    const timelineNode = document.querySelector(`.timeline-project:nth-child(${projectIndex + 1}) .node-circle`) as HTMLElement;
+    if (timelineNode) {
+      if (isHovering) {
+        timelineNode.classList.add('timeline-circle-hover');
+      } else {
+        timelineNode.classList.remove('timeline-circle-hover');
+      }
+    }
   }
 }

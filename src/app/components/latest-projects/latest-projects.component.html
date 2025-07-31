@@ -7,7 +7,7 @@
     </p>
   </div>
 
-  <div class="timeline-container">
+  <div class="timeline-container" *ngIf="projects.length > 0">
     <div class="timeline-line"></div>
 
     <div class="timeline-projects">
@@ -15,23 +15,20 @@
 
         <div class="timeline-node">
           <div class="node-circle">
-            <span class="node-icon">💻</span>
+            <div class="node-dot"></div>
           </div>
         </div>
 
-        <div class="project-timeline-card">
-          <div class="project-image">
-            <img [src]="project.imageUrl" [alt]="project.name + ' preview'">
-            <div class="project-overlay">
-              <div class="overlay-icon">💻</div>
-              <div class="overlay-text">View Project</div>
-            </div>
+        <div class="project-image-container">
+          <div class="project-icon-circle">
+            <img [src]="project.imageUrl" [alt]="project.name + ' preview'" (mouseenter)="onProjectImageHover(i, true)" (mouseleave)="onProjectImageHover(i, false)">
           </div>
+        </div>
 
-          <div class="project-content">
+        <div class="project-text-container">
+          <div class="project-text-card" (mouseenter)="onProjectCardHover(i, true)" (mouseleave)="onProjectCardHover(i, false)">
             <div class="project-header">
               <h3 class="project-title">{{ project.name }}</h3>
-              <div class="project-badge">{{ project.category }}</div>
             </div>
 
             <p class="project-description">{{ project.description }}</p>
@@ -54,14 +51,9 @@
     </div>
   </div>
 
-  <!-- Show More Button -->
-  <div class="show-more-container" *ngIf="showMoreButton">
-    <button class="show-more-btn" (click)="toggleShowMore()">
-      <span class="btn-text">{{ buttonText }}</span>
-      <svg class="btn-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M6 9l6 6 6-6" *ngIf="!showAllProjects"></path>
-        <path d="M18 15l-6-6-6 6" *ngIf="showAllProjects"></path>
-      </svg>
-    </button>
+  <!-- No projects message -->
+  <div *ngIf="projects.length === 0" style="text-align: center; padding: 40px; color: #666;">
+    <h3>No projects available</h3>
+    <p>Projects will appear here once they are added to the portfolio.</p>
   </div>
 </section>

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 import { ProjectPageComponent } from './project-page.component';
 import { AdminLoginComponent } from '../../components/admin-login/admin-login.component';
@@ -24,7 +25,8 @@ import { SharedModule } from '../../shared/shared.module';
     RouterModule,
     FormsModule,
     HttpClientModule,
-    SharedModule
+    SharedModule,
+    DragDropModule
   ],
   exports: [
     ProjectPageComponent,

@@ -1,113 +1,83 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { environment } from '../../../environments/environment';
-
-export interface AdminCredentials {
-  username: string;
-  password: string;
-}
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private readonly ADMIN_KEY = 'portfolio_admin_authenticated';
-  private readonly CREDENTIALS_KEY = 'portfolio_admin_credentials';
-  private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
-  public isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
+  private readonly AUTH_KEY = 'portfolio_admin_authenticated';
+  private authStateSubject = new BehaviorSubject<boolean>(false);
+  public authState$ = this.authStateSubject.asObservable();
 
   constructor() {
-    this.checkAuthenticationStatus();
+    // Initialize auth state on service creation
+    this.authStateSubject.next(this.isAuthenticated());
   }
 
-  checkAuthenticationStatus(): boolean {
-    const isAuth = localStorage.getItem(this.ADMIN_KEY) === 'true';
-    this.isAuthenticatedSubject.next(isAuth);
-    return isAuth;
-  }
+  login(username: string, password: string): boolean {
+    // Simple admin authentication
+    if (username === 'emaildakarolineribeiro@gmail.com' && password === '!Kzd.0342!') {
+      const authData = {
+        isAuthenticated: true,
+        username: 'admin',
+        lastLogin: new Date()
+      };
+      localStorage.setItem(this.AUTH_KEY, JSON.stringify(authData));
 
-  // Login with credentials
-  login(credentials: AdminCredentials): boolean {
-    // Get credentials from environment
-    const validCredentials = this.getValidCredentials();
-
-    if (credentials.username === validCredentials.username &&
-      credentials.password === validCredentials.password) {
-
-      // Store authentication status
-      localStorage.setItem(this.ADMIN_KEY, 'true');
-      localStorage.setItem(this.CREDENTIALS_KEY, JSON.stringify(credentials));
-
-      // Update authentication state
-      this.isAuthenticatedSubject.next(true);
-
-      // Scroll to top after successful login
-      this.scrollToTop();
+      // Emit auth state change
+      this.authStateSubject.next(true);
+      console.log('🔐 AuthService: Login successful, auth state updated to true');
 
       return true;
     }
-
     return false;
   }
 
   logout(): void {
-    localStorage.removeItem(this.ADMIN_KEY);
-    localStorage.removeItem(this.CREDENTIALS_KEY);
-    this.isAuthenticatedSubject.next(false);
+    console.log('🔐 AuthService logout called');
+    console.log('🔐 Removing auth key from localStorage:', this.AUTH_KEY);
 
-    // Scroll to top after logout
-    this.scrollToTop();
+    localStorage.removeItem(this.AUTH_KEY);
+
+    // Verify removal
+    const remainingAuth = localStorage.getItem(this.AUTH_KEY);
+    console.log('🔐 Auth data after removal:', remainingAuth);
+
+    // Emit auth state change
+    this.authStateSubject.next(false);
+    console.log('🔐 AuthService: Logout completed, auth state updated to false');
   }
 
   isAuthenticated(): boolean {
-    return this.checkAuthenticationStatus();
+    const authData = localStorage.getItem(this.AUTH_KEY);
+    console.log('🔐 AuthService isAuthenticated called');
+    console.log('🔐 Auth data from localStorage:', authData);
+
+    if (authData) {
+      try {
+        const parsed = JSON.parse(authData);
+        const isAuth = parsed.isAuthenticated === true;
+        console.log('🔐 Parsed auth data:', parsed);
+        console.log('🔐 Is authenticated:', isAuth);
+        return isAuth;
+      } catch (error) {
+        console.error('🔐 Error parsing auth data:', error);
+        return false;
+      }
+    }
+    console.log('🔐 No auth data found, returning false');
+    return false;
   }
 
-  // Get stored credentials (for display purposes)
-  getStoredCredentials(): AdminCredentials | null {
-    const stored = localStorage.getItem(this.CREDENTIALS_KEY);
-    return stored ? JSON.parse(stored) : null;
-  }
-
-  // Change admin password
-  changePassword(newPassword: string): boolean {
-    const currentCredentials = this.getStoredCredentials();
-    if (!currentCredentials) return false;
-
-    const newCredentials = {
-      username: currentCredentials.username,
-      password: newPassword
-    };
-
-    localStorage.setItem(this.CREDENTIALS_KEY, JSON.stringify(newCredentials));
-    return true;
-  }
-
-  // Reset to default credentials
-  resetToDefault(): void {
-    const defaultCredentials = this.getValidCredentials();
-    localStorage.setItem(this.CREDENTIALS_KEY, JSON.stringify(defaultCredentials));
-  }
-
-  getAuthStatus(): boolean {
-    return this.isAuthenticatedSubject.value;
-  }
-
-  // Private method to scroll to top of the page
-  private scrollToTop(): void {
-    // Smooth scroll to top
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: 'smooth'
-    });
-  }
-
-  // Private method to get valid credentials from environment
-  private getValidCredentials(): AdminCredentials {
-    return {
-      username: environment.admin.defaultUsername,
-      password: environment.admin.defaultPassword
-    };
+  getCurrentUser(): any {
+    const authData = localStorage.getItem(this.AUTH_KEY);
+    if (authData) {
+      try {
+        return JSON.parse(authData);
+      } catch (error) {
+        return null;
+      }
+    }
+    return null;
   }
 }

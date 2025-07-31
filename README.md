@@ -1,4 +1,4 @@
-# 🚀 Karoline Rocha - Frontend Developer Portfolio
+# Karoline Rocha - Frontend Developer Portfolio
 
 <div align="center">
 
@@ -11,46 +11,46 @@
 [![Responsive](https://img.shields.io/badge/Responsive-Design-4CAF50?style=for-the-badge&logo=responsive)](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Responsive_Design)
 [![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Live%20Demo-222222?style=for-the-badge&logo=github)](https://karolinerrocha.github.io/karoline-rocha-portifolio/)
 
-[🌐 **Live Demo**](https://karolinerrocha.github.io/karoline-rocha-portifolio/) • [📧 **Contact**](mailto:emaildakarolineribeiro@gmail.com) • [💼 **LinkedIn**](https://www.linkedin.com/in/karoline-rrocha/)
+[Live Demo](https://karolinerrocha.github.io/karoline-rocha-portifolio/) • [Contact](mailto:emaildakarolineribeiro@gmail.com) • [LinkedIn](https://www.linkedin.com/in/karoline-rrocha/)
 
 </div>
 
 ---
 
-## 📋 Table of Contents
+## Table of Contents
 
-- [✨ Overview](#-overview)
-- [🎯 Features](#-features)
-- [🛠️ Tech Stack](#️-tech-stack)
-- [🚀 Getting Started](#-getting-started)
-- [🏗️ Architecture](#️-architecture)
-- [🎨 Design System](#-design-system)
-- [📱 Responsive Design](#-responsive-design)
-- [🔧 Configuration](#-configuration)
-- [🚀 Deployment](#-deployment)
-- [🤝 Contributing](#-contributing)
-- [📞 Contact](#-contact)
+- [Overview](#overview)
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Getting Started](#getting-started)
+- [Architecture](#architecture)
+- [Design System](#design-system)
+- [Responsive Design](#responsive-design)
+- [Configuration](#configuration)
+- [Deployment](#deployment)
+- [Contributing](#contributing)
+- [Contact](#contact)
 
 ---
 
-## ✨ Overview
+## Overview
 
 A **modern, responsive portfolio website** built with **Angular 16** and **TypeScript**, showcasing my expertise in frontend development through elegant design, smooth animations, and interactive user experiences.
 
-### 🎯 **What Makes This Portfolio Special**
+### What Makes This Portfolio Special
 
-- **🎨 Modern Aesthetics** - Clean, professional design with smooth animations
-- **📱 Mobile-First Approach** - Optimized for all devices and screen sizes
-- **⚡ Performance Optimized** - Fast loading times and smooth interactions
-- **🔧 Admin Management** - Secure project management system
-- **📧 Seamless Communication** - Integrated contact forms with EmailJS
-- **🎭 Enhanced UX** - Custom notifications and intuitive navigation
+- **Modern Aesthetics** - Clean, professional design with smooth animations
+- **Mobile-First Approach** - Optimized for all devices and screen sizes
+- **Performance Optimized** - Fast loading times and smooth interactions
+- **Admin Management** - Secure project management system
+- **Seamless Communication** - Integrated contact forms with EmailJS
+- **Enhanced UX** - Custom notifications and intuitive navigation
 
 ---
 
-## 🎯 Features
+## Features
 
-### 🎨 **Design & User Experience**
+### Design & User Experience
 | Feature | Description |
 |---------|-------------|
 | **Floating Elements** | Animated code brackets for visual appeal |
@@ -59,7 +59,7 @@ A **modern, responsive portfolio website** built with **Angular 16** and **TypeS
 | **Modern Typography** | Clean, readable font hierarchy |
 | **Professional Color Scheme** | Purple/blue gradient theme |
 
-### 📱 **Responsive Design**
+### Responsive Design
 | Device | Features |
 |--------|----------|
 | **Mobile** | Touch-optimized, compact layout |
@@ -67,7 +67,7 @@ A **modern, responsive portfolio website** built with **Angular 16** and **TypeS
 | **Desktop** | Enhanced features, larger interactions |
 | **Large Screens** | Full-width layouts, advanced animations |
 
-### 🔧 **Technical Excellence**
+### Technical Excellence
 | Aspect | Implementation |
 |--------|---------------|
 | **Component Architecture** | Modular, reusable Angular components |
@@ -76,7 +76,7 @@ A **modern, responsive portfolio website** built with **Angular 16** and **TypeS
 | **Route Protection** | Secure admin routes with guards |
 | **Performance** | Lazy loading and optimization |
 
-### 👨‍💼 **Admin Features**
+### Admin Features
 | Capability | Details |
 |------------|---------|
 | **Secure Authentication** | Environment-based credentials |
@@ -86,38 +86,38 @@ A **modern, responsive portfolio website** built with **Angular 16** and **TypeS
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
-### **Frontend Framework**
+### Frontend Framework
 - **[Angular 16](https://angular.io/)** - Modern web framework
 - **[TypeScript](https://www.typescriptlang.org/)** - Type-safe JavaScript
 - **[SCSS](https://sass-lang.com/)** - Advanced CSS preprocessing
 
-### **Styling & Design**
+### Styling & Design
 - **CSS Grid & Flexbox** - Modern layout techniques
 - **CSS Animations** - Smooth transitions and effects
 - **Responsive Design** - Mobile-first approach
 - **Custom Design System** - Consistent UI components
 
-### **Development Tools**
+### Development Tools
 - **[Angular CLI](https://cli.angular.io/)** - Development and build tools
 - **[Git](https://git-scm.com/)** - Version control
 - **[GitHub Pages](https://pages.github.com/)** - Hosting and deployment
 
-### **External Services**
+### External Services
 - **[EmailJS](https://www.emailjs.com/)** - Contact form integration
 - **[GitHub API](https://developer.github.com/v3/)** - Project data sync
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
-### **Prerequisites**
+### Prerequisites
 - Node.js (v16 or higher)
 - npm or yarn package manager
 - Git
 
-### **Installation**
+### Installation
 
 1. **Clone the repository**
    ```bash
@@ -140,16 +140,16 @@ A **modern, responsive portfolio website** built with **Angular 16** and **TypeS
    Navigate to http://localhost:4200
    ```
 
-### **Build for Production**
+### Build for Production
 ```bash
 ng build --configuration production
 ```
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
-### **Project Structure**
+### Project Structure
 ```
 src/
 ├── app/
@@ -164,7 +164,7 @@ src/
 └── styles/                 # Global styles and variables
 ```
 
-### **Component Architecture**
+### Component Architecture
 - **Smart Components** - Handle business logic and state
 - **Presentational Components** - Focus on UI rendering
 - **Service Layer** - Centralized data management
@@ -172,9 +172,9 @@ src/
 
 ---
 
-## 🎨 Design System
+## Design System
 
-### **Color Palette**
+### Color Palette
 ```scss
 // Primary Colors
 --color-primary: #00d4ff;      // Bright cyan
@@ -187,7 +187,7 @@ src/
 --gradient-light: linear-gradient(135deg, #f8f9fa, #e9ecef);
 ```
 
-### **Typography**
+### Typography
 ```scss
 // Font Families
 --font-family-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -202,7 +202,7 @@ src/
 --font-size-2xl: 1.5rem;      // 24px
 ```
 
-### **Spacing System**
+### Spacing System
 ```scss
 --spacing-xs: 0.25rem;        // 4px
 --spacing-sm: 0.5rem;         // 8px
@@ -215,9 +215,9 @@ src/
 
 ---
 
-## 📱 Responsive Design
+## Responsive Design
 
-### **Breakpoints**
+### Breakpoints
 ```scss
 // Mobile First Approach
 $mobile: 480px;
@@ -227,7 +227,7 @@ $large: 1200px;
 $xl: 1440px;
 ```
 
-### **Responsive Features**
+### Responsive Features
 - **Mobile-First Design** - Optimized for small screens
 - **Flexible Grid System** - Adapts to different screen sizes
 - **Touch-Friendly Interactions** - Optimized for mobile devices
@@ -235,9 +235,9 @@ $xl: 1440px;
 
 ---
 
-## 🔧 Configuration
+## Configuration
 
-### **Environment Setup**
+### Environment Setup
 Create environment files for different deployment stages:
 
 ```typescript
@@ -256,7 +256,7 @@ export const environment = {
 };
 ```
 
-### **Admin Configuration**
+### Admin Configuration
 Set up admin credentials in environment files:
 ```typescript
 admin: {
@@ -267,9 +267,9 @@ admin: {
 
 ---
 
-## 🚀 Deployment
+## Deployment
 
-### **GitHub Pages Deployment**
+### GitHub Pages Deployment
 1. **Build the project**
    ```bash
    ng build --configuration production
@@ -280,25 +280,25 @@ admin: {
    ng deploy --base-href=https://yourusername.github.io/your-repo/
    ```
 
-### **Custom Domain Setup**
+### Custom Domain Setup
 1. Add custom domain in repository settings
 2. Configure DNS records
 3. Update base href in build configuration
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
-### **Development Guidelines**
+### Development Guidelines
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
 3. Commit your changes (`git commit -m 'Add amazing feature'`)
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-### **Code Style**
+### Code Style
 - Follow Angular style guide
 - Use TypeScript strict mode
 - Write meaningful commit messages
@@ -306,7 +306,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ---
 
-## 📞 Contact
+## Contact
 
 <div align="center">
 
@@ -317,7 +317,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Karoline%20Rocha-0077B5?style=for-the-badge&logo=linkedin)](https://www.linkedin.com/in/karoline-rrocha/)
 [![GitHub](https://img.shields.io/badge/GitHub-KarolineRRocha-181717?style=for-the-badge&logo=github)](https://github.com/KarolineRRocha)
 
-**Let's connect and build something amazing together! 🚀**
+**Let's connect and build something amazing together!**
 
 </div>
 
@@ -325,7 +325,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 <div align="center">
 
-**Made with ❤️ by Karoline Rocha**
+**Made with love by Karoline Rocha**
 
 [![Angular](https://img.shields.io/badge/Angular-16.1.0-DD0031?style=flat-square&logo=angular)](https://angular.io/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-4.9.5-3178C6?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
