@@ -106,7 +106,17 @@
             </div>
             <div class="project-content">
               <h3>{{ card.project.name }}</h3>
-              <p>{{ card.project.description }}</p>
+
+              <div class="project-description">
+                <p *ngIf="card.project.description && card.project.description.trim().length > 0; else noDescription">
+                  {{ card.project.description }}
+                </p>
+
+                <ng-template #noDescription>
+                  <p>No description available for this project yet.</p>
+                </ng-template>
+              </div>
+
               <div class="project-tech">
                 <span *ngFor="let tech of card.project.technologies; trackBy: trackByTechnology">{{ tech }}</span>
               </div>

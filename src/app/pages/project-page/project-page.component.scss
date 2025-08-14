@@ -501,20 +501,13 @@
 
 .project-tech span {
   background: var(--color-light);
-  color: var(--color-primary);
+  color: var(--color-secondary);
   padding: var(--spacing-xs) var(--spacing-sm);
-  border-radius: 20px;
+  border-radius: 10px;
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-semibold);
-  border: 1px solid rgba(0, 212, 255, 0.3);
+  border: 1.5px solid rgba(138, 43, 226, 0.3);
   transition: none;
-}
-
-.project-tech span:hover {
-  background: var(--color-light);
-  color: var(--color-primary);
-  transform: none;
-  box-shadow: none;
 }
 
 .project-links {
