@@ -1691,12 +1691,29 @@
     max-width: 45%;
   }
 
+  .title-line {
+    font-size: var(--font-size-4xl);
+  }
+
+  .description-text {
+    font-size: var(--font-size-md);
+    margin-bottom: var(--spacing-xl);
+  }
+
+  .tech-tag {
+    padding: var(--spacing-sm) var(--spacing-sm);
+  }
+
   .hero-visual {
     max-width: 45%;
   }
 
   .tech-tags {
     justify-content: flex-start;
+  }
+
+  .social-links {
+    gap: var(--spacing-xl);
   }
 
   .code-window {
