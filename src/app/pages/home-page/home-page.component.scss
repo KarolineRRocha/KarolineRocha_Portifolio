@@ -12,6 +12,7 @@
 
 .hero-section {
   min-height: 100vh;
+  max-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -101,7 +102,6 @@
   margin: 0 auto;
   padding: var(--spacing-lg) var(--spacing-md);
   flex: 1;
-  min-height: 100%;
 }
 
 /* Hero Text Section - Mobile First */
@@ -626,6 +626,38 @@
   display: none;
 }
 
+/* Override any timeline line shadows on mobile */
+@media (max-width: 767px) {
+
+  .timeline-container::before,
+  .timeline-line {
+    box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    -moz-box-shadow: none !important;
+    filter: none !important;
+  }
+}
+
+/* Mobile Timeline Line - Only for Mobile */
+.timeline-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  background: linear-gradient(180deg, #3b82f6, #8b5cf6);
+  border-radius: 2px;
+  z-index: 1;
+  box-shadow: none !important;
+  filter: none !important;
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+}
+
+
+
 /* Timeline Projects - Mobile First */
 .timeline-projects {
   position: relative;
@@ -1123,6 +1155,10 @@
     width: 50px;
   }
 
+  .timeline-node {
+    display: none;
+  }
+
   .project-icon-circle {
     width: 100px;
     height: 100px;
@@ -1184,9 +1220,13 @@
     width: 80px;
   }
 
+  .timeline-node {
+    display: none;
+  }
+
   .project-icon-circle {
-    width: 140px;
-    height: 140px;
+    width: 110px;
+    height: 110px;
   }
 
   .project-title {
@@ -1244,6 +1284,15 @@
     max-width: 500px;
   }
 
+  .window-content {
+    padding: var(--spacing-lg);
+    font-size: var(--font-size-sm);
+  }
+
+  .code-line {
+    gap: var(--spacing-md);
+  }
+
   .social-links {
     gap: var(--spacing-xl);
   }
@@ -1275,11 +1324,16 @@
     width: 100px;
   }
 
-  /* Timeline Layout for Tablet */
+  /* Hide Mobile Wavy Line on Tablet and Up */
+  .timeline-container::before {
+    display: none;
+  }
+
+  /* Timeline Layout for Tablet - Left Line Layout */
   .timeline-line {
     display: block;
     position: absolute;
-    left: 50%;
+    left: 35%;
     top: 0;
     bottom: 0;
     width: 3px;
@@ -1289,6 +1343,10 @@
     box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
     border-radius: 2px;
     animation: timelineGlow 4s ease-in-out infinite;
+  }
+
+  .timeline-container[_ngcontent-ng-c542651242] {
+    max-width: 100%;
   }
 
   @keyframes timelineGlow {
@@ -1316,38 +1374,42 @@
 
   .timeline-node {
     position: absolute;
-    left: 50%;
+    left: 34%;
     top: 50%;
     transform: translate(-50%, -50%);
     margin-bottom: 0;
     width: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .node-circle {
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
   }
 
   .node-dot {
-    width: 10px;
-    height: 10px;
+    width: 15px;
+    height: 15px;
   }
 
   .project-image-container {
     width: 30%;
-    max-width: 200px;
-    right: -120px;
-    justify-content: flex-end;
+    max-width: 150px;
+    left: 0;
+    justify-content: flex-start;
     order: 1;
+    margin-right: var(--spacing-xl);
   }
 
   .project-image-container::after {
     display: block;
     content: '';
     position: absolute;
-    right: -150px;
+    left: 110px;
     top: 50%;
-    width: 150px;
+    width: 60px;
     height: 4px;
     background: linear-gradient(90deg, #3b82f6, transparent);
     transform: translateY(-50%);
@@ -1356,19 +1418,20 @@
   }
 
   .project-icon-circle {
-    width: 150px;
-    height: 150px;
+    width: 110px;
+    height: 110px;
   }
 
   .project-text-container {
     width: 60%;
     max-width: 500px;
     text-align: left;
-    order: 3;
+    order: 2;
+    margin-left: var(--spacing-xl);
   }
 
   .project-text-card {
-    height: 320px;
+    height: 260px;
   }
 
   .project-header {
@@ -1381,7 +1444,11 @@
 
   .project-description {
     text-align: left;
-    height: 50px;
+    min-height: 20px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
   }
 
   .project-tech {
@@ -1394,49 +1461,6 @@
 
   .project-links {
     justify-content: flex-start;
-  }
-
-  /* Even projects layout */
-  .timeline-project:nth-child(even) .project-image-container {
-    order: 3;
-    right: auto;
-    left: -120px;
-    justify-content: flex-start;
-  }
-
-  .timeline-project:nth-child(even) .project-image-container::after {
-    right: auto;
-    left: -150px;
-    background: linear-gradient(90deg, transparent, #3b82f6);
-  }
-
-  .timeline-project:nth-child(even) .project-text-container {
-    order: 1;
-    text-align: right;
-  }
-
-  .timeline-project:nth-child(even) .project-header {
-    justify-content: flex-end;
-  }
-
-  .timeline-project:nth-child(even) .project-title {
-    text-align: right;
-  }
-
-  .timeline-project:nth-child(even) .project-description {
-    text-align: right;
-  }
-
-  .timeline-project:nth-child(even) .project-tech {
-    justify-content: flex-end;
-  }
-
-  .timeline-project:nth-child(even) .project-footer {
-    justify-content: flex-end;
-  }
-
-  .timeline-project:nth-child(even) .project-links {
-    justify-content: flex-end;
   }
 }
 
@@ -1564,30 +1588,175 @@
     margin-top: 0;
   }
 
+  /* Timeline Layout for Desktop - Centered */
+  .timeline-line {
+    display: block;
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(180deg, #3b82f6, #8b5cf6);
+    transform: translateX(-50%);
+    z-index: 1;
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+    border-radius: 2px;
+    animation: timelineGlow 4s ease-in-out infinite;
+  }
+
   .timeline-container {
-    max-width: 1000px;
+    max-width: 1200px;
   }
 
   .timeline-project {
-    max-width: 900px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    text-align: left;
+    gap: var(--spacing-3xl);
+    background: none;
+    border: none;
+    backdrop-filter: none;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    min-height: 350px;
+  }
+
+  .timeline-node {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    margin-bottom: 0;
+    width: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .node-circle {
+    width: 60px;
+    height: 60px;
+  }
+
+  .node-dot {
+    width: 14px;
+    height: 14px;
   }
 
   .project-image-container {
-    width: 30%;
-    max-width: 200px;
+    width: 35%;
+    max-width: 250px;
+    left: 110px;
+    justify-content: flex-end;
+    order: 1;
+  }
+
+  .project-image-container::after {
+    display: block;
+    content: '';
+    position: absolute;
+    left: 200px;
+    top: 50%;
+    width: 110px;
+    height: 4px;
+    background: linear-gradient(90deg, #3b82f6, transparent);
+    transform: translateY(-50%);
+    z-index: 1;
+    border-radius: 2px;
+  }
+
+  .project-icon-circle {
+    width: 160px;
+    height: 160px;
   }
 
   .project-text-container {
-    width: 60%;
-    max-width: 500px;
+    width: 55%;
+    max-width: 600px;
+    text-align: left;
+    order: 3;
+  }
+
+  .project-text-card {
+    height: 300px;
+    padding: var(--spacing-xl);
+  }
+
+  .project-header {
+    justify-content: flex-start;
   }
 
   .project-title {
     font-size: var(--font-size-2xl);
+    text-align: left;
   }
 
   .project-description {
+    text-align: left;
+    min-height: 60px;
     font-size: var(--font-size-base);
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+  }
+
+  .project-tech {
+    justify-content: flex-start;
+  }
+
+  .project-footer {
+    justify-content: flex-start;
+  }
+
+  .project-links {
+    justify-content: flex-start;
+  }
+
+  /* Even projects layout - Same style but mirrored */
+  .timeline-project:nth-child(even) .project-image-container {
+    order: 3;
+    right: auto;
+    left: -80px;
+    justify-content: flex-start;
+  }
+
+  .timeline-project:nth-child(even) .project-image-container::after {
+    right: auto;
+    left: -110px;
+    background: linear-gradient(90deg, transparent, #3b82f6);
+  }
+
+  .timeline-project:nth-child(even) .project-text-container {
+    order: 1;
+    text-align: right;
+    margin-left: 0;
+  }
+
+  .timeline-project:nth-child(even) .project-header {
+    justify-content: flex-end;
+  }
+
+  .timeline-project:nth-child(even) .project-title {
+    text-align: right;
+  }
+
+  .timeline-project:nth-child(even) .project-description {
+    text-align: right;
+  }
+
+  .timeline-project:nth-child(even) .project-tech {
+    justify-content: flex-end;
+  }
+
+  .timeline-project:nth-child(even) .project-footer {
+    justify-content: flex-end;
+  }
+
+  .timeline-project:nth-child(even) .project-links {
+    justify-content: flex-end;
   }
 }
 
@@ -1598,11 +1767,16 @@
   }
 
   .hero-content {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    text-align: left;
     gap: var(--spacing-2xl);
     width: 92%;
   }
 
   .hero-text {
+    text-align: left;
     max-width: 45%;
   }
 
@@ -1645,12 +1819,36 @@
     height: 24px;
   }
 
+  /* Timeline Layout for Landscape - Centered */
+  .timeline-line {
+    display: block;
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(180deg, #3b82f6, #8b5cf6);
+    transform: translateX(-50%);
+    z-index: 1;
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+    border-radius: 2px;
+    animation: timelineGlow 4s ease-in-out infinite;
+  }
+
   .timeline-container {
     max-width: 900px;
   }
 
   .timeline-project {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    text-align: left;
+    gap: var(--spacing-2xl);
     max-width: 800px;
+    background: none;
+    border: none;
+    backdrop-filter: none;
   }
 
   .project-image-container {
@@ -1747,7 +1945,7 @@
   }
 
   .timeline-project {
-    max-width: 900px;
+    max-width: 100%;
   }
 
   .project-image-container {

@@ -35,7 +35,7 @@
   z-index: 2;
   max-width: var(--container-max-width);
   margin: 0 auto;
-  padding: 0 var(--spacing-lg);
+  padding: 0;
 }
 
 .footer-main {
@@ -107,7 +107,11 @@
 .contact-info {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-md);
+  gap: var(--spacing-sm);
+}
+
+.contact-info h4 {
+  margin-bottom: var(--spacing-lg);
 }
 
 .contact-item {
@@ -146,6 +150,7 @@
 .footer-nav ul {
   list-style: none;
   margin: 0;
+  margin-top: -0.6rem;
   padding: 0;
   display: flex;
   flex-direction: column;
@@ -159,7 +164,6 @@
   font-family: var(--font-family-sans);
   transition: all var(--transition-normal);
   position: relative;
-  padding-left: var(--spacing-sm);
   outline: none !important;
   border: none;
 }
@@ -266,7 +270,7 @@
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-xs);
+  gap: var(--spacing-sm);
 }
 
 .skill-list li,
@@ -275,7 +279,7 @@
   color: var(--color-gray);
   font-family: var(--font-family-sans);
   position: relative;
-  padding-left: var(--spacing-sm);
+  padding-left: var(--spacing-md);
 }
 
 .skill-list li::before,
@@ -285,6 +289,10 @@
   left: 0;
   color: var(--color-primary);
   font-weight: var(--font-weight-bold);
+}
+
+.skill-category h5 {
+  margin-bottom: var(--spacing-md);
 }
 
 .services h5 {
@@ -584,12 +592,75 @@
     padding: var(--spacing-sm) var(--spacing-md);
   }
 
-  .footer-bottom {
-    padding: var(--spacing-md) 0;
+  .footer-logo {
+    margin-top: var(--spacing-md);
   }
 
   .copyright p,
   .footer-links .footer-link {
     font-size: 0.7rem;
+  }
+
+  .contact-info {
+    gap: var(--spacing-xs);
+    margin-top: var(--spacing-sm);
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .footer-section h4 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    position: relative;
+    margin-top: var(--spacing-sm);
+  }
+
+  /* Remove o traço original do desktop */
+  .footer-section h4::after {
+    content: none;
+    width: auto;
+    height: auto;
+    background: none;
+    box-shadow: none;
+    position: static;
+  }
+
+  /* Adiciona traços laterais */
+  .footer-section h4::before,
+  .footer-section h4::after {
+    content: '';
+    display: inline-block;
+    /* necessário para aparecer corretamente */
+    width: 40px;
+    /* largura do traço */
+    height: 2px;
+    /* altura do traço */
+    background: var(--gradient-neon);
+    box-shadow: var(--shadow-glow);
+  }
+
+  .footer-nav {
+    margin-top: -0.6rem;
+  }
+
+  .footer-nav ul {
+    gap: var(--spacing-xs);
+  }
+
+  .skill-list {
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .skill-list li::before,
+  .service-list li::before {
+    content: '';
+  }
+
+  .footer-bottom {
+    padding: var(--spacing-md) 0;
+    margin-top: var(--spacing-lg);
   }
 }
