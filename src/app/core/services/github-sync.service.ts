@@ -68,7 +68,7 @@ export class GitHubSyncService {
   // Para criar: https://github.com/settings/tokens
   // Scopes necessários: public_repo
   // Exemplo: private readonly GITHUB_TOKEN = 'ghp_1234567890abcdef1234567890abcdef12345678';
-  private readonly GITHUB_TOKEN = ''; // ← Token removido - funcionando sem autenticação
+  private readonly GITHUB_TOKEN: string = ''; // ← Token removido - funcionando sem autenticação
 
   constructor(
     private http: HttpClient,
@@ -461,12 +461,11 @@ export class GitHubSyncService {
     console.log('🔍 Fetching GitHub repos from:', url);
 
     const headers: any = {
-      'User-Agent': 'Portfolio-App/1.0',
       'Accept': 'application/vnd.github.v3+json'
     };
 
-    // Adicionar token de autenticação se disponível
-    if (this.GITHUB_TOKEN) {
+    // Adicionar token de autenticação apenas se disponível e não vazio
+    if (this.GITHUB_TOKEN && this.GITHUB_TOKEN.trim() !== '') {
       headers['Authorization'] = `token ${this.GITHUB_TOKEN}`;
       console.log('🔑 Using GitHub token for authentication');
     } else {
