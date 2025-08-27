@@ -1,17 +1,17 @@
-import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { ProjectsService, Project } from '../../core/services/projects.service';
 import { AuthService } from '../../core/services/auth.service';
 import { NotificationService } from '../../services/notification.service';
 import { GitHubSyncService, SyncStatus } from '../../core/services/github-sync.service';
 import { AdminCommunicationService } from '../../core/services/admin-communication.service';
+import { FirebaseStorageService } from '../../core/services/firebase-storage.service';
 import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-project-page',
   templateUrl: './project-page.component.html',
-  styleUrls: ['./project-page.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./project-page.component.scss']
 })
 export class ProjectPageComponent implements OnInit, OnDestroy {
   projects: Project[] = [];
@@ -41,7 +41,7 @@ export class ProjectPageComponent implements OnInit, OnDestroy {
     private notificationService: NotificationService,
     private githubSyncService: GitHubSyncService,
     private adminCommunicationService: AdminCommunicationService,
-    private cdr: ChangeDetectorRef
+    private firebaseService: FirebaseStorageService
   ) {
     console.log('🚀 ProjectPageComponent constructor called');
     this.projectsSubscription = this.projectsService.projects$.subscribe(projects => {
@@ -72,12 +72,10 @@ export class ProjectPageComponent implements OnInit, OnDestroy {
 
       this.updateDisplayedProjects();
       this.updateVisibleCards();
-      this.cdr.detectChanges(); // Trigger change detection manually
     });
 
     this.syncStatusSubscription = this.githubSyncService.syncStatus$.subscribe(status => {
       this.syncStatus = status;
-      this.cdr.detectChanges(); // Trigger change detection manually
     });
 
 
@@ -91,8 +89,6 @@ export class ProjectPageComponent implements OnInit, OnDestroy {
         this.updateVisibleCards(); // Update cards when auth state changes
         console.log('🔐 Updated visibleCards length:', this.visibleCards.length);
         console.log('🔐 Visible cards:', this.visibleCards.map(card => card.type === 'project' ? card.project.name : 'create'));
-        this.cdr.detectChanges(); // Force change detection immediately
-        console.log('🔐 Change detection triggered');
       }
     );
   }
@@ -139,10 +135,10 @@ export class ProjectPageComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * TrackBy function for project technologies
+   * TrackBy function for project languages
    */
-  trackByTechnology(index: number, tech: string): string {
-    return tech;
+  trackByLanguage(index: number, lang: string): string {
+    return lang;
   }
 
   /**
@@ -182,11 +178,54 @@ export class ProjectPageComponent implements OnInit, OnDestroy {
     // Move the item in the array
     moveItemInArray(this.visibleCards, event.previousIndex, event.currentIndex);
 
-    // Force change detection to update the UI immediately
-    this.cdr.markForCheck();
-
     // Update the order in Firebase for all projects
     this.updateProjectOrder();
+  }
+
+  /**
+   * Reorders projects after deletion to fill the gap
+   */
+  private async reorderProjectsAfterDeletion(deletedOrder: number): Promise<void> {
+    if (!this.isAdmin) {
+      return;
+    }
+
+    try {
+      console.log('🔄 Reordering projects after deletion of order:', deletedOrder);
+
+      // Wait a bit more for Firebase to fully process the deletion
+      await new Promise(resolve => setTimeout(resolve, 1000));
+
+      // Get fresh data from Firebase
+      const currentProjects = this.projectsService.getCompletedProjects();
+      console.log('🔄 Current projects after deletion:', currentProjects.map(p => `${p.name} (order: ${p.order})`));
+
+      // Get all completed projects that have order > deletedOrder
+      const projectsToReorder = currentProjects.filter(project => (project.order || 0) > deletedOrder);
+
+      console.log('🔄 Projects to reorder:', projectsToReorder.map(p => `${p.name} (order: ${p.order} -> ${(p.order || 0) - 1})`));
+
+      if (projectsToReorder.length === 0) {
+        console.log('🔄 No projects need reordering');
+        return;
+      }
+
+      // Update order for each project (decrease by 1)
+      const updatePromises = projectsToReorder.map(project => {
+        const newOrder = (project.order || 0) - 1;
+        console.log(`🔄 Updating ${project.name} from order ${project.order} to ${newOrder}`);
+        return this.projectsService.updateProject(project.id, { order: newOrder });
+      });
+
+      await Promise.all(updatePromises);
+
+      console.log('✅ Projects reordered successfully after deletion');
+      this.notificationService.success(`Projects reordered successfully! ${projectsToReorder.length} projects updated.`);
+
+    } catch (error) {
+      console.error('❌ Error reordering projects after deletion:', error);
+      this.notificationService.error('Failed to reorder projects after deletion. Please try again.');
+    }
   }
 
   /**
@@ -363,7 +402,6 @@ export class ProjectPageComponent implements OnInit, OnDestroy {
     console.log('🔧 Canceling project edit, closing modal');
     this.showEditModal = false;
     this.editingProject = null;
-    this.cdr.markForCheck(); // Force change detection to update the view
   }
 
   async saveNewProject(projectData: any): Promise<void> {
@@ -392,7 +430,6 @@ export class ProjectPageComponent implements OnInit, OnDestroy {
         console.log('🚀 Project created successfully:', newProject.name);
         this.notificationService.success(`Project "${newProject.name}" created successfully!`);
         this.showAddModal = false;
-        this.cdr.markForCheck(); // Force change detection to update the view
       } else {
         console.error('❌ addProject returned null');
         this.notificationService.error('Failed to create project - null result');
@@ -426,8 +463,18 @@ export class ProjectPageComponent implements OnInit, OnDestroy {
 
     if (confirmed) {
       try {
+        console.log('🗑️ Deleting project:', project.name, 'with order:', project.order);
+
         const success = await this.projectsService.deleteProject(id);
         if (success) {
+          console.log('✅ Project deleted successfully, reordering remaining projects...');
+
+          // Wait a moment for Firebase to process the deletion
+          await new Promise(resolve => setTimeout(resolve, 500));
+
+          // Reorder remaining projects to fill the gap
+          await this.reorderProjectsAfterDeletion(project.order || 0);
+
           this.notificationService.success('Project deleted successfully!');
         } else {
           this.notificationService.error('Failed to delete project');
@@ -483,6 +530,8 @@ export class ProjectPageComponent implements OnInit, OnDestroy {
 
     try {
       console.log('🔧 Updating project with ID:', this.editingProject.id);
+      console.log('🔧 Updated data being sent:', updatedData);
+      console.log('🔧 uploadedImage in updatedData:', updatedData['uploadedImage']);
       const updatedProject = await this.projectsService.updateProject(this.editingProject.id, updatedData);
       console.log('🔧 Update result:', updatedProject);
 
@@ -496,22 +545,18 @@ export class ProjectPageComponent implements OnInit, OnDestroy {
 
         if (newProjectsCount === 0 && currentProjectsCount > 0) {
           console.warn('⚠️ Projects disappeared after update, triggering manual refresh');
-          // Force a manual refresh by triggering change detection
-          this.cdr.markForCheck();
         }
 
         this.notificationService.success(`Project "${updatedProject.name}" updated successfully!`);
         console.log('🔧 Closing modal after successful update');
         this.showEditModal = false;
         this.editingProject = null;
-        this.cdr.markForCheck(); // Force change detection to update the view
       } else {
         console.error('❌ Update returned null');
         this.notificationService.error('Failed to update project');
         // Close modal even on error
         this.showEditModal = false;
         this.editingProject = null;
-        this.cdr.markForCheck(); // Force change detection to update the view
       }
     } catch (error) {
       console.error('❌ Error updating project:', error);
@@ -519,18 +564,17 @@ export class ProjectPageComponent implements OnInit, OnDestroy {
       // Close modal even on error
       this.showEditModal = false;
       this.editingProject = null;
-      this.cdr.markForCheck(); // Force change detection to update the view
     }
   }
 
 
 
   /**
- * Sincronização manual com GitHub
- * Sempre verifica se há atualizações no GitHub
- */
+   * Sincronização manual com GitHub
+   * APENAS ADICIONA NOVOS REPOSITÓRIOS - não altera projetos existentes
+   */
   async manualGitHubSync(): Promise<void> {
-    console.log('🔄 Manual GitHub sync requested - always checking for updates');
+    console.log('🔄 Manual GitHub sync requested - ONLY ADDING NEW REPOSITORIES');
     try {
       // Use manual full sync that always checks for updates
       const status = await this.githubSyncService.manualFullSync().toPromise();
@@ -538,8 +582,8 @@ export class ProjectPageComponent implements OnInit, OnDestroy {
 
       if (status) {
         const message = status.newRepos > 0
-          ? `Sync completed: ${status.newRepos} new repositories added`
-          : 'Sync completed: No new repositories found';
+          ? `Sync completed: ${status.newRepos} new repositories added (existing projects preserved)`
+          : 'Sync completed: No new repositories found (existing projects preserved)';
         this.notificationService.success(message);
       }
     } catch (error) {
@@ -549,11 +593,41 @@ export class ProjectPageComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Reset sync data (useful for testing)
-   */
+ * Reset sync data and clear all projects (useful for testing)
+ */
   resetSyncData(): void {
-    this.githubSyncService.clearSyncData();
-    this.notificationService.info('Sync data reset. Next sync will be treated as first sync.');
+    console.log('🔄 Reset sync data button clicked');
+
+    // Confirm with user before clearing all data
+    const confirmed = confirm('⚠️ This will delete ALL projects from the application and database. Are you sure you want to continue?');
+    if (!confirmed) {
+      console.log('🔄 Reset cancelled by user');
+      return;
+    }
+
+    try {
+      console.log('🔄 Reset sync data and projects requested');
+
+      // Clear sync data first
+      this.githubSyncService.clearSyncData();
+
+      // Clear all projects from Firebase
+      this.firebaseService.clearAllProjects().then(() => {
+        // Clear local projects
+        this.projects = [];
+        this.updateVisibleCards();
+
+        this.notificationService.success('All projects and sync data cleared successfully.');
+        console.log('✅ Reset completed - all projects and sync data cleared');
+      }).catch((error) => {
+        console.error('❌ Error clearing projects from Firebase:', error);
+        this.notificationService.error('Failed to clear projects from database: ' + error);
+      });
+
+    } catch (error) {
+      console.error('❌ Error resetting data:', error);
+      this.notificationService.error('Failed to reset data: ' + error);
+    }
   }
 
   /**
@@ -588,65 +662,9 @@ export class ProjectPageComponent implements OnInit, OnDestroy {
     }
   }
 
-  /**
-   * Test Firebase connection
-   */
-  async testFirebaseConnection(): Promise<void> {
-    try {
-      console.log('🧪 Testing Firebase connection...');
-      const result = await this.projectsService.testFirebaseConnection();
-      console.log('🧪 Firebase connection test result:', result);
-      if (result) {
-        this.notificationService.success('Firebase connection test successful');
-      } else {
-        this.notificationService.error('Firebase connection test failed');
-      }
-    } catch (error: any) {
-      console.error('Error testing Firebase connection:', error);
-      this.notificationService.error('Firebase connection test failed');
-    }
-  }
 
-  /**
- * Test creating a minimal project
- */
-  async testCreateMinimalProject(): Promise<void> {
-    try {
-      console.log('🧪 Testing minimal project creation...');
-      const testData = {
-        name: 'Test Project',
-        description: 'Test description',
-        technologies: ['Test'],
-        imageUrl: '',
-        demoUrl: '',
-        projectUrl: '',
-        category: 'completed' as const
-      };
 
-      console.log('🧪 Test data:', testData);
-      const result = await this.projectsService.addProject(testData);
-      console.log('🧪 Minimal project created:', result);
-      this.notificationService.success('Minimal project created successfully');
-    } catch (error: any) {
-      console.error('Error creating minimal project:', error);
-      this.notificationService.error(`Minimal project creation failed: ${error?.message}`);
-    }
-  }
 
-  /**
-   * Test method for drag and drop functionality
-   */
-  testDragAndDrop(): void {
-    console.log('🧪 Testing drag and drop functionality...');
-    console.log('🧪 Current visible cards:', this.visibleCards.length);
-    console.log('🧪 Cards:', this.visibleCards.map(card =>
-      card.type === 'project' ? card.project.name : 'create'
-    ));
-    console.log('🧪 isAdmin:', this.isAdmin);
-    console.log('🧪 completedProjects:', this.completedProjects.length);
-
-    this.notificationService.info(`Drag and drop test: ${this.visibleCards.length} cards available, ${this.completedProjects.length} projects loaded`);
-  }
 
   /**
    * Formata data para exibição
@@ -660,7 +678,8 @@ export class ProjectPageComponent implements OnInit, OnDestroy {
    * Verifica se está sincronizando
    */
   get isSyncing(): boolean {
-    return this.syncStatus?.isSyncing || false;
+    const syncing = this.syncStatus?.isSyncing || false;
+    return syncing;
   }
 
   /**

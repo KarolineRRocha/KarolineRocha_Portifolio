@@ -24,7 +24,7 @@ export class EditProjectModalComponent implements OnInit, OnDestroy {
       this.editedProject = {
         name: this.project.name,
         description: this.project.description,
-        technologies: [...this.project.technologies],
+        languages: [...this.project.languages],
         imageUrl: this.project.imageUrl,
         uploadedImage: this.project.uploadedImage,
         demoUrl: this.project.demoUrl || '',
@@ -61,12 +61,12 @@ export class EditProjectModalComponent implements OnInit, OnDestroy {
     this.cancel.emit();
   }
 
-  addTechnology() {
+  addLanguage() {
     if (this.newTech && this.newTech.trim()) {
-      if (!this.editedProject.technologies) {
-        this.editedProject.technologies = [];
+      if (!this.editedProject.languages) {
+        this.editedProject.languages = [];
       }
-      this.editedProject.technologies.push(this.newTech.trim());
+      this.editedProject.languages.push(this.newTech.trim());
       this.newTech = '';
       this.isAddingTech = false;
     }
@@ -76,18 +76,18 @@ export class EditProjectModalComponent implements OnInit, OnDestroy {
     this.isAddingTech = true;
   }
 
-  cancelAddingTech() {
+  cancelAddingLang() {
     this.isAddingTech = false;
     this.newTech = '';
   }
 
-  startEditingTech(index: number, tech: string) {
+  startEditingLang(index: number, lang: string) {
     this.editingTechIndex = index;
-    this.editingTechValue = tech;
+    this.editingTechValue = lang;
 
     // Focus on the input after a short delay to ensure DOM is updated
     setTimeout(() => {
-      const input = document.querySelector('.edit-tech-input') as HTMLInputElement;
+      const input = document.querySelector('.edit-lang-input') as HTMLInputElement;
       if (input) {
         input.focus();
         input.select();
@@ -95,39 +95,39 @@ export class EditProjectModalComponent implements OnInit, OnDestroy {
     }, 10);
   }
 
-  saveEditedTech() {
+  saveEditedLang() {
     if (this.editingTechValue && this.editingTechValue.trim() && this.editingTechIndex >= 0) {
-      if (this.editedProject.technologies) {
-        this.editedProject.technologies[this.editingTechIndex] = this.editingTechValue.trim();
+      if (this.editedProject.languages) {
+        this.editedProject.languages[this.editingTechIndex] = this.editingTechValue.trim();
       }
     }
-    this.cancelEditingTech();
+    this.cancelEditingLang();
   }
 
-  cancelEditingTech() {
+  cancelEditingLang() {
     this.editingTechIndex = -1;
     this.editingTechValue = '';
   }
 
   moveTechnology(index: number, direction: 'left' | 'right') {
-    if (!this.editedProject.technologies) return;
+    if (!this.editedProject.languages) return;
 
-    const technologies = [...this.editedProject.technologies];
+    const languages = [...this.editedProject.languages];
 
     if (direction === 'left' && index > 0) {
       // Move left: swap with previous element
-      [technologies[index], technologies[index - 1]] = [technologies[index - 1], technologies[index]];
-    } else if (direction === 'right' && index < technologies.length - 1) {
+      [languages[index], languages[index - 1]] = [languages[index - 1], languages[index]];
+    } else if (direction === 'right' && index < languages.length - 1) {
       // Move right: swap with next element
-      [technologies[index], technologies[index + 1]] = [technologies[index + 1], technologies[index]];
+      [languages[index], languages[index + 1]] = [languages[index + 1], languages[index]];
     }
 
-    this.editedProject.technologies = technologies;
+    this.editedProject.languages = languages;
   }
 
-  removeTechnology(index: number) {
-    if (this.editedProject.technologies) {
-      this.editedProject.technologies.splice(index, 1);
+  removeLanguage(index: number) {
+    if (this.editedProject.languages) {
+      this.editedProject.languages.splice(index, 1);
     }
   }
 
@@ -170,8 +170,11 @@ export class EditProjectModalComponent implements OnInit, OnDestroy {
   }
 
   removeUploadedImage() {
-    this.editedProject.uploadedImage = undefined;
+    this.editedProject.uploadedImage = ''; // Use empty string instead of null
     this.selectedFileName = '';
     this.onImageUrlChange();
+    console.log('🗑️ Removed uploaded image, now using imageUrl only');
   }
+
+
 }

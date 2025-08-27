@@ -86,6 +86,15 @@
 }
 
 /* Responsive Design */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .scroll-to-top {
+    bottom: 4.5rem;
+    right: 2.5rem;
+    width: 3.5rem;
+    height: 3.5rem;
+  }
+}
+
 @media (max-width: 768px) {
   .scroll-to-top {
     bottom: 1.5rem;
@@ -123,4 +132,3 @@
     transition: none;
   }
 }
-

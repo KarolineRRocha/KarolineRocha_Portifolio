@@ -13,7 +13,7 @@ export class AddProjectModalComponent implements OnInit, OnDestroy {
   newProject: NewProjectData = {
     name: '',
     description: '',
-    technologies: [],
+    languages: [],
     imageUrl: '',
     uploadedImage: undefined,
     demoUrl: '',
@@ -21,7 +21,7 @@ export class AddProjectModalComponent implements OnInit, OnDestroy {
     category: 'completed'
   };
 
-  technologies: string[] = [];
+  languages: string[] = [];
   isAddingTech = false;
   newTech = '';
   selectedFileName: string = '';
@@ -49,7 +49,7 @@ export class AddProjectModalComponent implements OnInit, OnDestroy {
   onSave() {
     console.log('📝 onSave called');
     console.log('📝 Project data:', this.newProject);
-    console.log('📝 Technologies:', this.technologies);
+    console.log('📝 Languages:', this.languages);
 
     // Validate required fields
     if (!this.newProject.name || this.newProject.name.trim() === '') {
@@ -61,15 +61,16 @@ export class AddProjectModalComponent implements OnInit, OnDestroy {
 
 
 
-    // Use technologies array directly
-    this.newProject.technologies = [...this.technologies];
+    // Use languages array directly
+    this.newProject.languages = [...this.languages];
 
     // Create clean project data
     const projectData = {
       name: this.newProject.name.trim(),
       description: this.newProject.description || '',
-      technologies: this.technologies || [],
+      languages: this.languages || [],
       imageUrl: this.newProject.imageUrl || '',
+      uploadedImage: this.newProject.uploadedImage,
       demoUrl: this.newProject.demoUrl || '',
       projectUrl: this.newProject.projectUrl || '',
       category: this.newProject.category || 'completed'
@@ -84,16 +85,16 @@ export class AddProjectModalComponent implements OnInit, OnDestroy {
     this.cancel.emit();
   }
 
-  addTechnology() {
+  addLanguage() {
     if (this.newTech && this.newTech.trim()) {
-      this.technologies.push(this.newTech.trim());
+      this.languages.push(this.newTech.trim());
       this.newTech = '';
       this.isAddingTech = false;
     }
   }
 
-  removeTechnology(index: number) {
-    this.technologies.splice(index, 1);
+  removeLanguage(index: number) {
+    this.languages.splice(index, 1);
   }
 
   startAddingTech() {
@@ -144,23 +145,26 @@ export class AddProjectModalComponent implements OnInit, OnDestroy {
   }
 
   removeUploadedImage() {
-    this.newProject.uploadedImage = undefined;
+    this.newProject.uploadedImage = ''; // Use empty string instead of null
     this.selectedFileName = '';
     this.onImageUrlChange();
+    console.log('🗑️ Removed uploaded image, now using imageUrl only');
   }
+
+
 
   resetForm() {
     this.newProject = {
       name: '',
       description: '',
-      technologies: [],
+      languages: [],
       imageUrl: '',
-      uploadedImage: undefined,
+      uploadedImage: '',
       demoUrl: '',
       projectUrl: '',
       category: 'completed'
     };
-    this.technologies = [];
+    this.languages = [];
     this.isAddingTech = false;
     this.newTech = '';
     this.selectedFileName = '';

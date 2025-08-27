@@ -66,7 +66,7 @@ export class GitHubSyncService {
   // Para criar: https://github.com/settings/tokens
   // Scopes necessários: public_repo
   // Exemplo: private readonly GITHUB_TOKEN = 'ghp_1234567890abcdef1234567890abcdef12345678';
-  private readonly GITHUB_TOKEN: string = ''; // ← Token removido - funcionando sem autenticação
+  private readonly GITHUB_TOKEN: string = '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'; // ← Token configurado para aumentar rate limit
 
   constructor(
     private http: HttpClient,
@@ -78,7 +78,7 @@ export class GitHubSyncService {
 
     // Verificar se há token configurado
     if (this.GITHUB_TOKEN) {
-      console.log('🔑 GitHub token configurado - Rate limit aumentado');
+      console.log('🔑 GitHub token configurado - Rate limit aumentado para 5000 req/hora');
     } else {
       console.log('⚠️ Sem GitHub token - Rate limit limitado a 60 req/hora');
     }
@@ -168,6 +168,8 @@ export class GitHubSyncService {
    */
   private async saveSyncStatus(status: SyncStatus): Promise<void> {
     try {
+      console.log('💾 Saving sync status to Firebase...');
+
       // Use the existing Firebase service instead of direct access
       const db = this.firebaseService['db']; // Access the db instance from the service
       if (!db) {
@@ -190,10 +192,12 @@ export class GitHubSyncService {
         dataToSave.lastSync = status.lastSync.toISOString();
       }
 
+      console.log('💾 Data to save:', dataToSave);
       await setDoc(syncDocRef, dataToSave);
-      console.log('💾 Sync status saved to Firebase');
+      console.log('✅ Sync status saved to Firebase successfully');
     } catch (error) {
       console.error('❌ Error saving sync status:', error);
+      throw error; // Re-throw to allow proper error handling
     }
   }
 
@@ -344,10 +348,11 @@ export class GitHubSyncService {
   }
 
   /**
-   * Sincronização manual completa - sempre verifica atualizações
+   * Sincronização manual completa - APENAS ADICIONA NOVOS REPOSITÓRIOS
+   * Não altera projetos existentes, apenas adiciona novos que não estão na base de dados
    */
   public manualFullSync(): Observable<SyncStatus> {
-    console.log('🔄 Manual full sync started - always checking for updates');
+    console.log('🔄 Manual full sync started - ONLY ADDING NEW REPOSITORIES');
 
     this.updateSyncStatus({
       isSyncing: true,
@@ -386,10 +391,11 @@ export class GitHubSyncService {
   }
 
   /**
-   * Processa repositórios para sincronização manual - sempre verifica atualizações
+   * Processa repositórios para sincronização manual - APENAS ADICIONA NOVOS REPOSITÓRIOS
+   * Não altera projetos existentes, apenas adiciona novos que não estão na base de dados
    */
   private async processReposManual(repos: GitHubRepo[]): Promise<SyncStatus> {
-    console.log('🔄 processReposManual started - always checking for updates');
+    console.log('🔄 processReposManual started - ONLY ADDING NEW REPOSITORIES');
     console.log('🔄 Processing repos for manual sync...');
     console.log(`📊 GitHub repos count: ${repos.length}`);
     console.log(`📊 GitHub repos:`, repos.map(r => r.name));
@@ -410,7 +416,7 @@ export class GitHubSyncService {
     let newRepos = 0;
     let deletedRepos = 0;
 
-    console.log('🔄 MANUAL SYNC: Adding new repositories and checking for deleted ones');
+    console.log('🔄 MANUAL SYNC: ONLY ADDING NEW REPOSITORIES - NO UPDATES TO EXISTING PROJECTS');
 
     // Get GitHub repository URLs for comparison
     const githubRepoUrls = repos.map(repo => repo.html_url);
@@ -432,24 +438,34 @@ export class GitHubSyncService {
       }
     }
 
-    // Manual sync: Add new repositories
+    // Manual sync: ONLY ADD NEW repositories (no updates to existing ones)
     for (const repo of repos) {
       console.log(`🔍 Checking repo: ${repo.name} (URL: ${repo.html_url})`);
 
       // Find existing project using multiple strategies
       let existingProject = this.findExistingProject(currentProjects, repo);
 
-      // TEMPORARY: Force creation for debug
-      console.log(`🔄 TEMPORARY DEBUG: Forcing creation of project: ${repo.name}`);
-      console.log(`➕ Creating new project: ${repo.name} (forced for debug)`);
-      try {
-        await this.createNewProject(repo);
-        newRepos++;
-        console.log(`✅ Successfully created project: ${repo.name}`);
-        // Wait for Firebase to update after creating new project
-        await new Promise(resolve => setTimeout(resolve, 1000));
-      } catch (error) {
-        console.error(`❌ Failed to create project ${repo.name}:`, error);
+      if (existingProject) {
+        console.log(`✅ Project already exists: ${existingProject.name} - SKIPPING (no updates allowed)`);
+        console.log(`📝 Existing project data preserved:`, {
+          name: existingProject.name,
+          description: existingProject.description,
+          languages: existingProject.languages,
+          imageUrl: existingProject.imageUrl,
+          demoUrl: existingProject.demoUrl,
+          category: existingProject.category
+        });
+      } else {
+        console.log(`➕ New repository found: ${repo.name} - Adding to database`);
+        try {
+          await this.createNewProject(repo);
+          newRepos++;
+          console.log(`✅ Successfully created new project: ${repo.name}`);
+          // Wait for Firebase to update after creating new project
+          await new Promise(resolve => setTimeout(resolve, 500));
+        } catch (error) {
+          console.error(`❌ Failed to create project ${repo.name}:`, error);
+        }
       }
     }
 
@@ -457,6 +473,7 @@ export class GitHubSyncService {
     await new Promise(resolve => setTimeout(resolve, 1000));
 
     console.log(`✅ Manual sync completed: ${newRepos} new repositories added, ${deletedRepos} deleted`);
+    console.log(`📊 Summary: Only new repositories were added. Existing projects were preserved unchanged.`);
 
     const finalStatus: SyncStatus = {
       lastSync: new Date(),
@@ -519,7 +536,10 @@ export class GitHubSyncService {
       // Fetch detailed information for each repo to get languages and topics
       switchMap(repos => {
         console.log('🔍 Fetching detailed information for repos...');
+
+        // With GitHub token, we can make requests faster
         const detailedRepos$ = repos.map(repo => this.fetchDetailedRepoInfo(repo));
+
         return forkJoin(detailedRepos$);
       }),
       tap(detailedRepos => {
@@ -538,7 +558,7 @@ export class GitHubSyncService {
           console.warn('⚠️ Rate limit exceeded. Using cached data or fallback.');
 
           if (this.GITHUB_TOKEN) {
-            this.notificationService.warning('GitHub API rate limit reached. Consider waiting or using a different token.');
+            this.notificationService.warning('GitHub API rate limit reached despite having token. Please wait before trying again.');
           } else {
             this.notificationService.warning('GitHub API rate limit reached (60 req/hour). Consider adding a Personal Access Token for higher limits.');
           }
@@ -729,7 +749,7 @@ export class GitHubSyncService {
   private async createNewProject(repo: GitHubRepo): Promise<void> {
     console.log(`🔄 Starting to create project for repo: ${repo.name}`);
 
-    const technologies = await this.extractTechnologies(repo);
+    const languages = await this.extractLanguages(repo);
 
     // Check if project already exists to preserve existing image
     const currentProjects = this.firebaseService.getProjects();
@@ -741,7 +761,7 @@ export class GitHubSyncService {
     const projectData = {
       name: this.formatProjectName(repo.name),
       description: repo.description || '', // Description is optional, keep empty if no description
-      technologies: technologies,
+      languages: languages,
       imageUrl: existingProject?.imageUrl || this.getDefaultImageUrl(repo.language), // Preserve existing image
       demoUrl: await this.getGitHubPagesUrl(repo),
       projectUrl: repo.html_url,
@@ -803,18 +823,54 @@ export class GitHubSyncService {
       headers['Authorization'] = `token ${this.GITHUB_TOKEN}`;
     }
 
-    const url = `${this.GITHUB_API_BASE}/repos/${this.USERNAME}/${repo.name}`;
+    const repoUrl = `${this.GITHUB_API_BASE}/repos/${this.USERNAME}/${repo.name}`;
+    const languagesUrl = `${this.GITHUB_API_BASE}/repos/${this.USERNAME}/${repo.name}/languages`;
 
-    return this.http.get<GitHubRepo>(url, { headers }).pipe(
-      tap(detailedRepo => {
-        console.log(`🔍 Detailed info for ${repo.name}:`, {
-          language: detailedRepo.language,
-          topics: detailedRepo.topics,
-          languages: detailedRepo.languages
+    // Fetch both repo details and languages
+    return forkJoin({
+      repo: this.http.get<GitHubRepo>(repoUrl, { headers }),
+      languages: this.http.get<{ [key: string]: number }>(languagesUrl, { headers }).pipe(
+        catchError(error => {
+          console.warn(`⚠️ Could not fetch languages for ${repo.name}:`, error);
+          return of({});
+        })
+      )
+    }).pipe(
+      map(({ repo: detailedRepo, languages }) => {
+        // Merge languages into the repo object
+        const enhancedRepo = {
+          ...detailedRepo,
+          languages: languages
+        };
+
+        console.log(`🔍 Enhanced repo info for ${repo.name}:`, {
+          language: enhancedRepo.language,
+          topics: enhancedRepo.topics,
+          languages: enhancedRepo.languages
         });
+
+        // Log the full languages object for debugging
+        if (enhancedRepo.languages && Object.keys(enhancedRepo.languages).length > 0) {
+          console.log(`🔍 Full languages object for ${repo.name}:`, enhancedRepo.languages);
+          console.log(`🔍 Languages percentages for ${repo.name}:`,
+            Object.entries(enhancedRepo.languages)
+              .sort(([, a], [, b]) => b - a)
+              .map(([lang, percent]) => `${lang}: ${percent}%`)
+              .join(', ')
+          );
+        } else {
+          console.log(`⚠️ No languages found for ${repo.name}`);
+        }
+
+        return enhancedRepo;
       }),
       catchError(error => {
         console.warn(`⚠️ Could not fetch detailed info for ${repo.name}:`, error);
+        console.warn(`⚠️ Error details:`, {
+          status: error.status,
+          message: error.message,
+          url: repoUrl
+        });
         // Return the original repo if detailed fetch fails
         return of(repo);
       })
@@ -822,10 +878,10 @@ export class GitHubSyncService {
   }
 
   /**
-   * Extracts technologies from repository
+   * Extracts languages from repository
    */
-  private async extractTechnologies(repo: GitHubRepo): Promise<string[]> {
-    console.log(`🔍 Extracting technologies for: ${repo.name}`);
+  private async extractLanguages(repo: GitHubRepo): Promise<string[]> {
+    console.log(`🔍 Extracting languages for: ${repo.name}`);
     console.log(`🔍 Repository data:`, {
       name: repo.name,
       language: repo.language,
@@ -833,86 +889,238 @@ export class GitHubSyncService {
       languages: repo.languages
     });
 
-    const technologies: string[] = [];
+    const languages: string[] = [];
 
-    // Add main language
+    // Add main language first
     if (repo.language) {
-      technologies.push(repo.language);
+      languages.push(repo.language);
       console.log(`🔍 Added main language: ${repo.language}`);
     }
 
-    // Add topics as technologies
-    if (repo.topics && repo.topics.length > 0) {
-      const validTopics = repo.topics.filter(topic =>
-        !technologies.includes(topic) && topic.length < 20
-      );
-      technologies.push(...validTopics);
-      console.log(`🔍 Added topics: ${validTopics.join(', ')}`);
-    }
-
-    // Add languages from languages object (if available)
-    if (repo.languages && typeof repo.languages === 'object') {
+    // Add languages from languages object (if available) - this is the most accurate source
+    if (repo.languages && typeof repo.languages === 'object' && Object.keys(repo.languages).length > 0) {
+      console.log(`🔍 Languages object for ${repo.name}:`, repo.languages);
       const languageNames = Object.keys(repo.languages);
-      const newLanguages = languageNames.filter(lang =>
-        !technologies.includes(lang) && lang !== repo.language
+      console.log(`🔍 Available languages: ${languageNames.join(', ')}`);
+
+      // Sort languages by usage percentage (descending) and take the top ones
+      const sortedLanguages = languageNames
+        .sort((a, b) => (repo.languages[b] || 0) - (repo.languages[a] || 0))
+        .filter(lang => {
+          const percentage = repo.languages[lang] || 0;
+          return percentage > 1; // Only include languages with more than 1% usage
+        });
+
+      console.log(`🔍 Sorted languages by usage:`, sortedLanguages.map(lang =>
+        `${lang} (${repo.languages[lang]}%)`
+      ));
+
+      // Add all languages from the languages object (except the main language if already added)
+      const newLanguages = sortedLanguages.filter(lang =>
+        !languages.includes(lang)
       );
-      technologies.push(...newLanguages);
+
+      languages.push(...newLanguages);
       console.log(`🔍 Added languages from languages object: ${newLanguages.join(', ')}`);
     }
 
-    // Add technologies based on repository name
+    // Add relevant topics as additional languages (only if not already included)
+    if (repo.topics && repo.topics.length > 0) {
+      const validTopics = repo.topics.filter(topic =>
+        !languages.includes(topic) &&
+        topic.length < 20 &&
+        this.isRelevantTopic(topic)
+      );
+      languages.push(...validTopics);
+      console.log(`🔍 Added relevant topics: ${validTopics.join(', ')}`);
+    }
+
+    // Add languages based on repository name
     const name = repo.name.toLowerCase();
-    const nameBasedTechs = [];
+    const nameBasedLanguages = [];
 
-    if (name.includes('react') && !technologies.includes('React')) {
-      nameBasedTechs.push('React');
+    // Framework detection
+    if (name.includes('react') && !languages.includes('React')) {
+      nameBasedLanguages.push('React');
     }
-    if (name.includes('angular') && !technologies.includes('Angular')) {
-      nameBasedTechs.push('Angular');
+    if (name.includes('angular') && !languages.includes('Angular')) {
+      nameBasedLanguages.push('Angular');
     }
-    if (name.includes('vue') && !technologies.includes('Vue')) {
-      nameBasedTechs.push('Vue');
+    if (name.includes('vue') && !languages.includes('Vue')) {
+      nameBasedLanguages.push('Vue');
     }
-    if (name.includes('node') && !technologies.includes('Node.js')) {
-      nameBasedTechs.push('Node.js');
+    if (name.includes('next') && !languages.includes('Next.js')) {
+      nameBasedLanguages.push('Next.js');
     }
-    if (name.includes('express') && !technologies.includes('Express')) {
-      nameBasedTechs.push('Express');
-    }
-    if (name.includes('mongodb') && !technologies.includes('MongoDB')) {
-      nameBasedTechs.push('MongoDB');
-    }
-    if (name.includes('firebase') && !technologies.includes('Firebase')) {
-      nameBasedTechs.push('Firebase');
-    }
-    if (name.includes('bootstrap') && !technologies.includes('Bootstrap')) {
-      nameBasedTechs.push('Bootstrap');
-    }
-    if (name.includes('tailwind') && !technologies.includes('Tailwind CSS')) {
-      nameBasedTechs.push('Tailwind CSS');
-    }
-    if ((name.includes('sass') || name.includes('scss')) && !technologies.includes('Sass')) {
-      nameBasedTechs.push('Sass');
-    }
-    if (name.includes('typescript') && !technologies.includes('TypeScript')) {
-      nameBasedTechs.push('TypeScript');
-    }
-    if (name.includes('javascript') && !technologies.includes('JavaScript')) {
-      nameBasedTechs.push('JavaScript');
-    }
-    if (name.includes('html') && !technologies.includes('HTML')) {
-      nameBasedTechs.push('HTML');
-    }
-    if (name.includes('css') && !technologies.includes('CSS')) {
-      nameBasedTechs.push('CSS');
+    if (name.includes('nuxt') && !languages.includes('Nuxt.js')) {
+      nameBasedLanguages.push('Nuxt.js');
     }
 
-    technologies.push(...nameBasedTechs);
-    console.log(`🔍 Added name-based technologies: ${nameBasedTechs.join(', ')}`);
+    // Backend detection
+    if (name.includes('node') && !languages.includes('Node.js')) {
+      nameBasedLanguages.push('Node.js');
+    }
+    if (name.includes('express') && !languages.includes('Express')) {
+      nameBasedLanguages.push('Express');
+    }
+    if (name.includes('nest') && !languages.includes('NestJS')) {
+      nameBasedLanguages.push('NestJS');
+    }
+    if (name.includes('django') && !languages.includes('Django')) {
+      nameBasedLanguages.push('Django');
+    }
+    if (name.includes('flask') && !languages.includes('Flask')) {
+      nameBasedLanguages.push('Flask');
+    }
+    if (name.includes('spring') && !languages.includes('Spring')) {
+      nameBasedLanguages.push('Spring');
+    }
+    if (name.includes('laravel') && !languages.includes('Laravel')) {
+      nameBasedLanguages.push('Laravel');
+    }
 
-    const result = technologies.slice(0, 5); // Maximum 5 technologies
-    console.log(`🔍 Final technologies for ${repo.name}: ${result.join(', ')}`);
+    // Database detection
+    if (name.includes('mongodb') && !languages.includes('MongoDB')) {
+      nameBasedLanguages.push('MongoDB');
+    }
+    if (name.includes('mysql') && !languages.includes('MySQL')) {
+      nameBasedLanguages.push('MySQL');
+    }
+    if (name.includes('postgres') && !languages.includes('PostgreSQL')) {
+      nameBasedLanguages.push('PostgreSQL');
+    }
+    if (name.includes('sqlite') && !languages.includes('SQLite')) {
+      nameBasedLanguages.push('SQLite');
+    }
+
+    // Cloud/Services detection
+    if (name.includes('firebase') && !languages.includes('Firebase')) {
+      nameBasedLanguages.push('Firebase');
+    }
+    if (name.includes('aws') && !languages.includes('AWS')) {
+      nameBasedLanguages.push('AWS');
+    }
+    if (name.includes('azure') && !languages.includes('Azure')) {
+      nameBasedLanguages.push('Azure');
+    }
+    if (name.includes('heroku') && !languages.includes('Heroku')) {
+      nameBasedLanguages.push('Heroku');
+    }
+
+    // CSS Frameworks detection
+    if (name.includes('bootstrap') && !languages.includes('Bootstrap')) {
+      nameBasedLanguages.push('Bootstrap');
+    }
+    if (name.includes('tailwind') && !languages.includes('Tailwind CSS')) {
+      nameBasedLanguages.push('Tailwind CSS');
+    }
+    if (name.includes('material') && !languages.includes('Material-UI')) {
+      nameBasedLanguages.push('Material-UI');
+    }
+    if (name.includes('chakra') && !languages.includes('Chakra UI')) {
+      nameBasedLanguages.push('Chakra UI');
+    }
+
+    // Preprocessors detection
+    if ((name.includes('sass') || name.includes('scss')) && !languages.includes('Sass')) {
+      nameBasedLanguages.push('Sass');
+    }
+    if (name.includes('less') && !languages.includes('Less')) {
+      nameBasedLanguages.push('Less');
+    }
+    if (name.includes('stylus') && !languages.includes('Stylus')) {
+      nameBasedLanguages.push('Stylus');
+    }
+
+    // Programming languages detection
+    if (name.includes('typescript') && !languages.includes('TypeScript')) {
+      nameBasedLanguages.push('TypeScript');
+    }
+    if (name.includes('javascript') && !languages.includes('JavaScript')) {
+      nameBasedLanguages.push('JavaScript');
+    }
+    if (name.includes('python') && !languages.includes('Python')) {
+      nameBasedLanguages.push('Python');
+    }
+    if (name.includes('java') && !languages.includes('Java')) {
+      nameBasedLanguages.push('Java');
+    }
+    if (name.includes('php') && !languages.includes('PHP')) {
+      nameBasedLanguages.push('PHP');
+    }
+    if (name.includes('csharp') && !languages.includes('C#')) {
+      nameBasedLanguages.push('C#');
+    }
+    if (name.includes('ruby') && !languages.includes('Ruby')) {
+      nameBasedLanguages.push('Ruby');
+    }
+    if (name.includes('go') && !languages.includes('Go')) {
+      nameBasedLanguages.push('Go');
+    }
+    if (name.includes('rust') && !languages.includes('Rust')) {
+      nameBasedLanguages.push('Rust');
+    }
+    if (name.includes('swift') && !languages.includes('Swift')) {
+      nameBasedLanguages.push('Swift');
+    }
+    if (name.includes('kotlin') && !languages.includes('Kotlin')) {
+      nameBasedLanguages.push('Kotlin');
+    }
+
+    // Markup languages detection
+    if (name.includes('html') && !languages.includes('HTML')) {
+      nameBasedLanguages.push('HTML');
+    }
+    if (name.includes('css') && !languages.includes('CSS')) {
+      nameBasedLanguages.push('CSS');
+    }
+    if (name.includes('xml') && !languages.includes('XML')) {
+      nameBasedLanguages.push('XML');
+    }
+    if (name.includes('json') && !languages.includes('JSON')) {
+      nameBasedLanguages.push('JSON');
+    }
+
+    // Tools detection
+    if (name.includes('docker') && !languages.includes('Docker')) {
+      nameBasedLanguages.push('Docker');
+    }
+    if (name.includes('kubernetes') && !languages.includes('Kubernetes')) {
+      nameBasedLanguages.push('Kubernetes');
+    }
+    if (name.includes('jenkins') && !languages.includes('Jenkins')) {
+      nameBasedLanguages.push('Jenkins');
+    }
+    if (name.includes('git') && !languages.includes('Git')) {
+      nameBasedLanguages.push('Git');
+    }
+
+    languages.push(...nameBasedLanguages);
+    console.log(`🔍 Added name-based languages: ${nameBasedLanguages.join(', ')}`);
+
+    // Remove duplicates and limit to 8 languages (increased from 5)
+    const uniqueLanguages = [...new Set(languages)];
+    const result = uniqueLanguages.slice(0, 8); // Maximum 8 languages
+
+    console.log(`🔍 All languages before deduplication: ${languages.join(', ')}`);
+    console.log(`🔍 Unique languages: ${uniqueLanguages.join(', ')}`);
+    console.log(`🔍 Final languages for ${repo.name}: ${result.join(', ')}`);
     return result;
+  }
+
+  /**
+   * Checks if a topic is relevant for language extraction
+   */
+  private isRelevantTopic(topic: string): boolean {
+    const relevantTopics = [
+      'javascript', 'typescript', 'react', 'angular', 'vue', 'node', 'express',
+      'python', 'java', 'csharp', 'php', 'ruby', 'go', 'rust', 'swift',
+      'html', 'css', 'sass', 'scss', 'less', 'bootstrap', 'tailwind',
+      'mongodb', 'mysql', 'postgresql', 'firebase', 'aws', 'docker',
+      'git', 'github', 'gitlab', 'bitbucket', 'jenkins', 'travis'
+    ];
+
+    return relevantTopics.includes(topic.toLowerCase());
   }
 
   /**
@@ -992,6 +1200,9 @@ export class GitHubSyncService {
    * Limpa dados de sincronização
    */
   public clearSyncData(): void {
+    console.log('🔄 Clearing sync data...');
+
+    // Create reset status
     const resetStatus: SyncStatus = {
       lastSync: null,
       totalRepos: 0,
@@ -1003,8 +1214,38 @@ export class GitHubSyncService {
       error: null,
       isFirstSync: true // Reset to first sync
     };
+
+    // Update local state immediately
     this.syncStatusSubject.next(resetStatus);
-    this.saveSyncStatus(resetStatus);
+    console.log('🔄 Local sync status updated');
+
+    // Try to save to Firebase
+    try {
+      const db = this.firebaseService['db'];
+      if (db) {
+        console.log('🔄 Firebase DB available, saving reset status...');
+        const syncDocRef = doc(db, COLLECTIONS.SYNC_DATA, 'github_sync');
+        const dataToSave = {
+          totalRepos: 0,
+          syncedRepos: 0,
+          newRepos: 0,
+          updatedRepos: 0,
+          deletedRepos: 0,
+          isFirstSync: true
+        };
+
+        setDoc(syncDocRef, dataToSave).then(() => {
+          console.log('✅ Sync data cleared from Firebase successfully');
+        }).catch((error) => {
+          console.error('❌ Error saving to Firebase:', error);
+        });
+      } else {
+        console.log('⚠️ Firebase DB not available, only local state cleared');
+      }
+    } catch (error) {
+      console.error('❌ Error accessing Firebase:', error);
+    }
+
     console.log('🔄 Sync data cleared, reset to first sync mode');
   }
 

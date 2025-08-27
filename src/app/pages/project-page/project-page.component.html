@@ -34,7 +34,7 @@
         <div class="sync-info">
           <span class="sync-status-text">{{ syncStatusText }}</span>
           <div class="sync-actions">
-            <button class="sync-btn" (click)="manualGitHubSync()" [disabled]="isSyncing" title="Sync with GitHub">
+            <button class="sync-btn" (click)="manualGitHubSync()" [disabled]="isSyncing" title="Sync with GitHub - Only adds new repositories, preserves existing projects">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M21 2v6h-6"></path>
                 <path d="M3 12a9 9 0 0 1 15-6.7L21 8"></path>
@@ -43,7 +43,7 @@
               </svg>
               {{ isSyncing ? 'Syncing...' : 'Sync GitHub' }}
             </button>
-            <button class="sync-reset-btn" (click)="resetSyncData()" [disabled]="isSyncing" title="Reset sync data">
+            <button class="sync-reset-btn" (click)="resetSyncData(); $event.stopPropagation()" title="Reset sync data">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M3 12a9 9 0 0 1 15-6.7L21 8"></path>
                 <path d="M3 22v-6h6"></path>
@@ -117,8 +117,8 @@
                 </ng-template>
               </div>
 
-              <div class="project-tech">
-                <span *ngFor="let tech of card.project.technologies; trackBy: trackByTechnology">{{ tech }}</span>
+              <div class="project-languages">
+                <span *ngFor="let lang of card.project.languages; trackBy: trackByLanguage">{{ lang }}</span>
               </div>
               <div class="project-links">
                 <a *ngIf="card.project.demoUrl" [href]="card.project.demoUrl" class="btn-primary" target="_blank">View Demo</a>

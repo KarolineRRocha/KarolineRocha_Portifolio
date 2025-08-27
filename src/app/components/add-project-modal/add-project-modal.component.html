@@ -19,21 +19,21 @@
         </div>
 
         <div class="form-group">
-          <label>Technologies</label>
-          <div class="technologies-container">
-            <div class="technology-tags">
-              <span class="tech-tag" *ngFor="let tech of technologies; let i = index">
-                {{ tech }}
-                <button class="remove-tech" (click)="removeTechnology(i)">&times;</button>
+          <label>Languages</label>
+          <div class="languages-container">
+            <div class="language-tags">
+              <span class="lang-tag" *ngFor="let lang of languages; let i = index">
+                {{ lang }}
+                <button class="remove-lang" (click)="removeLanguage(i)">&times;</button>
               </span>
             </div>
-            <div class="add-tech-section" *ngIf="!isAddingTech">
-              <button class="btn-add-tech" (click)="startAddingTech()">+ Add Technology</button>
+            <div class="add-lang-section" *ngIf="!isAddingTech">
+              <button class="btn-add-lang" (click)="startAddingTech()">+ Add Language</button>
             </div>
-            <div class="add-tech-input" *ngIf="isAddingTech">
-              <input type="text" class="form-input" [(ngModel)]="newTech" placeholder="Enter technology name" (keyup.enter)="addTechnology()">
-              <button class="btn-confirm-tech" (click)="addTechnology()">Add</button>
-              <button class="btn-cancel-tech" (click)="cancelAddingTech()">Cancel</button>
+            <div class="add-lang-input" *ngIf="isAddingTech">
+              <input type="text" class="form-input" [(ngModel)]="newTech" placeholder="Enter language name" (keyup.enter)="addLanguage()">
+              <button class="btn-confirm-lang" (click)="addLanguage()">Add</button>
+              <button class="btn-cancel-lang" (click)="cancelAddingTech()">Cancel</button>
             </div>
           </div>
         </div>
@@ -71,7 +71,7 @@
             <span *ngIf="!selectedFileName">📤 Escolher Imagem</span>
             <span *ngIf="selectedFileName">✅ {{ selectedFileName }}</span>
           </label>
-          <button *ngIf="selectedFileName" class="btn-remove-file" (click)="removeUploadedImage()">🗑️ Remover</button>
+          <button *ngIf="newProject.uploadedImage" class="btn-remove-file" (click)="removeUploadedImage()">🗑️ Remover</button>
           <small class="upload-help">Formatos aceitos: JPG, PNG, GIF, WebP (máx. 5MB)</small>
         </div>
       </div>

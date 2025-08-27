@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProjectsService, Project } from '../../core/services/projects.service';
+import { AuthService } from '../../core/services/auth.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -23,26 +24,59 @@ export class HomePageComponent implements OnInit, OnDestroy {
 
   // Projects properties
   projects: Project[] = [];
+  isAdmin = false;
   private projectsSubscription!: Subscription;
+  private authStateSubscription!: Subscription;
 
   constructor(
     private router: Router,
-    private projectsService: ProjectsService
+    private projectsService: ProjectsService,
+    private authService: AuthService
   ) { }
 
   ngOnInit() {
+    console.log('🏠 Home page: Initializing...');
     this.startTypewriterEffect();
-    this.loadProjects();
+
+    // Set initial auth state
+    this.isAdmin = this.authService.isAuthenticated();
 
     // Subscribe to projects changes for automatic updates
     this.projectsSubscription = this.projectsService.projects$.subscribe(projects => {
+      console.log('🏠 Home page: Projects updated, reloading featured projects...');
+      console.log('🏠 Home page: Received projects count:', projects.length);
+      console.log('🏠 Home page: Projects received:', projects.map(p => ({ 
+        name: p.name, 
+        order: p.order, 
+        imageUrl: p.imageUrl,
+        uploadedImage: p.uploadedImage ? 'present' : 'not present',
+        uploadedImageLength: p.uploadedImage?.length || 0
+      })));
+
+      // Force reload of featured projects
       this.loadProjects();
+
+      // Force change detection
+      setTimeout(() => {
+        console.log('🏠 Home page: Change detection triggered');
+      }, 100);
     });
+
+    // Subscribe to auth state changes
+    this.authStateSubscription = this.authService.authState$.subscribe(isAuthenticated => {
+      this.isAdmin = isAuthenticated;
+    });
+
+    // Initial load
+    this.loadProjects();
   }
 
   ngOnDestroy() {
     if (this.projectsSubscription) {
       this.projectsSubscription.unsubscribe();
+    }
+    if (this.authStateSubscription) {
+      this.authStateSubscription.unsubscribe();
     }
   }
 
@@ -64,17 +98,73 @@ export class HomePageComponent implements OnInit, OnDestroy {
 
   // Load projects from service
   loadProjects() {
-    let allProjects = this.projectsService.getProjects();
+    console.log('🏠 Home page: Loading projects...');
 
-    // Sort by creation date (newest first)
-    allProjects.sort((a, b) => {
-      const dateA = new Date(a.createdAt).getTime();
-      const dateB = new Date(b.createdAt).getTime();
-      return dateB - dateA; // Newest first
+    // Get fresh data from service
+    let allProjects = this.projectsService.getProjects();
+    console.log('🏠 Home page: Total projects available:', allProjects.length);
+
+    // Filter only completed projects for featured section
+    const completedProjects = allProjects.filter(project => project.category === 'completed');
+    console.log('🏠 Home page: Completed projects:', completedProjects.length);
+
+    // Sort by order (as defined in projects page) - this reflects drag & drop changes
+    completedProjects.sort((a, b) => {
+      const orderA = a.order || 0;
+      const orderB = b.order || 0;
+      return orderA - orderB; // Lower order first (top of list)
     });
 
-    // Show only the 3 most recent projects
-    this.projects = allProjects.slice(0, 3);
+    // Show only the 3 first projects (top 3 in order)
+    const newProjects = completedProjects.slice(0, 3);
+
+    // Check if projects actually changed
+    const projectsChanged = this.projects.length !== newProjects.length ||
+      this.projects.some((oldProject, index) => {
+        const newProject = newProjects[index];
+        if (!newProject) return true;
+
+        const uploadedImageChanged = oldProject.uploadedImage !== newProject.uploadedImage;
+        
+        // Debug: Log detailed comparison for uploadedImage
+        if (oldProject.uploadedImage || newProject.uploadedImage) {
+          console.log('🏠 Home page: UploadedImage comparison for project:', newProject.name, {
+            oldUploadedImagePresent: !!oldProject.uploadedImage,
+            newUploadedImagePresent: !!newProject.uploadedImage,
+            oldUploadedImageLength: oldProject.uploadedImage?.length || 0,
+            newUploadedImageLength: newProject.uploadedImage?.length || 0,
+            uploadedImageChanged: uploadedImageChanged
+          });
+        }
+
+        const hasChanges = !newProject ||
+          oldProject.id !== newProject.id ||
+          oldProject.name !== newProject.name ||
+          oldProject.order !== newProject.order ||
+          oldProject.imageUrl !== newProject.imageUrl ||
+          uploadedImageChanged;
+
+        if (hasChanges) {
+          console.log('🏠 Home page: Changes detected for project:', newProject.name, {
+            oldImageUrl: oldProject.imageUrl,
+            newImageUrl: newProject.imageUrl,
+            oldUploadedImage: oldProject.uploadedImage ? 'present' : 'not present',
+            newUploadedImage: newProject.uploadedImage ? 'present' : 'not present',
+            uploadedImageChanged: uploadedImageChanged
+          });
+        }
+
+        return hasChanges;
+      });
+
+    if (projectsChanged) {
+      console.log('🏠 Home page: Projects changed, updating featured projects...');
+      this.projects = [...newProjects]; // Force new array reference
+      console.log('🏠 Home page: Featured projects updated:', this.projects.length);
+      console.log('🏠 Home page: Featured projects:', this.projects.map(p => ({ name: p.name, order: p.order, imageUrl: p.imageUrl })));
+    } else {
+      console.log('🏠 Home page: No changes detected in projects');
+    }
   }
 
   // Typewriter effect
@@ -123,4 +213,6 @@ export class HomePageComponent implements OnInit, OnDestroy {
       }
     }
   }
+
+
 }

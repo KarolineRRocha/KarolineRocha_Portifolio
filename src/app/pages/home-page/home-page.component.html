@@ -166,9 +166,10 @@
         A showcase of my latest work, demonstrating frontend development skills,
         responsive design, and modern web technologies.
       </p>
+
     </div>
 
-    <div class="timeline-container"*ngIf="projects.length > 0">
+    <div class="timeline-container" *ngIf="projects.length > 0">
       <div class="timeline-line"></div>
 
       <div class="timeline-projects">
@@ -182,7 +183,7 @@
 
           <div class="project-image-container">
             <div class="project-icon-circle">
-              <img [src]="project.imageUrl" [alt]="project.name + ' preview'" (mouseenter)="onProjectImageHover(i, true)" (mouseleave)="onProjectImageHover(i, false)">
+              <img [src]="project.uploadedImage || project.imageUrl" [alt]="project.name + ' preview'" (mouseenter)="onProjectImageHover(i, true)" (mouseleave)="onProjectImageHover(i, false)">
             </div>
           </div>
 
@@ -203,7 +204,7 @@
               </div>
 
               <div class="project-tech">
-                <span class="tech-pill" *ngFor="let tech of project.technologies">{{ tech }}</span>
+                <span class="tech-pill" *ngFor="let tech of project.languages">{{ tech }}</span>
               </div>
 
               <div class="project-footer">

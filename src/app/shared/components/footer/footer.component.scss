@@ -510,6 +510,106 @@
   }
 }
 
+/* Tablet specific breakpoint */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .footer-content {
+    padding: 0 var(--spacing-xl);
+  }
+
+  .footer-main {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-2xl);
+    padding: var(--spacing-3xl) 0 var(--spacing-2xl);
+  }
+
+  .footer-section {
+    gap: var(--spacing-lg);
+  }
+
+  .footer-section h4 {
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .footer-logo h3 {
+    font-size: var(--font-size-xl);
+  }
+
+  .footer-tagline {
+    font-size: var(--font-size-base);
+  }
+
+  .contact-info {
+    gap: var(--spacing-md);
+  }
+
+  .contact-info h4 {
+    margin-top: var(--spacing-xl);
+  }
+
+  .contact-item {
+    font-size: var(--font-size-base);
+  }
+
+  .social-links {
+    gap: var(--spacing-md);
+  }
+
+  .footer-social h4 {
+    margin-top: var(--spacing-xl);
+  }
+
+  .social-link {
+    width: 45px;
+    height: 45px;
+  }
+
+  .footer-nav ul {
+    gap: var(--spacing-xs);
+  }
+
+  .footer-nav li {
+    margin-bottom: var(--spacing-xs);
+  }
+
+  .footer-nav .footer-link {
+    font-size: var(--font-size-base);
+  }
+
+  .skills-grid {
+    gap: var(--spacing-lg);
+  }
+
+  .skill-category h5 {
+    font-size: var(--font-size-base);
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .skill-list {
+    gap: var(--spacing-sm);
+  }
+
+  .skill-list li {
+    font-size: var(--font-size-sm);
+  }
+
+  .footer-bottom-content {
+    gap: var(--spacing-md);
+  }
+
+  .copyright p {
+    font-size: var(--font-size-sm);
+  }
+
+  .footer-links {
+    gap: var(--spacing-md);
+  }
+
+  .footer-links .footer-link {
+    font-size: var(--font-size-sm);
+  }
+}
+
 @media (max-width: 768px) {
   .footer-content {
     padding: 0 var(--spacing-md);

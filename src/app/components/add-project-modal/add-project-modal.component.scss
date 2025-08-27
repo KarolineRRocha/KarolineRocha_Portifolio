@@ -122,9 +122,15 @@
   color: #1a1a1a;
 }
 
+.form-input {
+  height: 40px;
+  padding: 12px 20px;
+}
+
 .form-textarea {
   resize: vertical;
-  min-height: 100px;
+  min-height: 120px;
+  padding: 16px 20px;
 }
 
 .form-input:focus,
@@ -135,40 +141,44 @@
   background: #ffffff;
 }
 
-.technologies-container {
+.languages-container {
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
 
-.technology-tags {
+.language-tags {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
 }
 
-.tech-tag {
-  background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(0, 212, 255, 0.05));
-  color: var(--color-primary);
-  padding: 8px 16px;
-  border-radius: 20px;
-  font-size: 14px;
+.lang-tag {
+  background: var(--color-light);
+  color: var(--color-secondary);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: 10px;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  border: 1.5px solid rgba(138, 43, 226, 0.3);
+  transition: all 0.3s ease;
   display: flex;
   align-items: center;
-  gap: 8px;
-  border: 1px solid rgba(0, 212, 255, 0.2);
-  font-weight: 500;
+  gap: var(--spacing-xs);
+  cursor: pointer;
+  min-width: 120px;
+  position: relative;
 }
 
-.remove-tech {
+.remove-lang {
   background: none;
   border: none;
-  color: var(--color-primary);
+  color: var(--color-secondary);
   cursor: pointer;
-  font-size: 16px;
+  font-size: var(--font-size-sm);
   padding: 0;
-  width: 20px;
-  height: 20px;
+  width: 16px;
+  height: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -176,49 +186,48 @@
   transition: all 0.3s ease;
 }
 
-.remove-tech:hover {
-  background: rgba(0, 212, 255, 0.2);
+.remove-lang:hover {
+  background: rgba(138, 43, 226, 0.2);
   transform: scale(1.1);
 }
 
-.add-tech-section {
+.add-lang-section {
   display: flex;
   gap: 12px;
 }
 
-.btn-add-tech {
+.btn-add-lang {
   background: none;
-  border: 2px dashed rgba(0, 212, 255, 0.3);
-  color: var(--color-primary);
-  padding: 12px 20px;
-  border-radius: 16px;
+  border: 2px dashed rgba(138, 43, 226, 0.3);
+  color: var(--color-secondary);
+  padding: var(--spacing-sm);
+  border-radius: var(--radius-md);
   cursor: pointer;
-  font-size: 14px;
+  font-size: var(--font-size-sm);
   transition: all 0.3s ease;
   align-self: flex-start;
-  font-weight: 500;
 }
 
-.btn-add-tech:hover {
-  border-color: var(--color-primary);
-  background: rgba(0, 212, 255, 0.05);
+.btn-add-lang:hover {
+  border-color: var(--color-secondary);
+  background: rgba(138, 43, 226, 0.05);
   transform: translateY(-1px);
 }
 
-.add-tech-input {
+.add-lang-input {
   display: flex;
   gap: 8px;
   align-items: center;
 }
 
-.add-tech-input .form-input {
+.add-lang-input .form-input {
   flex: 1;
   padding: 12px 16px;
   font-size: 14px;
 }
 
-.btn-confirm-tech,
-.btn-cancel-tech {
+.btn-confirm-lang,
+.btn-cancel-lang {
   padding: 12px 20px;
   border: none;
   border-radius: 12px;
@@ -228,22 +237,22 @@
   font-weight: 500;
 }
 
-.btn-confirm-tech {
+.btn-confirm-lang {
   background: var(--color-primary);
   color: white;
 }
 
-.btn-confirm-tech:hover {
+.btn-confirm-lang:hover {
   background: var(--color-accent);
   transform: translateY(-1px);
 }
 
-.btn-cancel-tech {
+.btn-cancel-lang {
   background: rgba(0, 0, 0, 0.05);
   color: #6c757d;
 }
 
-.btn-cancel-tech:hover {
+.btn-cancel-lang:hover {
   background: rgba(0, 0, 0, 0.1);
 }
 
@@ -448,6 +457,25 @@
 .btn-remove-file:hover {
   background: rgba(220, 53, 69, 0.2);
   border-color: #dc3545;
+  transform: translateY(-1px);
+}
+
+.btn-clean-image {
+  background: rgba(255, 193, 7, 0.1);
+  border: 1px solid rgba(255, 193, 7, 0.3);
+  color: #ffc107;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  margin-left: 8px;
+}
+
+.btn-clean-image:hover {
+  background: rgba(255, 193, 7, 0.2);
+  border-color: #ffc107;
   transform: translateY(-1px);
 }
 

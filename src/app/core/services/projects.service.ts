@@ -6,7 +6,7 @@ export interface Project {
   id: string;
   name: string;
   description: string;
-  technologies: string[];
+  languages: string[];
   imageUrl: string;
   uploadedImage?: string; // Base64 string for uploaded image
   demoUrl?: string;
@@ -21,7 +21,7 @@ export interface Project {
 export interface NewProjectData {
   name: string;
   description: string;
-  technologies: string[];
+  languages: string[];
   imageUrl: string;
   uploadedImage?: string; // Base64 string for uploaded image
   demoUrl: string;
@@ -110,7 +110,9 @@ export class ProjectsService {
     return this.firebaseService.searchProjects(query);
   }
 
-  async testFirebaseConnection(): Promise<boolean> {
-    return await this.firebaseService.testFirebaseConnection();
+  // Force refresh projects from Firebase
+  async refreshProjects(): Promise<void> {
+    return await this.firebaseService.refreshProjects();
   }
+
 }
