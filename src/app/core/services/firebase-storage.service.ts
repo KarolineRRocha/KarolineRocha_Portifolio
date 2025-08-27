@@ -15,6 +15,7 @@ export class FirebaseStorageService {
 
   constructor() {
     console.log('🔥 FirebaseStorageService constructor called');
+    console.log('🔥 Firebase config:', firebaseConfig);
     try {
       const app = initializeApp(firebaseConfig);
       this.db = getFirestore(app);

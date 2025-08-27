@@ -9,7 +9,6 @@ export class GitHubApiInterceptor implements HttpInterceptor {
     if (request.url.includes('api.github.com')) {
       const modifiedRequest = request.clone({
         setHeaders: {
-          'User-Agent': 'Portfolio-App/1.0',
           'Accept': 'application/vnd.github.v3+json'
         }
       });
