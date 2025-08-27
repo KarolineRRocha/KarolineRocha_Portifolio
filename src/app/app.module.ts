@@ -13,6 +13,8 @@ import { LatestProjectsComponent } from './components/latest-projects/latest-pro
 import { AboutPageComponent } from './pages/about-page/about-page.component';
 import { ContactPageComponent } from './pages/contact-page/contact-page.component';
 import { TechnologiesPageComponent } from './pages/technologies-page/technologies-page.component';
+import { PrivacyPageComponent } from './pages/privacy-page/privacy-page.component';
+import { TermsPageComponent } from './pages/terms-page/terms-page.component';
 import { GlobalNotificationsComponent } from './shared/components/global-notifications/global-notifications.component';
 import { AdminLoginComponent } from './components/admin-login/admin-login.component';
 
@@ -34,6 +36,8 @@ import { ProjectModule } from './pages/project-page/project.module';
     AboutPageComponent,
     ContactPageComponent,
     TechnologiesPageComponent,
+    PrivacyPageComponent,
+    TermsPageComponent,
     GlobalNotificationsComponent,
     AdminLoginComponent
   ],

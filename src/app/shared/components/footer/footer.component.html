@@ -22,7 +22,7 @@
           </div>
           <div class="contact-item">
             <span class="contact-icon">📍</span>
-            <span class="contact-text">Santa Maria da Feira, Portugal</span>
+            <span class="contact-text">Portugal</span>
           </div>
         </div>
 
@@ -96,8 +96,8 @@
         </div>
 
         <div class="footer-links">
-          <a href="/privacy" class="footer-link">Privacy Policy</a>
-          <a href="/terms" class="footer-link">Terms of Service</a>
+          <a routerLink="/privacy" class="footer-link">Privacy Policy</a>
+          <a routerLink="/terms" class="footer-link">Terms of Service</a>
           <button class="footer-link admin-btn-footer" (click)="showAdminLogin()" [class.authenticated]="isAdmin" [title]="isAdmin ? 'Logout' : 'Admin Access'">
             <span class="admin-icon">{{ isAdmin ? '👤' : '🔐' }}</span>
           </button>
