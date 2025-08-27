@@ -114,13 +114,6 @@ export class FirebaseStorageService {
       const projectsRef = collection(this.db, COLLECTIONS.PROJECTS);
       const currentProjects = this.projectsSubject.value;
 
-      // New projects always go to the top (order: 0)
-      // Increment order of all existing projects
-      const updatePromises = currentProjects.map(project => {
-        const projectRef = doc(this.db, COLLECTIONS.PROJECTS, project.id);
-        return updateDoc(projectRef, { order: (project.order || 0) + 1 });
-      });
-
       // Create a simple, clean project object
       const newProject = {
         name: projectData.name.trim(),
@@ -133,19 +126,12 @@ export class FirebaseStorageService {
         createdAt: new Date(),
         updatedAt: new Date(),
         featured: false,
-        order: 0 // New projects always at the top
+        order: currentProjects.length // Simple order based on current count
       };
 
       console.log('🔥 Project data to save:', newProject);
 
-      // First, update all existing projects to increment their order
-      if (updatePromises.length > 0) {
-        console.log('🔥 Updating existing projects order...');
-        await Promise.all(updatePromises);
-        console.log('🔥 Existing projects order updated');
-      }
-
-      // Then create the new project
+      // Create the new project
       const docRef = await addDoc(projectsRef, newProject);
       console.log('🔥 Document created with ID:', docRef.id);
 

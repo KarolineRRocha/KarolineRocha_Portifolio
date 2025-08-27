@@ -52,16 +52,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   onLoginSuccess(): void {
     this.showLoginModal = false;
-    this.githubSyncService.startAutoSync();
     this.notificationService.success('Login successful! Welcome back!');
-
-    // Mostrar status atual da sincronização
-    const currentStatus = this.githubSyncService.getCurrentStatus();
-    if (currentStatus.isFirstSync) {
-      this.notificationService.info('First sync will add all GitHub projects to the database');
-    } else {
-      this.notificationService.info('Subsequent syncs will only update changed attributes');
-    }
   }
 
   onLoginCancel(): void {

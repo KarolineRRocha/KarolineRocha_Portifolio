@@ -707,11 +707,19 @@ export class GitHubSyncService {
     console.log(`🔄 Starting to create project for repo: ${repo.name}`);
 
     const technologies = await this.extractTechnologies(repo);
+
+    // Check if project already exists to preserve existing image
+    const currentProjects = this.firebaseService.getProjects();
+    const existingProject = currentProjects.find(p =>
+      p.projectUrl === repo.html_url ||
+      p.name === this.formatProjectName(repo.name)
+    );
+
     const projectData = {
       name: this.formatProjectName(repo.name),
       description: repo.description || '', // Description is optional, keep empty if no description
       technologies: technologies,
-      imageUrl: this.getDefaultImageUrl(repo.language),
+      imageUrl: existingProject?.imageUrl || this.getDefaultImageUrl(repo.language), // Preserve existing image
       demoUrl: await this.getGitHubPagesUrl(repo),
       projectUrl: repo.html_url,
       category: 'completed' as const
@@ -765,11 +773,10 @@ export class GitHubSyncService {
     console.log(`🔍 Fetching detailed info for: ${repo.name}`);
 
     const headers: any = {
-      'User-Agent': 'Portfolio-App/1.0',
       'Accept': 'application/vnd.github.v3+json'
     };
 
-    if (this.GITHUB_TOKEN) {
+    if (this.GITHUB_TOKEN && this.GITHUB_TOKEN.trim() !== '') {
       headers['Authorization'] = `token ${this.GITHUB_TOKEN}`;
     }
 
