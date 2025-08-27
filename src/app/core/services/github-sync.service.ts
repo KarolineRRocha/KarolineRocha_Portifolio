@@ -419,19 +419,17 @@ export class GitHubSyncService {
       // Find existing project using multiple strategies
       let existingProject = this.findExistingProject(currentProjects, repo);
 
-      if (existingProject) {
-        console.log(`✅ Project already exists: ${existingProject.name} - Skipping (no updates)`);
-      } else {
-        console.log(`➕ Creating new project: ${repo.name} (not found in database)`);
-        try {
-          await this.createNewProject(repo);
-          newRepos++;
-          console.log(`✅ Successfully created project: ${repo.name}`);
-          // Wait for Firebase to update after creating new project
-          await new Promise(resolve => setTimeout(resolve, 500));
-        } catch (error) {
-          console.error(`❌ Failed to create project ${repo.name}:`, error);
-        }
+      // TEMPORARY: Force creation for debug
+      console.log(`🔄 TEMPORARY DEBUG: Forcing creation of project: ${repo.name}`);
+      console.log(`➕ Creating new project: ${repo.name} (forced for debug)`);
+      try {
+        await this.createNewProject(repo);
+        newRepos++;
+        console.log(`✅ Successfully created project: ${repo.name}`);
+        // Wait for Firebase to update after creating new project
+        await new Promise(resolve => setTimeout(resolve, 1000));
+      } catch (error) {
+        console.error(`❌ Failed to create project ${repo.name}:`, error);
       }
     }
 
