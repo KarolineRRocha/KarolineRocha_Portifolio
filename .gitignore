@@ -297,28 +297,28 @@ config.json
 credentials.json
 service-account.json
 
-# Personal documents (CV, resumes, etc.)
-src/assets/*.pdf
-src/assets/*.doc
-src/assets/*.docx
-src/assets/cv.*
-src/assets/resume.*
-src/assets/CV.*
-src/assets/Resume.*
-src/assets/cv/
-src/assets/karoline-portrait.jpg
+# Personal documents (CV, resumes, etc.) - REMOVED TO ALLOW ASSETS
+# src/assets/*.pdf
+# src/assets/*.doc
+# src/assets/*.docx
+# src/assets/cv.*
+# src/assets/resume.*
+# src/assets/CV.*
+# src/assets/Resume.*
+# src/assets/cv/
+# src/assets/karoline-portrait.jpg
 
 # Environment files with sensitive data
 src/environments/environment.ts
 src/environments/environment.prod.ts
 src/environments/
 
-# Personal images and portraits
-src/assets/*portrait*
-src/assets/*Portrait*
-src/assets/KAROL*
-src/assets/karol*
-src/assets/Karol*
+# Personal images and portraits - REMOVED TO ALLOW ASSETS
+# src/assets/*portrait*
+# src/assets/*Portrait*
+# src/assets/KAROL*
+# src/assets/karol*
+# src/assets/Karol*
 
 # API keys and sensitive configuration
 *.env
@@ -457,8 +457,8 @@ functions/dist/
 .firebase/cache/
 
 
-# Scripts for run project
-start.sh
+# Scripts for run project - REMOVED TO ALLOW SCRIPTS
+# start.sh
 
-# README_START
-README-START.md
+# README_START - REMOVED TO ALLOW DOCUMENTATION
+# README-START.md
