@@ -108,11 +108,15 @@ export class FirebaseStorageService {
     console.log('🔥 addProject called with data:', projectData);
     try {
       if (!this.db) {
+        console.error('🔥 Database not initialized!');
         throw new Error('Firebase database not initialized');
       }
 
+      console.log('🔥 Database is initialized, proceeding...');
       const projectsRef = collection(this.db, COLLECTIONS.PROJECTS);
       const currentProjects = this.projectsSubject.value;
+
+      console.log('🔥 Current projects count:', currentProjects.length);
 
       // Create a simple, clean project object
       const newProject = {
@@ -132,6 +136,7 @@ export class FirebaseStorageService {
       console.log('🔥 Project data to save:', newProject);
 
       // Create the new project
+      console.log('🔥 Adding document to Firebase...');
       const docRef = await addDoc(projectsRef, newProject);
       console.log('🔥 Document created with ID:', docRef.id);
 

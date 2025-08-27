@@ -423,10 +423,15 @@ export class GitHubSyncService {
         console.log(`✅ Project already exists: ${existingProject.name} - Skipping (no updates)`);
       } else {
         console.log(`➕ Creating new project: ${repo.name} (not found in database)`);
-        await this.createNewProject(repo);
-        newRepos++;
-        // Wait for Firebase to update after creating new project
-        await new Promise(resolve => setTimeout(resolve, 500));
+        try {
+          await this.createNewProject(repo);
+          newRepos++;
+          console.log(`✅ Successfully created project: ${repo.name}`);
+          // Wait for Firebase to update after creating new project
+          await new Promise(resolve => setTimeout(resolve, 500));
+        } catch (error) {
+          console.error(`❌ Failed to create project ${repo.name}:`, error);
+        }
       }
     }
 
