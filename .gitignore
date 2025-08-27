@@ -455,3 +455,10 @@ functions/dist/
 
 # Firebase CLI cache
 .firebase/cache/
+
+
+# Scripts for run project
+start.sh
+
+# README_START
+README-START.md

@@ -23,6 +23,7 @@
     "@emailjs/browser": "^3.11.0",
     "@rxweb/reactive-form-validators": "^13.0.1",
     "firebase": "^12.0.0",
+    "firebase-admin": "^13.4.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.13.0"
