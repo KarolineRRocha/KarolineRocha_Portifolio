@@ -758,11 +758,15 @@ export class GitHubSyncService {
       p.name === this.formatProjectName(repo.name)
     );
 
+    // Check if repository has a logo image
+    const logoImageUrl = await this.checkForLogoImage(repo.name);
+
     const projectData = {
       name: this.formatProjectName(repo.name),
       description: repo.description || '', // Description is optional, keep empty if no description
       languages: languages,
-      imageUrl: existingProject?.imageUrl || this.getDefaultImageUrl(repo.language), // Preserve existing image
+      imageUrl: existingProject?.imageUrl || logoImageUrl || this.getDefaultImageUrl(repo.language), // Use logo if available, otherwise default
+      uploadedImage: '', // Always empty for GitHub sync projects
       demoUrl: await this.getGitHubPagesUrl(repo),
       projectUrl: repo.html_url,
       category: 'completed' as const
@@ -1166,6 +1170,78 @@ export class GitHubSyncService {
     } catch (error) {
       console.error('❌ Error checking GitHub API status:', error);
       return { available: false };
+    }
+  }
+
+  /**
+ * Checks if repository has a logo image
+ */
+  private async checkForLogoImage(repoName: string): Promise<string | null> {
+    try {
+      console.log(`🔍 Checking for logo image in repository: ${repoName}`);
+
+      // Common logo file names to check
+      const logoFiles = [
+        'logo.png',
+        'logo.jpg',
+        'logo.jpeg',
+        'logo.svg',
+        'logo.gif',
+        'logo.webp',
+        'Logo.png',
+        'Logo.jpg',
+        'Logo.jpeg',
+        'Logo.svg',
+        'Logo.gif',
+        'Logo.webp'
+      ];
+
+      // Common folders where logos are typically stored
+      const logoFolders = [
+        '', // Root directory
+        'assets/',
+        'images/',
+        'img/',
+        'src/assets/',
+        'src/images/',
+        'public/',
+        'static/',
+        'media/',
+        'resources/',
+        'assets/images/',
+        'assets/img/'
+      ];
+
+      // Check each branch
+      const branches = ['main', 'master', 'develop', 'dev'];
+
+      for (const branch of branches) {
+        // Check each folder
+        for (const folder of logoFolders) {
+          // Check each logo file
+          for (const logoFile of logoFiles) {
+            const logoUrl = `https://raw.githubusercontent.com/${this.USERNAME}/${repoName}/${branch}/${folder}${logoFile}`;
+
+            try {
+              const response = await fetch(logoUrl, { method: 'HEAD' });
+
+              if (response.ok) {
+                console.log(`✅ Found logo image: ${logoUrl}`);
+                return logoUrl;
+              }
+            } catch (error) {
+              // Continue checking other files silently
+              continue;
+            }
+          }
+        }
+      }
+
+      console.log(`❌ No logo image found in repository: ${repoName}`);
+      return null;
+    } catch (error) {
+      console.error(`❌ Error checking for logo image in ${repoName}:`, error);
+      return null;
     }
   }
 
