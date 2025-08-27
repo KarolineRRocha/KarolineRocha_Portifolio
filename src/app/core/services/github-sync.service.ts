@@ -4,9 +4,8 @@ import { BehaviorSubject, Observable, interval, timer, from, of, throwError, Sub
 import { switchMap, tap, catchError, map } from 'rxjs/operators';
 import { FirebaseStorageService } from './firebase-storage.service';
 import { NotificationService } from '../../services/notification.service';
-import { getFirestore, doc, setDoc, getDoc, collection } from 'firebase/firestore';
-import { firebaseConfig, COLLECTIONS } from '../../../environments/firebase.config';
-import { initializeApp } from 'firebase/app';
+import { doc, setDoc, getDoc } from 'firebase/firestore';
+import { COLLECTIONS } from '../../../environments/firebase.config';
 
 export interface GitHubRepo {
   id: number;
@@ -46,7 +45,6 @@ export interface SyncStatus {
   providedIn: 'root'
 })
 export class GitHubSyncService {
-  private db: any;
   private syncStatusSubject = new BehaviorSubject<SyncStatus>({
     lastSync: null,
     totalRepos: 0,
@@ -75,10 +73,6 @@ export class GitHubSyncService {
     private firebaseService: FirebaseStorageService,
     private notificationService: NotificationService
   ) {
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    this.db = getFirestore(app);
-
     // Load saved sync status
     this.loadSyncStatus();
 
@@ -95,7 +89,26 @@ export class GitHubSyncService {
  */
   private async loadSyncStatus(): Promise<void> {
     try {
-      const syncDocRef = doc(this.db, COLLECTIONS.SYNC_DATA, 'github_sync');
+      // Use the existing Firebase service instead of direct access
+      const db = this.firebaseService['db']; // Access the db instance from the service
+      if (!db) {
+        console.log('📊 Firebase not ready yet, using default status');
+        const defaultStatus: SyncStatus = {
+          lastSync: null,
+          totalRepos: 0,
+          syncedRepos: 0,
+          newRepos: 0,
+          updatedRepos: 0,
+          deletedRepos: 0,
+          isSyncing: false,
+          error: null,
+          isFirstSync: true
+        };
+        this.syncStatusSubject.next(defaultStatus);
+        return;
+      }
+
+      const syncDocRef = doc(db, COLLECTIONS.SYNC_DATA, 'github_sync');
       const syncDoc = await getDoc(syncDocRef);
 
       if (syncDoc.exists()) {
@@ -155,7 +168,14 @@ export class GitHubSyncService {
    */
   private async saveSyncStatus(status: SyncStatus): Promise<void> {
     try {
-      const syncDocRef = doc(this.db, COLLECTIONS.SYNC_DATA, 'github_sync');
+      // Use the existing Firebase service instead of direct access
+      const db = this.firebaseService['db']; // Access the db instance from the service
+      if (!db) {
+        console.log('📊 Firebase not ready yet, skipping save');
+        return;
+      }
+
+      const syncDocRef = doc(db, COLLECTIONS.SYNC_DATA, 'github_sync');
       const dataToSave: any = {
         totalRepos: status.totalRepos,
         syncedRepos: status.syncedRepos,
