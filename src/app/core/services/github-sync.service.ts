@@ -68,7 +68,7 @@ export class GitHubSyncService {
   // Para criar: https://github.com/settings/tokens
   // Scopes necessários: public_repo
   // Exemplo: private readonly GITHUB_TOKEN = 'ghp_1234567890abcdef1234567890abcdef12345678';
-  private readonly GITHUB_TOKEN = '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'; // ← Token configurado!
+  private readonly GITHUB_TOKEN = ''; // ← Token removido - funcionando sem autenticação
 
   constructor(
     private http: HttpClient,
