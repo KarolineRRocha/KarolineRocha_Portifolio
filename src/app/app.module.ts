@@ -14,6 +14,7 @@ import { AboutPageComponent } from './pages/about-page/about-page.component';
 import { ContactPageComponent } from './pages/contact-page/contact-page.component';
 import { TechnologiesPageComponent } from './pages/technologies-page/technologies-page.component';
 import { GlobalNotificationsComponent } from './shared/components/global-notifications/global-notifications.component';
+import { AdminLoginComponent } from './components/admin-login/admin-login.component';
 
 // Shared Module
 import { SharedModule } from './shared/shared.module';
@@ -33,7 +34,8 @@ import { ProjectModule } from './pages/project-page/project.module';
     AboutPageComponent,
     ContactPageComponent,
     TechnologiesPageComponent,
-    GlobalNotificationsComponent
+    GlobalNotificationsComponent,
+    AdminLoginComponent
   ],
   imports: [
     BrowserModule,

@@ -159,9 +159,7 @@
   </div>
 </section>
 
-<!-- Admin Login Modal -->
-<app-admin-login *ngIf="showLoginModal" (loginSuccess)="onLoginSuccess()" (loginCancel)="onLoginCancel()">
-</app-admin-login>
+
 
 <!-- Edit Project Modal -->
 <app-edit-project-modal *ngIf="showEditModal" [project]="editingProject" (save)="saveProjectEdit($event)" (cancel)="cancelProjectEdit()">

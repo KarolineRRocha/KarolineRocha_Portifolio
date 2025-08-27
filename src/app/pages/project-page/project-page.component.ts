@@ -24,14 +24,14 @@ export class ProjectPageComponent implements OnInit, OnDestroy {
   syncStatus: SyncStatus | null = null;
 
   // Modal states
-  showLoginModal = false;
+
   showAddModal = false;
   showEditModal = false;
   editingProject: Project | null = null;
 
   private projectsSubscription: Subscription;
   private syncStatusSubscription: Subscription;
-  private adminLoginSubscription: Subscription;
+
   private authStateSubscription: Subscription;
 
 
@@ -80,11 +80,7 @@ export class ProjectPageComponent implements OnInit, OnDestroy {
       this.cdr.detectChanges(); // Trigger change detection manually
     });
 
-    // Listen for admin login requests from footer
-    this.adminLoginSubscription = this.adminCommunicationService.adminLoginRequested$.subscribe(() => {
-      this.showLoginModal = true;
-      this.cdr.detectChanges(); // Trigger change detection manually
-    });
+
 
     this.authStateSubscription = this.authService.authState$.subscribe(
       (isAuthenticated: boolean) => {
@@ -120,9 +116,7 @@ export class ProjectPageComponent implements OnInit, OnDestroy {
     if (this.syncStatusSubscription) {
       this.syncStatusSubscription.unsubscribe();
     }
-    if (this.adminLoginSubscription) {
-      this.adminLoginSubscription.unsubscribe();
-    }
+
     if (this.authStateSubscription) {
       this.authStateSubscription.unsubscribe();
     }
@@ -336,45 +330,9 @@ export class ProjectPageComponent implements OnInit, OnDestroy {
     return this.showMore ? 'Show Less' : 'Show More Projects';
   }
 
-  /**
-   * Mostra modal de login
-   */
-  showLogin(): void {
-    this.showLoginModal = true;
-  }
 
-  /**
-   * Esconde modal de login
-   */
-  hideLogin(): void {
-    this.showLoginModal = false;
-  }
 
-  /**
-   * Callback quando login é bem-sucedido
-   */
-  onLoginSuccess(): void {
-    // isAdmin will be automatically updated via auth state subscription
-    this.showLoginModal = false;
-    this.githubSyncService.startAutoSync();
-    this.notificationService.success('Login successful! Welcome back!');
-    this.cdr.detectChanges(); // Force update after login
 
-    // Mostrar status atual da sincronização
-    const currentStatus = this.githubSyncService.getCurrentStatus();
-    if (currentStatus.isFirstSync) {
-      this.notificationService.info('First sync will add all GitHub projects to the database');
-    } else {
-      this.notificationService.info('Subsequent syncs will only update changed attributes');
-    }
-  }
-
-  /**
-   * Callback quando login é cancelado
-   */
-  onLoginCancel(): void {
-    this.showLoginModal = false;
-  }
 
   /**
    * Shows project creation modal

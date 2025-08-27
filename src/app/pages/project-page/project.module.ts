@@ -6,7 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 
 import { ProjectPageComponent } from './project-page.component';
-import { AdminLoginComponent } from '../../components/admin-login/admin-login.component';
+
 import { EditProjectModalComponent } from '../../components/edit-project-modal/edit-project-modal.component';
 import { AddProjectModalComponent } from '../../components/add-project-modal/add-project-modal.component';
 
@@ -16,7 +16,6 @@ import { SharedModule } from '../../shared/shared.module';
 @NgModule({
   declarations: [
     ProjectPageComponent,
-    AdminLoginComponent,
     EditProjectModalComponent,
     AddProjectModalComponent
   ],
@@ -30,7 +29,6 @@ import { SharedModule } from '../../shared/shared.module';
   ],
   exports: [
     ProjectPageComponent,
-    AdminLoginComponent,
     EditProjectModalComponent,
     AddProjectModalComponent
   ]
