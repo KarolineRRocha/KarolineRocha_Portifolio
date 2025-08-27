@@ -171,7 +171,7 @@ export class FirebaseStorageService {
         description: projectData.description || '',
         languages: projectData.languages || [],
         imageUrl: projectData.imageUrl || '',
-        uploadedImage: projectData.uploadedImage || '', // Ensure it's never undefined
+        uploadedImage: projectData.uploadedImage || '',
         demoUrl: projectData.demoUrl || '',
         projectUrl: projectData.projectUrl || '',
         category: projectData.category || 'completed',

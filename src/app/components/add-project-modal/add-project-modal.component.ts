@@ -15,7 +15,7 @@ export class AddProjectModalComponent implements OnInit, OnDestroy {
     description: '',
     languages: [],
     imageUrl: '',
-    uploadedImage: undefined,
+    uploadedImage: '',
     demoUrl: '',
     projectUrl: '',
     category: 'completed'
@@ -70,7 +70,7 @@ export class AddProjectModalComponent implements OnInit, OnDestroy {
       description: this.newProject.description || '',
       languages: this.languages || [],
       imageUrl: this.newProject.imageUrl || '',
-      uploadedImage: this.newProject.uploadedImage,
+      uploadedImage: this.newProject.uploadedImage || '',
       demoUrl: this.newProject.demoUrl || '',
       projectUrl: this.newProject.projectUrl || '',
       category: this.newProject.category || 'completed'
