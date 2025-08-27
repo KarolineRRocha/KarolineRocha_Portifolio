@@ -14,7 +14,9 @@ export class AuthService {
     this.authStateSubject.next(this.isAuthenticated());
   }
 
-  login(username: string, password: string): boolean {
+  login(username: string, password: string): { success: boolean; message?: string } {
+    console.log('🔐 AuthService.login called with:', { username, password: '***' });
+    
     // Simple admin authentication
     if (username === 'emaildakarolineribeiro@gmail.com' && password === '!Kzd.0342!') {
       const authData = {
@@ -28,9 +30,14 @@ export class AuthService {
       this.authStateSubject.next(true);
       console.log('🔐 AuthService: Login successful, auth state updated to true');
 
-      return true;
+      console.log('🔐 AuthService.login: Authentication successful');
+      return { success: true };
     }
-    return false;
+    console.log('🔐 AuthService.login: Authentication failed');
+    return {
+      success: false,
+      message: 'You do not have permissions to access this area.'
+    };
   }
 
   logout(): void {

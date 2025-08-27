@@ -48,19 +48,21 @@ export class AdminLoginComponent implements OnInit, OnDestroy {
     this.successMessage = '';
 
     // Use AuthService for authentication
-    const success = this.authService.login(this.credentials.username, this.credentials.password);
-    if (success) {
+    const result = this.authService.login(this.credentials.username, this.credentials.password);
+    console.log('🔐 Login result:', result);
+
+    if (result.success) {
       setTimeout(() => {
         this.isLoading = false;
         // Close modal immediately after successful login
         this.loginSuccess.emit();
       }, 1000);
-    } else {
-      setTimeout(() => {
-        this.isLoading = false;
-        this.errorMessage = 'Invalid credentials. Please try again.';
-      }, 1000);
-    }
+          } else {
+        setTimeout(() => {
+          this.isLoading = false;
+          this.errorMessage = result.message ?? 'Invalid credentials. Please try again.';
+        }, 1000);
+      }
   }
 
   onCancel() {
