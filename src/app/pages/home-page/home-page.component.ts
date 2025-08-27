@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProjectsService, Project } from '../../core/services/projects.service';
 import { AuthService } from '../../core/services/auth.service';
+import { TypewriterService } from '../../services/typewriter.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -10,17 +11,8 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./home-page.component.scss']
 })
 export class HomePageComponent implements OnInit, OnDestroy {
-  // Typewriter effect properties
   typewriterText = '';
-  typewriterPhrases = [
-    'Ready to create amazing things!',
-    'Let\'s build something incredible!',
-    'Code that makes a difference!',
-    'Innovation through code!'
-  ];
-  currentPhraseIndex = 0;
-  currentCharIndex = 0;
-  isDeleting = false;
+  private typewriterSubscription!: Subscription;
 
   // Projects properties
   projects: Project[] = [];
@@ -31,12 +23,25 @@ export class HomePageComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private projectsService: ProjectsService,
-    private authService: AuthService
+    private authService: AuthService,
+    private typewriterService: TypewriterService
   ) { }
 
   ngOnInit() {
     console.log('🏠 Home page: Initializing...');
-    this.startTypewriterEffect();
+
+    this.typewriterService.startTypewriter({
+      phrases: [
+        'Ready to create amazing things!',
+        'Let\'s build something incredible!',
+        'Code that makes a difference!',
+        'Innovation through code!'
+      ]
+    });
+
+    this.typewriterSubscription = this.typewriterService.typewriterText$.subscribe(
+      text => this.typewriterText = text
+    );
 
     // Set initial auth state
     this.isAdmin = this.authService.isAuthenticated();
@@ -45,9 +50,9 @@ export class HomePageComponent implements OnInit, OnDestroy {
     this.projectsSubscription = this.projectsService.projects$.subscribe(projects => {
       console.log('🏠 Home page: Projects updated, reloading featured projects...');
       console.log('🏠 Home page: Received projects count:', projects.length);
-      console.log('🏠 Home page: Projects received:', projects.map(p => ({ 
-        name: p.name, 
-        order: p.order, 
+      console.log('🏠 Home page: Projects received:', projects.map(p => ({
+        name: p.name,
+        order: p.order,
         imageUrl: p.imageUrl,
         uploadedImage: p.uploadedImage ? 'present' : 'not present',
         uploadedImageLength: p.uploadedImage?.length || 0
@@ -78,6 +83,10 @@ export class HomePageComponent implements OnInit, OnDestroy {
     if (this.authStateSubscription) {
       this.authStateSubscription.unsubscribe();
     }
+    if (this.typewriterSubscription) {
+      this.typewriterSubscription.unsubscribe();
+    }
+    this.typewriterService.stopTypewriter();
   }
 
   // Navigate to contact page and scroll to contact form
@@ -125,7 +134,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
         if (!newProject) return true;
 
         const uploadedImageChanged = oldProject.uploadedImage !== newProject.uploadedImage;
-        
+
         // Debug: Log detailed comparison for uploadedImage
         if (oldProject.uploadedImage || newProject.uploadedImage) {
           console.log('🏠 Home page: UploadedImage comparison for project:', newProject.name, {
@@ -167,43 +176,10 @@ export class HomePageComponent implements OnInit, OnDestroy {
     }
   }
 
-  // Typewriter effect
-  private startTypewriterEffect(): void {
-    setInterval(() => {
-      const currentPhrase = this.typewriterPhrases[this.currentPhraseIndex];
 
-      if (!this.isDeleting) {
-        this.typewriterText = currentPhrase.substring(0, this.currentCharIndex + 1);
-        this.currentCharIndex++;
 
-        if (this.currentCharIndex === currentPhrase.length) {
-          setTimeout(() => this.isDeleting = true, 2000);
-        }
-      } else {
-        this.typewriterText = currentPhrase.substring(0, this.currentCharIndex - 1);
-        this.currentCharIndex--;
-
-        if (this.currentCharIndex === 0) {
-          this.isDeleting = false;
-          this.currentPhraseIndex = (this.currentPhraseIndex + 1) % this.typewriterPhrases.length;
-        }
-      }
-    }, 100);
-  }
-
-  // Timeline circle hover control methods
-  onProjectImageHover(projectIndex: number, isHovering: boolean) {
-    const timelineNode = document.querySelector(`.timeline-project:nth-child(${projectIndex + 1}) .node-circle`) as HTMLElement;
-    if (timelineNode) {
-      if (isHovering) {
-        timelineNode.classList.add('timeline-circle-hover');
-      } else {
-        timelineNode.classList.remove('timeline-circle-hover');
-      }
-    }
-  }
-
-  onProjectCardHover(projectIndex: number, isHovering: boolean) {
+  // Timeline circle hover control method
+  onProjectHover(projectIndex: number, isHovering: boolean) {
     const timelineNode = document.querySelector(`.timeline-project:nth-child(${projectIndex + 1}) .node-circle`) as HTMLElement;
     if (timelineNode) {
       if (isHovering) {

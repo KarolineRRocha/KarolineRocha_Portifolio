@@ -45,30 +45,15 @@ export class ProjectPageComponent implements OnInit, OnDestroy {
   ) {
     console.log('🚀 ProjectPageComponent constructor called');
     this.projectsSubscription = this.projectsService.projects$.subscribe(projects => {
-      console.log('📊 Projects updated in component:', projects.length);
-      console.log('📊 All projects:', projects.map(p => ({ id: p.id, name: p.name, category: p.category, order: p.order })));
-
-      // Ensure projects array is never empty unless there are actually no projects
-      if (projects.length === 0) {
-        console.warn('⚠️ Received empty projects array, checking if this is correct');
-      }
-
       this.projects = projects;
       this.completedProjects = this.projectsService.getCompletedProjects();
-      console.log('📊 Completed projects:', this.completedProjects.length);
-      console.log('📊 Completed projects:', this.completedProjects.map(p => ({ id: p.id, name: p.name, category: p.category, order: p.order })));
-
       this.comingSoonProjects = this.projectsService.getComingSoonProjects();
-      console.log('📊 Coming soon projects:', this.comingSoonProjects.length);
 
       // Debug: Check if there are projects with undefined or null category
       const projectsWithInvalidCategory = projects.filter(p => !p.category);
       if (projectsWithInvalidCategory.length > 0) {
         console.warn('⚠️ Projects with invalid category:', projectsWithInvalidCategory);
       }
-
-      // Debug: Check all projects and their categories
-      console.log('🔍 All projects with categories:', projects.map(p => ({ name: p.name, category: p.category, id: p.id })));
 
       this.updateDisplayedProjects();
       this.updateVisibleCards();

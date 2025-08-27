@@ -1,28 +1,35 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
+import { TypewriterService } from '../../../services/typewriter.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit {
-  // Typewriter effect for console.log text
+export class HeaderComponent implements OnInit, OnDestroy {
   typewriterText = '';
-  typewriterPhrases = [
-    'Ready to create amazing things!',
-    'Let\'s build something incredible!',
-    'Code that makes a difference!',
-    'Innovation through code!'
-  ];
-  currentPhraseIndex = 0;
-  currentCharIndex = 0;
-  isDeleting = false;
+  private typewriterSubscription!: Subscription;
 
-  constructor(private router: Router) { }
+  constructor(
+    private router: Router,
+    private typewriterService: TypewriterService
+  ) { }
 
   ngOnInit(): void {
-    this.startTypewriterEffect();
+    this.typewriterService.startTypewriter({
+      phrases: [
+        'Ready to create amazing things!',
+        'Let\'s build something incredible!',
+        'Code that makes a difference!',
+        'Innovation through code!'
+      ]
+    });
+
+    this.typewriterSubscription = this.typewriterService.typewriterText$.subscribe(
+      text => this.typewriterText = text
+    );
   }
 
   // Navigate to contact page and scroll to contact form
@@ -42,27 +49,10 @@ export class HeaderComponent implements OnInit {
     });
   }
 
-  // Typewriter effect
-  private startTypewriterEffect(): void {
-    setInterval(() => {
-      const currentPhrase = this.typewriterPhrases[this.currentPhraseIndex];
-
-      if (!this.isDeleting) {
-        this.typewriterText = currentPhrase.substring(0, this.currentCharIndex + 1);
-        this.currentCharIndex++;
-
-        if (this.currentCharIndex === currentPhrase.length) {
-          setTimeout(() => this.isDeleting = true, 2000);
-        }
-      } else {
-        this.typewriterText = currentPhrase.substring(0, this.currentCharIndex - 1);
-        this.currentCharIndex--;
-
-        if (this.currentCharIndex === 0) {
-          this.isDeleting = false;
-          this.currentPhraseIndex = (this.currentPhraseIndex + 1) % this.typewriterPhrases.length;
-        }
-      }
-    }, 100);
+  ngOnDestroy(): void {
+    if (this.typewriterSubscription) {
+      this.typewriterSubscription.unsubscribe();
+    }
+    this.typewriterService.stopTypewriter();
   }
 }

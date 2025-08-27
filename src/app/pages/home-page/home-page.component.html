@@ -183,12 +183,12 @@
 
           <div class="project-image-container">
             <div class="project-icon-circle">
-              <img [src]="project.uploadedImage || project.imageUrl" [alt]="project.name + ' preview'" (mouseenter)="onProjectImageHover(i, true)" (mouseleave)="onProjectImageHover(i, false)">
+              <img [src]="project.uploadedImage || project.imageUrl" [alt]="project.name + ' preview'" (mouseenter)="onProjectHover(i, true)" (mouseleave)="onProjectHover(i, false)">
             </div>
           </div>
 
           <div class="project-text-container">
-            <div class="project-text-card" (mouseenter)="onProjectCardHover(i, true)" (mouseleave)="onProjectCardHover(i, false)">
+            <div class="project-text-card" (mouseenter)="onProjectHover(i, true)" (mouseleave)="onProjectHover(i, false)">
               <div class="project-header">
                 <h3 class="project-title">{{ project.name }}</h3>
               </div>

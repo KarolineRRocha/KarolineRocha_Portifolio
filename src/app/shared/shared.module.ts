@@ -9,20 +9,14 @@ import { FooterComponent } from './components/footer/footer.component';
 import { TopnavComponent } from './components/topnav/topnav.component';
 import { ScrollTopComponent } from './components/scroll-top/scroll-top.component';
 
-// Shared Directives (future)
-// import { HighlightDirective } from './directives/highlight.directive';
 
-// Shared Pipes (future)
-// import { FilterPipe } from './pipes/filter.pipe';
 
 @NgModule({
   declarations: [
     HeaderComponent,
     FooterComponent,
     TopnavComponent,
-    ScrollTopComponent,
-    // HighlightDirective,
-    // FilterPipe
+    ScrollTopComponent
   ],
   imports: [
     CommonModule,
@@ -38,9 +32,7 @@ import { ScrollTopComponent } from './components/scroll-top/scroll-top.component
     ReactiveFormsModule,
     FormsModule,
     RouterModule,
-    CommonModule,
-    // HighlightDirective,
-    // FilterPipe
+    CommonModule
   ]
 })
 export class SharedModule { }

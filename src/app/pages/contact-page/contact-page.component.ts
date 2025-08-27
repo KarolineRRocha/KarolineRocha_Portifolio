@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { ContactForm } from '../../models/contact.interface';
 import { ContactService } from '../../services/contact.service';
@@ -6,7 +6,9 @@ import { BaseComponent } from '../../components/base/base.component';
 import { LoadingService } from '../../services/loading.service';
 import { NotificationService } from '../../services/notification.service';
 import { ErrorHandlerService } from '../../services/error-handler.service';
+import { TypewriterService } from '../../services/typewriter.service';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-contact-page',
@@ -14,7 +16,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
   styleUrls: ['./contact-page.component.scss'],
 
 })
-export class ContactPageComponent extends BaseComponent implements OnInit {
+export class ContactPageComponent extends BaseComponent implements OnInit, OnDestroy {
   form: FormGroup = this.fb.group({
     from_name: ['', [Validators.required]],
     to_name: ['Admin'],
@@ -29,17 +31,8 @@ export class ContactPageComponent extends BaseComponent implements OnInit {
   showSuccessModal = false;
   showQuickContactModal = false;
 
-  // Typewriter effect
   typewriterText = '';
-  typewriterPhrases = [
-    'Ready to Build Something Amazing?',
-    'Let\'s Create Digital Magic Together',
-    'Your Ideas + My Code = Success',
-    'Innovation Starts Here'
-  ];
-  currentPhraseIndex = 0;
-  currentCharIndex = 0;
-  isDeleting = false;
+  private typewriterSubscription!: Subscription;
 
   // Form progress
   focusedField = '';
@@ -77,6 +70,7 @@ export class ContactPageComponent extends BaseComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private contactService: ContactService,
+    private typewriterService: TypewriterService,
     protected override loadingService: LoadingService,
     protected override notificationService: NotificationService,
     protected override errorHandler: ErrorHandlerService
@@ -85,7 +79,19 @@ export class ContactPageComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.startTypewriterEffect();
+    this.typewriterService.startTypewriter({
+      phrases: [
+        'Ready to Build Something Amazing?',
+        'Let\'s Create Digital Magic Together',
+        'Your Ideas + My Code = Success',
+        'Innovation Starts Here'
+      ]
+    });
+
+    this.typewriterSubscription = this.typewriterService.typewriterText$.subscribe(
+      text => this.typewriterText = text
+    );
+
     this.updateFormProgress();
     this.startAvailabilityTimer();
   }
@@ -163,29 +169,7 @@ export class ContactPageComponent extends BaseComponent implements OnInit {
 
 
 
-  // Typewriter effect
-  private startTypewriterEffect(): void {
-    setInterval(() => {
-      const currentPhrase = this.typewriterPhrases[this.currentPhraseIndex];
 
-      if (!this.isDeleting) {
-        this.typewriterText = currentPhrase.substring(0, this.currentCharIndex + 1);
-        this.currentCharIndex++;
-
-        if (this.currentCharIndex === currentPhrase.length) {
-          setTimeout(() => this.isDeleting = true, 2000);
-        }
-      } else {
-        this.typewriterText = currentPhrase.substring(0, this.currentCharIndex - 1);
-        this.currentCharIndex--;
-
-        if (this.currentCharIndex === 0) {
-          this.isDeleting = false;
-          this.currentPhraseIndex = (this.currentPhraseIndex + 1) % this.typewriterPhrases.length;
-        }
-      }
-    }, 100);
-  }
 
   // Form progress tracking
   private updateFormProgress(): void {
@@ -233,6 +217,13 @@ export class ContactPageComponent extends BaseComponent implements OnInit {
   shouldShowError(fieldName: string): boolean {
     const field = this.form.get(fieldName);
     return !!(field?.errors && field.touched);
+  }
+
+  override ngOnDestroy(): void {
+    if (this.typewriterSubscription) {
+      this.typewriterSubscription.unsubscribe();
+    }
+    this.typewriterService.stopTypewriter();
   }
 
 
