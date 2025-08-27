@@ -121,7 +121,6 @@ export class ContactPageComponent extends BaseComponent implements OnInit, OnDes
         console.log('Email sent successfully!');
         this.showSuccessModal = true;
         this.form.reset();
-        this.notificationService.success('Message sent successfully! You will receive a response soon.');
       } else {
         console.log('Failed to send email');
         this.notificationService.error('Failed to send message. Please try again.');

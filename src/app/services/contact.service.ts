@@ -31,7 +31,6 @@ export class ContactService {
       const response = await this.emailService.sendEmail(emailData);
 
       if (response.success) {
-        this.notificationService.success(SUCCESS_MESSAGES.CONTACT.MESSAGE_SENT);
         this.errorHandler.handleWarning('Contact form submitted successfully', 'ContactService');
         return true;
       } else {
