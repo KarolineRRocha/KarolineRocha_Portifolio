@@ -298,3 +298,98 @@ azure-pipelines.yml.bak
 *.crt
 *.csr
 *.der
+
+# =============================================================================
+# Additional Angular/Node.js ignores
+# =============================================================================
+# Angular CLI cache
+.angular/
+
+# Angular build artifacts
+*.js.map
+*.css.map
+
+# Angular testing
+test-results/
+playwright-report/
+playwright/.cache/
+
+# =============================================================================
+# Debug and development files
+# =============================================================================
+# Debug logs
+debug.log
+debug-*.log
+
+# Development configuration
+.dev/
+.devrc
+
+# Local development files
+local/
+local.*
+local-*
+
+# =============================================================================
+# Backup and temporary files
+# =============================================================================
+# Editor backup files
+*~
+*.orig
+*.rej
+
+# System files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# =============================================================================
+# Package manager files
+# =============================================================================
+# npm
+.npmrc
+.npmignore
+
+# yarn
+.yarnrc
+.yarnrc.yml
+
+# pnpm
+.pnpmrc
+
+# =============================================================================
+# Build and deployment
+# =============================================================================
+# Build artifacts
+build/
+dist/
+out/
+
+# Deployment files
+deploy/
+deployment/
+
+# =============================================================================
+# Monitoring and analytics
+# =============================================================================
+# Analytics
+analytics/
+stats/
+
+# Monitoring
+monitoring/
+metrics/
+
+# =============================================================================
+# Testing and quality assurance
+# =============================================================================
+# Test coverage
+coverage/
+.nyc_output/
+
+# Test results
+test-results/
+junit.xml
+
+# Quality assurance
+.quality/
