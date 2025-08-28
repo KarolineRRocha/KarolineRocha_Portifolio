@@ -2,66 +2,35 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [ main ]
-  workflow_dispatch:
+    branches:
+      - main
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
+  contents: write
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
+      - name: Checkout main
+        uses: actions/checkout@v4
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '18'
-        cache: 'npm'
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
 
-    - name: Install dependencies
-      run: npm ci
+      - name: Install dependencies
+        run: npm ci
 
-    - name: Build application
-      run: npm run build:prod
+      - name: Build Project
+        run: npm run build:prod
 
-    - name: List build output
-      run: ls -la dist/webPortifolio
-
-    - name: Setup Pages
-      uses: actions/configure-pages@v4
-
-    - name: Prepare gh-pages branch
-      run: |
-        git config --global user.name "GitHub Actions"
-        git config --global user.email "actions@github.com"
-
-        # Criar branch gh-pages ou fazer checkout
-        git checkout --orphan gh-pages || git checkout gh-pages
-
-        # Limpar branch
-        git rm -rf . || true
-
-        # Copiar arquivos de build para a raiz
-        cp -r dist/webPortifolio/* .
-
-        # Adicionar todos os arquivos
-        git add .
-
-        # Commit
-        git commit -m "Deploy to GitHub Pages - $(date)"
-
-    - name: Push to gh-pages
-      run: |
-        git push origin gh-pages --force
-
-
+      - name: Deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist/webPortifolio
+          commit_message: 'deploy: automatic deployment from main branch'
+          force_orphan: true
