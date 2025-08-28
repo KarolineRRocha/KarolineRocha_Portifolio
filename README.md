@@ -75,12 +75,18 @@ This portfolio demonstrates modern web development practices with a focus on:
    npm install
    ```
 
-3. Start development server
+3. Set up environment files (IMPORTANT!)
+   ```bash
+   ./setup-env.sh
+   ```
+   Then edit the created environment files with your actual values.
+
+4. Start development server
    ```bash
    ng serve
    ```
 
-4. Open your browser and navigate to `http://localhost:4200`
+5. Open your browser and navigate to `http://localhost:4200`
 
 ### Build for Production
 ```bash
@@ -123,32 +129,55 @@ src/
 ## Configuration
 
 ### Environment Setup
-Create environment files for different deployment stages:
 
-```typescript
-// environment.ts
-export const environment = {
-  production: false,
-  github: {
-    username: 'your-github-username',
-    apiUrl: 'https://api.github.com'
-  },
-  email: {
-    serviceId: 'your-emailjs-service-id',
-    templateId: 'your-emailjs-template-id',
-    userId: 'your-emailjs-user-id'
-  }
-};
-```
+**⚠️ IMPORTANT: Never commit sensitive tokens or credentials to version control!**
 
-### Admin Configuration
-Set up admin credentials in environment files:
-```typescript
-admin: {
-  defaultUsername: 'your-admin-email',
-  defaultPassword: 'your-secure-password'
-}
-```
+1. Copy the example environment file:
+   ```bash
+   cp src/environments/environment.example.ts src/environments/environment.ts
+   cp src/environments/environment.example.ts src/environments/environment.prod.ts
+   ```
+
+2. Configure your environment files with your actual values:
+   ```typescript
+   // environment.ts
+   export const environment = {
+     production: false,
+     github: {
+       username: 'your-github-username',
+       apiUrl: 'https://api.github.com',
+       token: 'your-github-personal-access-token'
+     },
+     email: {
+       serviceId: 'your-emailjs-service-id',
+       templateId: 'your-emailjs-template-id',
+       userId: 'your-emailjs-user-id'
+     },
+     admin: {
+       defaultUsername: 'your-admin-email',
+       defaultPassword: 'your-secure-password'
+     }
+   };
+   ```
+
+### Required Services Setup
+
+#### GitHub Personal Access Token
+1. Go to GitHub Settings > Developer settings > Personal access tokens
+2. Generate new token with scopes: `public_repo`, `read:user`
+3. Add the token to your environment files
+
+#### EmailJS Configuration
+1. Create an account at [EmailJS](https://www.emailjs.com/)
+2. Set up email service and template
+3. Get your Service ID, Template ID, and User ID
+4. Add them to your environment files
+
+### Security Notes
+- Environment files are ignored by Git (see `.gitignore`)
+- Use strong, unique passwords
+- Rotate tokens regularly
+- See [SECURITY.md](SECURITY.md) for detailed security guidelines
 
 ## Deployment
 
@@ -162,6 +191,28 @@ admin: {
    ```bash
    ng deploy --base-href=https://yourusername.github.io/your-repo/
    ```
+
+## Security
+
+### 🔒 Security Guidelines
+
+This project follows strict security practices to protect sensitive information:
+
+- **Environment Files**: Sensitive data is stored in environment files that are ignored by Git
+- **Token Management**: API tokens and credentials are never committed to version control
+- **Access Control**: Admin credentials are securely configured
+- **Regular Updates**: Dependencies are regularly updated for security patches
+
+For detailed security information, see [SECURITY.md](SECURITY.md).
+
+### 🚨 If You Find a Security Issue
+
+If you discover a security vulnerability, please:
+
+1. **Do NOT create a public issue**
+2. Contact the maintainer privately
+3. Provide detailed information about the vulnerability
+4. Allow time for the issue to be addressed
 
 ## Contributing
 

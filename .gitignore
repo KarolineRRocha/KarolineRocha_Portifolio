@@ -44,6 +44,35 @@ typings/
 .env.*.local
 
 # =============================================================================
+# Security - Sensitive Configuration Files
+# =============================================================================
+# Environment files with sensitive data
+src/environments/environment.ts
+src/environments/environment.prod.ts
+
+# Configuration files with secrets
+config/secrets.json
+config/credentials.json
+*.key
+*.pem
+*.p12
+*.pfx
+
+# =============================================================================
+# API Keys and Tokens
+# =============================================================================
+# GitHub tokens
+.github-token
+github-token.txt
+
+# Email service credentials
+email-credentials.json
+emailjs-config.json
+
+# Admin credentials
+admin-credentials.json
+
+# =============================================================================
 # IDE and Editor files
 # =============================================================================
 # Visual Studio Code
