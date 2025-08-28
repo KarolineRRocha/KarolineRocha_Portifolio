@@ -6,7 +6,7 @@
   min-height: 100vh;
   background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #cbd5e1 100%);
   position: relative;
-  overflow: hidden;
+  overflow-x: hidden;
   scroll-behavior: smooth;
 }
 
@@ -229,7 +229,7 @@
   background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
   position: relative;
   animation: slideInUp 1.2s ease-out 0.3s both;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 .availability-section::before {
@@ -534,7 +534,7 @@
   background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
   position: relative;
   animation: slideInUp 1.2s ease-out 0.6s both;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 .contact-content::before {
@@ -573,6 +573,7 @@
   max-width: 800px;
   margin: 0 auto;
   animation: slideInUp 1s ease-out 0.8s both;
+  width: 100%;
 }
 
 .form-header {
@@ -597,7 +598,6 @@
   color: rgba(255, 255, 255, 0.8);
   font-size: clamp(1rem, 1.8vw, 1.2rem);
   line-height: 1.6;
-  max-width: 600px;
   margin: 0 auto;
   font-weight: var(--font-weight-medium);
   animation: fadeIn 1s ease-out 1.2s both;
@@ -1326,9 +1326,16 @@
     padding: calc(var(--header-height) + var(--spacing-2xl)) var(--spacing-md) var(--spacing-2xl);
   }
 
-  .availability-section,
-  .contact-content {
+  .availability-section {
     padding: var(--spacing-3xl) var(--spacing-md);
+  }
+
+  .contact-content {
+    min-height: 100vh;
+    padding: var(--spacing-3xl) var(--spacing-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .contact-form {
@@ -1356,8 +1363,8 @@
   }
 
   .input-wrapper input {
-    min-height: 52px;
-    height: 52px;
+    min-height: 48px;
+    height: 48px;
   }
 
   .input-icon {
@@ -1377,9 +1384,16 @@
     padding: calc(var(--header-height) + var(--spacing-xl)) var(--spacing-sm) var(--spacing-xl);
   }
 
-  .availability-section,
-  .contact-content {
+  .availability-section {
     padding: var(--spacing-2xl) var(--spacing-sm);
+  }
+
+  .contact-content {
+    min-height: 100vh;
+    padding: var(--spacing-2xl) var(--spacing-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .contact-form {
@@ -1400,6 +1414,11 @@
     padding: var(--spacing-sm) var(--spacing-md);
     padding-left: 2rem;
     font-size: 0.9rem;
+  }
+
+  .input-wrapper input {
+    min-height: 44px;
+    height: 44px;
   }
 
   .input-icon {
@@ -1452,7 +1471,7 @@
 
   .form-header h2,
   .form-header p {
-    text-align: left;
+    text-align: center;
   }
 }
 

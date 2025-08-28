@@ -1,6 +1,6 @@
 # Karoline Rocha - Frontend Developer Portfolio
 
-A modern, responsive portfolio website built with Angular 16 and TypeScript, showcasing frontend development expertise through elegant design and interactive user experiences.
+A modern, responsive portfolio website built with Angular 16.2.12 and TypeScript, showcasing frontend development expertise through elegant design and interactive user experiences.
 
 ## Live Demo
 
@@ -18,12 +18,21 @@ This portfolio demonstrates modern web development practices with a focus on:
 
 ## Features
 
+### Recent Improvements (Latest Updates)
+- **Enhanced Mobile Responsiveness**: Optimized breakpoints for all screen sizes (320px to 1400px+)
+- **Improved Navigation**: Fixed scroll behavior with proper header offset calculation
+- **Contact Form Optimization**: Responsive input sizing and 100vh minimum height on mobile
+- **Cross-Component Consistency**: Unified navigation methods across all components
+- **Performance Optimizations**: Reduced CSS conflicts and improved build efficiency
+
 ### Design & User Experience
 - Animated floating elements and smooth transitions
 - Interactive code window with typing animations
 - Modern typography and professional color scheme
-- Mobile-first responsive design
+- Mobile-first responsive design with optimized breakpoints
 - Custom notifications and form validation
+- Smooth scroll navigation with proper offset handling
+- Responsive form inputs with adaptive sizing
 
 ### Technical Features
 - Component-based architecture with Angular 16
@@ -42,10 +51,11 @@ This portfolio demonstrates modern web development practices with a focus on:
 ## Tech Stack
 
 ### Frontend
-- **Angular 16** - Modern web framework
-- **TypeScript** - Type-safe JavaScript
+- **Angular 16.2.12** - Modern web framework
+- **TypeScript 4.9.5** - Type-safe JavaScript
 - **SCSS** - Advanced CSS preprocessing
 - **CSS Grid & Flexbox** - Modern layout techniques
+- **RxJS 7.8.2** - Reactive programming library
 
 ### Development Tools
 - **Angular CLI** - Development and build tools
@@ -59,8 +69,9 @@ This portfolio demonstrates modern web development practices with a focus on:
 ## Getting Started
 
 ### Prerequisites
-- Node.js (v16 or higher)
+- Node.js (v18 or higher - LTS version recommended)
 - npm or yarn package manager
+- Angular CLI (v16 or higher)
 
 ### Installation
 
@@ -241,4 +252,4 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ---
 
-**Made with Angular 16, TypeScript, and SCSS** 
+**Made with Angular 16.2.12, TypeScript 4.9.5, and SCSS** 

@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 export class PrivacyPageComponent {
   constructor(private router: Router) { }
 
-    // Navigate to contact page and scroll to contact form
+  // Navigate to contact page and scroll to contact form
   navigateToContactForm(): void {
     // Navigate to contact page
     this.router.navigate(['/contact']).then(() => {
@@ -20,7 +20,7 @@ export class PrivacyPageComponent {
           // Check device size and set appropriate header offset
           const width = window.innerWidth;
           let headerOffset = 0;
-          
+
           if (width <= 768) {
             // Mobile: 3.75rem = 60px
             headerOffset = 60;
@@ -31,10 +31,10 @@ export class PrivacyPageComponent {
             // Tablet Landscape: 4.5rem = 72px
             headerOffset = 72;
           }
-          
+
           const elementPosition = contactForm.getBoundingClientRect().top;
           const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-          
+
           window.scrollTo({
             top: offsetPosition,
             behavior: 'smooth'
