@@ -31,7 +31,7 @@
 
         <div class="project-image-container">
           <div class="project-icon-circle">
-            <img [src]="getImageSrc(project)" [alt]="project.name + ' preview'" [attr.data-updated]="project.updatedAt?.getTime()" (mouseenter)="onProjectImageHover(i, true)" (mouseleave)="onProjectImageHover(i, false)" (load)="onImageLoad(project.name)" (error)="onImageError(project.name)">
+            <img [src]="getImageSrc(project)" [alt]="project.name + ' preview'" [attr.data-updated]="project.updatedAt.getTime()" (mouseenter)="onProjectImageHover(i, true)" (mouseleave)="onProjectImageHover(i, false)" (load)="onImageLoad(project.name)" (error)="onImageError(project.name)">
           </div>
         </div>
 

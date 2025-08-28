@@ -138,11 +138,32 @@ export class ContactPageComponent extends BaseComponent implements OnInit, OnDes
     this.showSuccessModal = false;
   }
 
-  // Navigation and interaction methods
+    // Navigation and interaction methods
   scrollToForm(): void {
     const element = document.getElementById('contact-form');
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      // Check device size and set appropriate header offset
+      const width = window.innerWidth;
+      let headerOffset = 0;
+      
+      if (width <= 768) {
+        // Mobile: 3.75rem = 60px
+        headerOffset = 60;
+      } else if (width <= 900) {
+        // Tablet Portrait: 4rem = 64px
+        headerOffset = 64;
+      } else if (width <= 1024) {
+        // Tablet Landscape: 4.5rem = 72px
+        headerOffset = 72;
+      }
+      
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+      
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
     }
   }
 
@@ -163,7 +184,7 @@ export class ContactPageComponent extends BaseComponent implements OnInit, OnDes
   }
 
   openEmail(): void {
-    window.open('mailto:karoline.rrocha@gmail.com', '_blank');
+    window.open('mailto:emaildakarolineribeiro@gmail.com', '_blank');
   }
 
 

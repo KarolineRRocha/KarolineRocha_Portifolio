@@ -52,12 +52,14 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
   gap: var(--spacing-lg);
+  justify-items: center;
 }
 
 .tech-item {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: var(--spacing-sm);
   padding: var(--spacing-lg);
   border-radius: var(--radius-lg);
@@ -67,6 +69,7 @@
   cursor: default;
   position: relative;
   overflow: hidden;
+  text-align: center;
 }
 
 .tech-item::before {
@@ -224,15 +227,18 @@
   .category-title {
     font-size: var(--font-size-lg);
     margin-bottom: var(--spacing-xl);
+    text-align: center;
   }
 
   .tech-items {
     grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
     gap: var(--spacing-sm);
-}
+    justify-items: center;
+  }
 
   .tech-item {
     padding: var(--spacing-md);
+    justify-self: center;
   }
 
   .tech-icon {
@@ -246,6 +252,7 @@
 
   .tech-name {
     font-size: var(--font-size-xs);
+    text-align: center;
   }
 }
 
@@ -257,10 +264,16 @@
   .tech-items {
     grid-template-columns: repeat(2, 1fr);
     gap: var(--spacing-sm);
+    justify-items: center;
+    align-items: center;
   }
 
   .tech-item {
     padding: var(--spacing-sm);
+    justify-self: center;
+    align-self: center;
+    width: 100%;
+    max-width: 120px;
   }
 
   .tech-icon {
@@ -274,5 +287,6 @@
 
   .tech-name {
     font-size: var(--font-size-xs);
+    text-align: center;
   }
 }

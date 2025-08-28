@@ -34,7 +34,7 @@ export const APP_CONSTANTS = {
   // Routes
   ROUTES: {
     HOME: '/home',
-    ABOUT: '/about',
+    ABOUT: '/about_me',
     TECHNOLOGIES: '/technologies',
     PROJECTS: '/projects',
     CONTACT: '/contact'

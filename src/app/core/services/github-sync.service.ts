@@ -6,6 +6,7 @@ import { FirebaseStorageService } from './firebase-storage.service';
 import { NotificationService } from '../../services/notification.service';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { COLLECTIONS } from '../../../environments/firebase.config';
+import { environment } from '../../../environments/environment';
 
 export interface GitHubRepo {
   id: number;
@@ -59,14 +60,14 @@ export class GitHubSyncService {
 
   public syncStatus$ = this.syncStatusSubject.asObservable();
   private syncInterval: any;
-  private readonly GITHUB_API_BASE = 'https://api.github.com';
-  private readonly USERNAME = 'KarolineRRocha';
+  private readonly GITHUB_API_BASE = environment.github.apiUrl;
+  private readonly USERNAME = environment.github.username;
 
   // GitHub Personal Access Token (opcional)
   // Para criar: https://github.com/settings/tokens
   // Scopes necessários: public_repo
   // Exemplo: private readonly GITHUB_TOKEN = 'ghp_1234567890abcdef1234567890abcdef12345678';
-  private readonly GITHUB_TOKEN: string = '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'; // ← Token configurado para aumentar rate limit
+  private readonly GITHUB_TOKEN: string = environment.github.token || ''; // ← Token configurado para aumentar rate limit
 
   constructor(
     private http: HttpClient,
@@ -504,9 +505,8 @@ export class GitHubSyncService {
       'Accept': 'application/vnd.github.v3+json'
     };
 
-    // Adicionar token de autenticação apenas se disponível e não vazio
+    // Token is now handled by the GitHub API interceptor
     if (this.GITHUB_TOKEN && this.GITHUB_TOKEN.trim() !== '') {
-      headers['Authorization'] = `token ${this.GITHUB_TOKEN}`;
       console.log('🔑 Using GitHub token for authentication');
     } else {
       console.log('⚠️ No GitHub token - using unauthenticated requests');
