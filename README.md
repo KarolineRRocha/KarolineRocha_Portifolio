@@ -4,7 +4,7 @@ A modern, responsive portfolio website built with Angular 16 and TypeScript, sho
 
 ## Live Demo
 
-**[View Portfolio](https://karolinerrocha.github.io/karoline-rocha-portifolio/)**
+**[View Portfolio](https://karolinerrocha.github.io/KarolineRocha_Portfolio/)**
 
 ## Overview
 
@@ -66,8 +66,8 @@ This portfolio demonstrates modern web development practices with a focus on:
 
 1. Clone the repository
    ```bash
-   git clone https://github.com/KarolineRRocha/karoline-rocha-portifolio.git
-   cd karoline-rocha-portifolio
+   git clone https://github.com/KarolineRRocha/KarolineRocha_Portfolio.git
+   cd KarolineRocha_Portfolio
    ```
 
 2. Install dependencies

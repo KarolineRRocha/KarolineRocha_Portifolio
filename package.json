@@ -1,15 +1,15 @@
 {
-  "name": "karoline-rocha-portifolio",
+  "name": "KarolineRocha_Portfolio",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "build:prod": "ng build --configuration=production --base-href /KarolineRocha_Portifolio/",
+    "build:prod": "ng build --configuration=production --base-href /KarolineRocha_Portfolio/",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "deploy:ghdocs": "ng build --configuration=production --output-path docs --base-href /KarolineRocha_Portifolio/",
-    "deploy": "ng build --configuration=production --base-href /KarolineRocha_Portifolio/ && npx angular-cli-ghpages --dir=dist/webPortifolio"
+    "deploy:ghdocs": "ng build --configuration=production --output-path docs --base-href /KarolineRocha_Portfolio/",
+    "deploy": "ng build --configuration=production --base-href /KarolineRocha_Portfolio/ && npx angular-cli-ghpages --dir=dist/KarolineRocha_Portfolio"
   },
   "private": true,
   "dependencies": {

@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "webPortifolio": {
+    "KarolineRocha_Portfolio": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/webPortifolio",
+            "outputPath": "dist/KarolineRocha_Portfolio",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
@@ -67,10 +67,10 @@
           },
           "configurations": {
             "production": {
-              "browserTarget": "webPortifolio:build:production"
+              "browserTarget": "KarolineRocha_Portfolio:build:production"
             },
             "development": {
-              "browserTarget": "webPortifolio:build:development"
+              "browserTarget": "KarolineRocha_Portfolio:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -78,7 +78,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "webPortifolio:build"
+            "browserTarget": "KarolineRocha_Portfolio:build"
           }
         },
         "test": {

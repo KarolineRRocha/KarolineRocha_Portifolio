@@ -13,7 +13,7 @@ import { NotificationService } from './services/notification.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit, OnDestroy {
-  title = 'webPortifolio';
+  title = 'KarolineRocha_Portfolio';
   showLoginModal = false;
   private adminLoginSubscription!: Subscription;
 
