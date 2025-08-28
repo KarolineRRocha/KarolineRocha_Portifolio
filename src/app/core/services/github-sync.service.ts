@@ -524,9 +524,9 @@ export class GitHubSyncService {
         })));
       }),
       // Filter public repos and exclude the portfolio repository itself
-      map(repos => repos.filter(repo => repo.visibility === 'public' && repo.name !== 'KarolineRocha_Portifolio')),
+      map(repos => repos.filter(repo => repo.visibility === 'public' && repo.name !== 'KarolineRocha_Portfolio')),
       tap(repos => {
-        console.log('✅ Public repos (excluding KarolineRocha_Portifolio):', repos.length);
+        console.log('✅ Public repos (excluding KarolineRocha_Portfolio):', repos.length);
         console.log('✅ Public repo names:', repos.map(r => r.name));
         this.updateSyncStatus({
           totalRepos: repos.length,
