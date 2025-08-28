@@ -136,9 +136,16 @@ Thumbs.db
 .temp/
 
 # =============================================================================
-# Documentation (keep README files)
+# Firebase
 # =============================================================================
-*.md
+.firebase/
+firebase-debug.log
+firestore-debug.log
+ui-debug.log
+
+# =============================================================================
+# Documentation (keep important files)
+# =============================================================================
 !README.md
 !readme.md
 !CONTRIBUTING.md
