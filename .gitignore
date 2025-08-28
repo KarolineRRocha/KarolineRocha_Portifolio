@@ -142,6 +142,13 @@ Thumbs.db
 firebase-debug.log
 firestore-debug.log
 ui-debug.log
+firestore.rules
+
+# =============================================================================
+# Deployment and scripts
+# =============================================================================
+deploy-manual.sh
+start.sh
 
 # =============================================================================
 # Documentation (keep important files)
