@@ -190,4 +190,4 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ---
 
-**Made with Angular 16, TypeScript, and SCSS** 
+**Made with Angular 16, TypeScript, and SCSS** 🚀 
