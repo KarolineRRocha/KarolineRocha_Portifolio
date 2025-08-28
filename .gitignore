@@ -49,6 +49,7 @@ typings/
 # Environment files with sensitive data
 src/environments/environment.ts
 src/environments/environment.prod.ts
+src/environments/firebase.config.ts
 
 # Configuration files with secrets
 config/secrets.json
@@ -64,6 +65,7 @@ config/credentials.json
 # GitHub tokens
 .github-token
 github-token.txt
+.github/
 
 # Email service credentials
 email-credentials.json
@@ -71,6 +73,10 @@ emailjs-config.json
 
 # Admin credentials
 admin-credentials.json
+
+# Firebase configuration
+firebase-config.json
+firebase-service-account.json
 
 # =============================================================================
 # IDE and Editor files
@@ -178,6 +184,7 @@ firestore.rules
 # =============================================================================
 deploy-manual.sh
 start.sh
+setup-env.sh
 
 # =============================================================================
 # Documentation (keep important files)
@@ -186,3 +193,108 @@ start.sh
 !readme.md
 !CONTRIBUTING.md
 !LICENSE
+!SECURITY.md
+
+# =============================================================================
+# Additional Angular/Node.js ignores
+# =============================================================================
+# Angular CLI
+.angular-cli.json
+
+# Angular Universal
+.serverless/
+
+# Angular SSR
+dist-server/
+
+# Angular PWA
+ngsw-config.json
+
+# Angular Material
+material-theme.scss
+
+# Angular Testing
+karma.conf.js
+protractor.conf.js
+test.ts
+
+# Angular e2e
+e2e/
+
+# Angular schematics
+schematics/
+
+# Angular library
+projects/
+
+# Angular workspace
+angular.json.bak
+
+# =============================================================================
+# Additional security ignores
+# =============================================================================
+# Local configuration files
+config.local.json
+settings.local.json
+
+# Backup files
+*.bak
+*.backup
+*.old
+
+# Lock files (keep package-lock.json but ignore others)
+yarn.lock
+pnpm-lock.yaml
+
+# =============================================================================
+# Development tools
+# =============================================================================
+# ESLint
+.eslintrc.js
+.eslintrc.json
+.eslintrc.yaml
+.eslintrc.yml
+
+# Prettier
+.prettierrc
+.prettierrc.js
+.prettierrc.json
+.prettierrc.yaml
+.prettierrc.yml
+
+# Stylelint
+.stylelintrc
+.stylelintrc.js
+.stylelintrc.json
+.stylelintrc.yaml
+.stylelintrc.yml
+
+# Husky
+.husky/
+
+# =============================================================================
+# CI/CD
+# =============================================================================
+# GitHub Actions
+.github/workflows/*.yml.bak
+.github/workflows/*.yaml.bak
+
+# GitLab CI
+.gitlab-ci.yml.bak
+
+# Azure DevOps
+azure-pipelines.yml.bak
+
+# =============================================================================
+# Database
+# =============================================================================
+*.db
+*.sqlite
+*.sqlite3
+
+# =============================================================================
+# SSL Certificates
+# =============================================================================
+*.crt
+*.csr
+*.der
