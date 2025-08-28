@@ -4,7 +4,7 @@ A modern, responsive portfolio website built with Angular 16 and TypeScript, sho
 
 ## Live Demo
 
-**[View Portfolio](https://karolinerrocha.github.io/karoline-rocha-portifolio/)**
+**[View Portfolio](https://karolinerrocha.github.io/KarolineRocha_Portifolio/)**
 
 ## Overview
 
