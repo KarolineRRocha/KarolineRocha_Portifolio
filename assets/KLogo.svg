@@ -1,0 +1,103 @@
+<svg width="320" height="60" viewBox="0 0 320 60" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Gradients -->
+    <linearGradient id="techGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00d4ff;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#8a2be2;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ff1493;stop-opacity:1" />
+    </linearGradient>
+
+    <linearGradient id="neonGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#00d4ff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ff1493;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Glow filters -->
+    <filter id="neonGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <filter id="strongGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Clear K letter that actually looks like K -->
+  <g filter="url(#strongGlow)">
+    <!-- K - Vertical line -->
+    <rect x="25" y="12" width="5" height="36" rx="2.5" fill="url(#techGradient)"/>
+
+    <!-- K - Top diagonal (proper K shape) -->
+    <path d="M 30 12 L 45 25 L 30 30 Z" fill="url(#techGradient)"/>
+
+    <!-- K - Bottom diagonal (proper K shape) -->
+    <path d="M 30 30 L 45 35 L 30 48 Z" fill="url(#techGradient)"/>
+
+    <!-- Circuit nodes on K -->
+    <circle cx="27.5" cy="18" r="2" fill="#00d4ff"/>
+    <circle cx="27.5" cy="30" r="2" fill="#8a2be2"/>
+    <circle cx="27.5" cy="42" r="2" fill="#ff1493"/>
+    <circle cx="37" cy="27" r="1.5" fill="#00d4ff"/>
+    <circle cx="37" cy="37" r="1.5" fill="#ff1493"/>
+  </g>
+
+  <!-- Binary code stream -->
+  <g filter="url(#neonGlow)" opacity="0.8">
+    <text x="55" y="20" font-family="monospace" font-size="8" fill="#00d4ff">1010</text>
+    <text x="55" y="30" font-family="monospace" font-size="8" fill="#8a2be2">1101</text>
+    <text x="55" y="40" font-family="monospace" font-size="8" fill="#ff1493">0110</text>
+    <text x="75" y="20" font-family="monospace" font-size="8" fill="#00d4ff">0011</text>
+    <text x="75" y="30" font-family="monospace" font-size="8" fill="#8a2be2">1001</text>
+    <text x="75" y="40" font-family="monospace" font-size="8" fill="#ff1493">0100</text>
+  </g>
+
+  <!-- Tech brackets -->
+  <g filter="url(#neonGlow)">
+    <text x="95" y="25" font-family="monospace" font-size="14" font-weight="bold" fill="url(#neonGradient)">&lt;</text>
+    <text x="105" y="25" font-family="monospace" font-size="14" font-weight="bold" fill="url(#neonGradient)">/</text>
+    <text x="115" y="25" font-family="monospace" font-size="14" font-weight="bold" fill="url(#neonGradient)">&gt;</text>
+  </g>
+
+  <!-- Name with tech styling - KAROLINE ROCHA with K -->
+  <g filter="url(#strongGlow)">
+    <text x="130" y="25" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white">KAROLINE ROCHA</text>
+    <text x="130" y="40" font-family="Arial, sans-serif" font-size="12" font-weight="500" fill="#00d4ff">DEVELOPER</text>
+  </g>
+
+  <!-- Animated data flow lines -->
+  <g opacity="0.6">
+    <path d="M 5 15 L 20 15" stroke="#00d4ff" stroke-width="1" fill="none">
+      <animate attributeName="stroke-dasharray" values="0,10;10,0;0,10" dur="2s" repeatCount="indefinite"/>
+    </path>
+    <path d="M 5 25 L 20 25" stroke="#8a2be2" stroke-width="1" fill="none">
+      <animate attributeName="stroke-dasharray" values="0,10;10,0;0,10" dur="2s" repeatCount="indefinite" begin="0.5s"/>
+    </path>
+    <path d="M 5 35 L 20 35" stroke="#ff1493" stroke-width="1" fill="none">
+      <animate attributeName="stroke-dasharray" values="0,10;10,0;0,10" dur="2s" repeatCount="indefinite" begin="1s"/>
+    </path>
+  </g>
+
+  <!-- Pulsing tech nodes -->
+  <circle cx="200" cy="15" r="2" fill="#00d4ff" opacity="0.8">
+    <animate attributeName="opacity" values="0.8;1;0.8" dur="1.5s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="205" cy="30" r="2" fill="#8a2be2" opacity="0.8">
+    <animate attributeName="opacity" values="0.8;1;0.8" dur="1.5s" repeatCount="indefinite" begin="0.5s"/>
+  </circle>
+  <circle cx="200" cy="45" r="2" fill="#ff1493" opacity="0.8">
+    <animate attributeName="opacity" values="0.8;1;0.8" dur="1.5s" repeatCount="indefinite" begin="1s"/>
+  </circle>
+
+  <!-- Scanning line effect -->
+  <rect x="0" y="0" width="320" height="2" fill="url(#neonGradient)" opacity="0.6">
+    <animate attributeName="y" values="0;58;0" dur="3s" repeatCount="indefinite"/>
+  </rect>
+</svg>
