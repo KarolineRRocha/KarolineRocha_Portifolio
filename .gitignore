@@ -16,6 +16,7 @@ lerna-debug.log*
 # Build outputs
 # =============================================================================
 dist/
+docs/
 tmp/
 out-tsc/
 bazel-out/
@@ -42,6 +43,7 @@ typings/
 .env.test.local
 .env.production.local
 .env.*.local
+.env.example
 
 # =============================================================================
 # Security - Sensitive Configuration Files

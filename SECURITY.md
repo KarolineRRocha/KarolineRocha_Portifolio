@@ -1,139 +1,123 @@
-# Security Guidelines
+# Security Guidelines for Karoline Rocha Portfolio
 
-## 🔒 Important Security Information
+## 🔒 Security Overview
 
-This document outlines security best practices for this portfolio project.
+This document outlines security best practices and guidelines for the Karoline Rocha Portfolio project.
 
-## 🚨 Critical Security Notice
+## 🚨 Critical Security Measures
 
-**NEVER commit sensitive information like API tokens, passwords, or personal access tokens to version control.**
+### 1. Environment Variables
+- **NEVER** commit sensitive data to version control
+- Use `.env` files for local development
+- Use environment variables in production deployments
+- Keep `.env` files in `.gitignore`
 
-## Environment Configuration
+### 2. API Keys and Tokens
+- Store all API keys in environment variables
+- Rotate tokens regularly
+- Use least privilege principle for token permissions
+- Never expose tokens in client-side code
 
-### Required Environment Variables
+### 3. Firebase Security
+- Configure Firebase Security Rules properly
+- Use Firebase Authentication for user management
+- Restrict database access with proper rules
+- Enable Firebase App Check for additional security
 
-The following sensitive information should be configured in your environment files:
+## 📋 Environment Variables
+
+### Required Variables
 
 #### GitHub Configuration
-- **GitHub Username**: Your GitHub username
-- **GitHub Personal Access Token**: Required for GitHub API integration
+```bash
+GITHUB_USERNAME=your_github_username
+GITHUB_TOKEN=your_github_personal_access_token
+```
 
 #### Email Configuration (EmailJS)
-- **Service ID**: EmailJS service identifier
-- **Template ID**: EmailJS template identifier  
-- **User ID**: EmailJS user identifier
+```bash
+EMAILJS_SERVICE_ID=your_emailjs_service_id
+EMAILJS_TEMPLATE_ID=your_emailjs_template_id
+EMAILJS_USER_ID=your_emailjs_user_id
+```
 
 #### Admin Configuration
-- **Admin Email**: Administrator email address
-- **Admin Password**: Secure administrator password
-
-## Setup Instructions
-
-### 1. Create Environment Files
-
-Copy the example file and create your actual environment files:
-
 ```bash
-# Copy the example file
-cp src/environments/environment.example.ts src/environments/environment.ts
-cp src/environments/environment.example.ts src/environments/environment.prod.ts
+ADMIN_USERNAME=your_admin_email
+ADMIN_PASSWORD=your_secure_password
 ```
 
-### 2. Configure Your Tokens
-
-Edit the environment files with your actual values:
-
-```typescript
-// src/environments/environment.ts
-export const environment = {
-  production: false,
-  github: {
-    username: 'YOUR_ACTUAL_USERNAME',
-    token: 'YOUR_ACTUAL_GITHUB_TOKEN'
-  },
-  // ... other configurations
-};
+#### Firebase Configuration
+```bash
+FIREBASE_API_KEY=your_firebase_api_key
+FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
+FIREBASE_DATABASE_URL=your_database_url
+FIREBASE_PROJECT_ID=your_project_id
+FIREBASE_STORAGE_BUCKET=your_storage_bucket
+FIREBASE_MESSAGING_SENDER_ID=your_sender_id
+FIREBASE_APP_ID=your_app_id
+FIREBASE_MEASUREMENT_ID=your_measurement_id
 ```
 
-### 3. GitHub Personal Access Token
+## 🔧 Setup Instructions
 
-To create a GitHub Personal Access Token:
+### Local Development
+1. Copy `env.example` to `.env`
+2. Fill in your actual values in `.env`
+3. Run `npm start` to start development server
 
-1. Go to GitHub Settings
-2. Navigate to Developer settings > Personal access tokens > Tokens (classic)
-3. Generate new token
-4. Select scopes: `public_repo`, `read:user`
-5. Copy the token and use it in your environment file
+### Production Deployment
+1. Set environment variables in your hosting platform
+2. Never commit `.env` files
+3. Use secure deployment practices
 
-### 4. EmailJS Configuration
+## 🛡️ Security Best Practices
 
-To set up EmailJS:
+### Code Security
+- Use HTTPS in production
+- Implement proper input validation
+- Sanitize user inputs
+- Use Content Security Policy (CSP)
+- Implement rate limiting
 
-1. Create an account at [EmailJS](https://www.emailjs.com/)
-2. Create an email service
-3. Create an email template
-4. Get your Service ID, Template ID, and User ID
-5. Add them to your environment files
+### Authentication
+- Use strong passwords
+- Implement multi-factor authentication when possible
+- Store passwords securely (hashed)
+- Implement session management
 
-## Security Best Practices
+### Data Protection
+- Encrypt sensitive data at rest
+- Use secure communication protocols
+- Implement proper access controls
+- Regular security audits
 
-### ✅ Do's
-- Use environment files for sensitive data
-- Keep tokens private and secure
-- Rotate tokens regularly
-- Use strong, unique passwords
-- Review access permissions periodically
+## 🚨 Incident Response
 
-### ❌ Don'ts
-- Never commit tokens to version control
-- Don't share tokens in public repositories
-- Don't use the same token across multiple projects
-- Don't store tokens in client-side code for production
+### If you suspect a security breach:
+1. Immediately revoke compromised tokens
+2. Change passwords and API keys
+3. Review access logs
+4. Update security measures
+5. Document the incident
 
-## File Structure
+## 📞 Security Contacts
 
-```
-src/environments/
-├── environment.example.ts    # Template file (safe to commit)
-├── environment.ts           # Development config (DO NOT COMMIT)
-└── environment.prod.ts      # Production config (DO NOT COMMIT)
-```
+For security issues, please contact:
+- Email: [Your Security Email]
+- GitHub: [Your GitHub Profile]
 
-## Troubleshooting
+## 🔄 Regular Security Tasks
 
-### GitHub API 401 Error
-If you get a 401 "Bad credentials" error:
-1. Check if your GitHub token is valid
-2. Ensure the token has the correct permissions
-3. Verify the token hasn't expired
-4. Regenerate the token if necessary
+- [ ] Rotate API tokens quarterly
+- [ ] Update dependencies monthly
+- [ ] Review Firebase security rules
+- [ ] Audit environment variables
+- [ ] Check for security vulnerabilities
 
-### EmailJS Issues
-If email functionality isn't working:
-1. Verify your EmailJS credentials
-2. Check if your service is active
-3. Ensure your template is properly configured
+## 📚 Additional Resources
 
-## Emergency Procedures
-
-### If Tokens Are Exposed
-1. **Immediately revoke the exposed token**
-2. Generate a new token
-3. Update your environment files
-4. Check for any unauthorized access
-5. Review your repository history
-
-### Token Revocation
-- **GitHub**: Go to Settings > Developer settings > Personal access tokens
-- **EmailJS**: Contact EmailJS support if needed
-
-## Support
-
-For security-related issues or questions:
-- Review this documentation
-- Check the main README.md
-- Contact the project maintainer
-
----
-
-**Remember: Security is everyone's responsibility!** 🔐
+- [GitHub Security Best Practices](https://docs.github.com/en/github/authenticating-to-github/keeping-your-account-and-data-secure)
+- [Firebase Security Rules](https://firebase.google.com/docs/rules)
+- [OWASP Security Guidelines](https://owasp.org/www-project-top-ten/)
+- [Angular Security Guide](https://angular.io/guide/security)

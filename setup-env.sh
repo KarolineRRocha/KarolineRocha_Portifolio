@@ -1,36 +1,40 @@
 #!/bin/bash
 
-# Setup Environment Script for Karoline Rocha Portfolio
-# This script helps set up the environment files securely
+# =============================================================================
+# Environment Setup Script for Karoline Rocha Portfolio
+# =============================================================================
 
-echo "🔧 Setting up environment files for Karoline Rocha Portfolio"
-echo "=========================================================="
+echo "🚀 Setting up environment for Karoline Rocha Portfolio"
+echo "=================================================="
 
-# Check if environment files already exist
-if [ -f "src/environments/environment.ts" ]; then
-    echo "⚠️  Warning: environment.ts already exists!"
-    read -p "Do you want to overwrite it? (y/N): " -n 1 -r
-    echo
-    if [[ ! $REPLY =~ ^[Yy]$ ]]; then
-        echo "❌ Setup cancelled. Environment files not modified."
-        exit 1
-    fi
+# Check if .env file exists
+if [ ! -f .env ]; then
+    echo "📝 Creating .env file from template..."
+    cp env.example .env
+    echo "✅ .env file created successfully!"
+    echo "⚠️  Please edit .env file with your actual values before running the application"
+else
+    echo "✅ .env file already exists"
 fi
 
-# Copy example files
-echo "📋 Copying example environment files..."
-cp src/environments/environment.example.ts src/environments/environment.ts
-cp src/environments/environment.example.ts src/environments/environment.prod.ts
+# Check if node_modules exists
+if [ ! -d "node_modules" ]; then
+    echo "📦 Installing dependencies..."
+    npm install
+    echo "✅ Dependencies installed successfully!"
+else
+    echo "✅ Dependencies already installed"
+fi
 
-echo "✅ Environment files created successfully!"
 echo ""
-echo "🔐 Next steps:"
-echo "1. Edit src/environments/environment.ts with your actual values"
-echo "2. Edit src/environments/environment.prod.ts with your production values"
-echo "3. Never commit these files to version control"
+echo "🎯 Next steps:"
+echo "1. Edit .env file with your actual API keys and credentials"
+echo "2. Run 'npm start' to start the development server"
+echo "3. Access the application at http://localhost:4200"
 echo ""
-echo "📖 For detailed instructions, see SECURITY.md"
-echo "🔗 For GitHub token setup: https://github.com/settings/tokens"
-echo "📧 For EmailJS setup: https://www.emailjs.com/"
+echo "🔒 Security notes:"
+echo "- Never commit .env file to version control"
+echo "- Keep your API keys and tokens secure"
+echo "- Use strong passwords for admin accounts"
 echo ""
-echo "🎉 Setup complete! You can now run 'npm start' to begin development."
+echo "✨ Setup complete!"

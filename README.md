@@ -73,6 +73,10 @@ This portfolio demonstrates modern web development practices with a focus on:
 - npm or yarn package manager
 - Angular CLI (v16 or higher)
 
+### Quick Start
+
+For a quick setup, see our **[⚡ Quick Start Guide](QUICK_START.md)**.
+
 ### Installation
 
 1. Clone the repository
@@ -90,19 +94,44 @@ This portfolio demonstrates modern web development practices with a focus on:
    ```bash
    ./setup-env.sh
    ```
-   Then edit the created environment files with your actual values.
+   Then edit the `.env` file with your actual API keys and credentials.
+
+   **🔒 Security Note**: Never commit the `.env` file to version control!
 
 4. Start development server
    ```bash
-   ng serve
+   ./dev-env.sh  # Load environment variables
+   npm start     # Start development server
    ```
 
 5. Open your browser and navigate to `http://localhost:4200`
 
+### Documentation
+
+- **[⚡ Quick Start Guide](QUICK_START.md)** - Get started in 5 minutes
+- **[🚀 Deployment Guide](DEPLOYMENT.md)** - Complete deployment instructions
+- **[🔒 Security Guide](SECURITY.md)** - Security best practices
+- **[🔧 GitHub Setup Guide](GITHUB_SETUP.md)** - Configure environment variables
+- **[🔗 SPA Routing Guide](SPA_ROUTING.md)** - GitHub Pages routing configuration
+
 ### Build for Production
+
+To build the project for production:
+
 ```bash
-ng build --configuration production
+./build-prod.sh
 ```
+
+The build artifacts will be stored in the `dist/KarolineRocha_Portfolio/` directory.
+
+### Deploy to GitHub Pages
+
+The project is configured for automatic deployment to GitHub Pages:
+
+1. **Automatic Deployment**: Just push to the main branch - GitHub Actions will handle the build and deployment
+2. **Manual Deployment**: Run `npm run deploy` to manually deploy to GitHub Pages
+
+Your site will be available at: **https://karolinerrocha.github.io/KarolineRocha_Portfolio/**
 
 ## Project Structure
 
@@ -143,65 +172,30 @@ src/
 
 **⚠️ IMPORTANT: Never commit sensitive tokens or credentials to version control!**
 
-1. Copy the example environment file:
-   ```bash
-   cp src/environments/environment.example.ts src/environments/environment.ts
-   cp src/environments/environment.example.ts src/environments/environment.prod.ts
-   ```
-
-2. Configure your environment files with your actual values:
-   ```typescript
-   // environment.ts
-   export const environment = {
-     production: false,
-     github: {
-       username: 'your-github-username',
-       apiUrl: 'https://api.github.com',
-       token: 'your-github-personal-access-token'
-     },
-     email: {
-       serviceId: 'your-emailjs-service-id',
-       templateId: 'your-emailjs-template-id',
-       userId: 'your-emailjs-user-id'
-     },
-     admin: {
-       defaultUsername: 'your-admin-email',
-       defaultPassword: 'your-secure-password'
-     }
-   };
-   ```
+The project uses a secure environment variable system. See the [Security Guide](SECURITY.md) for detailed setup instructions.
 
 ### Required Services Setup
 
 #### GitHub Personal Access Token
 1. Go to GitHub Settings > Developer settings > Personal access tokens
 2. Generate new token with scopes: `public_repo`, `read:user`
-3. Add the token to your environment files
+3. Add the token to your `.env` file
 
 #### EmailJS Configuration
 1. Create an account at [EmailJS](https://www.emailjs.com/)
 2. Set up email service and template
 3. Get your Service ID, Template ID, and User ID
-4. Add them to your environment files
+4. Add them to your `.env` file
 
 ### Security Notes
-- Environment files are ignored by Git (see `.gitignore`)
+- Environment variables are stored in `.env` files (ignored by Git)
 - Use strong, unique passwords
 - Rotate tokens regularly
 - See [SECURITY.md](SECURITY.md) for detailed security guidelines
 
 ## Deployment
 
-### GitHub Pages
-1. Build the project
-   ```bash
-   ng build --configuration production
-   ```
-
-2. Deploy to GitHub Pages
-   ```bash
-   ng deploy --base-href=https://yourusername.github.io/your-repo/
-   ```
+The project is configured for automatic deployment to GitHub Pages. See the [Deployment Guide](DEPLOYMENT.md) for detailed instructions.
 
 ## Security
 
