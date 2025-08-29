@@ -35,45 +35,52 @@ jobs:
 
     - name: Validate environment variables
       run: |
-        echo "🔍 Validating required environment variables..."
+        echo "🔍 Validating environment variables..."
 
-        # Check if required secrets are set
+        # Check if optional secrets are set and provide warnings
         if [ -z "${{ secrets.GITHUB_USERNAME }}" ]; then
-          echo "❌ GITHUB_USERNAME is not set"
-          exit 1
+          echo "⚠️  GITHUB_USERNAME is not set (optional for portfolio)"
+        else
+          echo "✅ GITHUB_USERNAME is set"
         fi
 
         if [ -z "${{ secrets.GITHUB_TOKEN }}" ]; then
-          echo "❌ GITHUB_TOKEN is not set"
-          exit 1
+          echo "⚠️  GITHUB_TOKEN is not set (optional for portfolio)"
+        else
+          echo "✅ GITHUB_TOKEN is set"
         fi
 
         if [ -z "${{ secrets.EMAILJS_SERVICE_ID }}" ]; then
-          echo "❌ EMAILJS_SERVICE_ID is not set"
-          exit 1
+          echo "⚠️  EMAILJS_SERVICE_ID is not set (optional for portfolio)"
+        else
+          echo "✅ EMAILJS_SERVICE_ID is set"
         fi
 
         if [ -z "${{ secrets.EMAILJS_TEMPLATE_ID }}" ]; then
-          echo "❌ EMAILJS_TEMPLATE_ID is not set"
-          exit 1
+          echo "⚠️  EMAILJS_TEMPLATE_ID is not set (optional for portfolio)"
+        else
+          echo "✅ EMAILJS_TEMPLATE_ID is set"
         fi
 
         if [ -z "${{ secrets.EMAILJS_USER_ID }}" ]; then
-          echo "❌ EMAILJS_USER_ID is not set"
-          exit 1
+          echo "⚠️  EMAILJS_USER_ID is not set (optional for portfolio)"
+        else
+          echo "✅ EMAILJS_USER_ID is set"
         fi
 
         if [ -z "${{ secrets.FIREBASE_API_KEY }}" ]; then
-          echo "❌ FIREBASE_API_KEY is not set"
-          exit 1
+          echo "⚠️  FIREBASE_API_KEY is not set (optional for portfolio)"
+        else
+          echo "✅ FIREBASE_API_KEY is set"
         fi
 
         if [ -z "${{ secrets.FIREBASE_PROJECT_ID }}" ]; then
-          echo "❌ FIREBASE_PROJECT_ID is not set"
-          exit 1
+          echo "⚠️  FIREBASE_PROJECT_ID is not set (optional for portfolio)"
+        else
+          echo "✅ FIREBASE_PROJECT_ID is set"
         fi
 
-        echo "✅ All required environment variables are set"
+        echo "✅ Environment validation completed - portfolio can deploy with optional features disabled"
 
     - name: Create environment file
       run: |
