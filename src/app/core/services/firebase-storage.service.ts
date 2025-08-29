@@ -3,7 +3,7 @@ import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, doc, getDoc, setDoc, deleteDoc, onSnapshot, query, orderBy, limit, getDocs, addDoc, updateDoc } from 'firebase/firestore';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Project, NewProjectData } from './projects.service';
-import { firebaseConfig, COLLECTIONS } from '../../../environments/firebase.config';
+import { firebaseConfig, COLLECTIONS } from '../../../environments/firebase.deploy';
 
 @Injectable({
   providedIn: 'root'
