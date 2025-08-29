@@ -67,7 +67,8 @@ config/credentials.json
 # GitHub tokens
 .github-token
 github-token.txt
-.github/
+# Don't ignore GitHub Actions workflows
+!.github/workflows/
 
 # Email service credentials
 email-credentials.json
