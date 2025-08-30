@@ -5,6 +5,37 @@
   <meta charset="utf-8">
   <title>Karoline Rocha</title>
   <base href="/KarolineRocha_Portfolio/">
+  <script>
+    // Detect environment and adjust base href
+    (function () {
+      var isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+      var isGitHubPages = window.location.hostname === 'karolinerrocha.github.io';
+
+      if (isGitHubPages) {
+        // For GitHub Pages, change base href
+        var baseElement = document.querySelector('base');
+        baseElement.href = '/KarolineRocha_Portfolio/';
+
+        // Update image paths for GitHub Pages
+        var images = document.querySelectorAll('img[src^="/KarolineRocha_Portfolio/"]');
+        images.forEach(function (img) {
+          // Keep absolute paths for GitHub Pages
+        });
+      } else {
+        // For localhost, use relative paths
+        var images = document.querySelectorAll('img[src^="/KarolineRocha_Portfolio/"]');
+        images.forEach(function (img) {
+          img.src = img.src.replace('/KarolineRocha_Portfolio/', '');
+        });
+
+        // Update favicon paths for localhost
+        var favicons = document.querySelectorAll('link[href^="/KarolineRocha_Portfolio/"]');
+        favicons.forEach(function (link) {
+          link.href = link.href.replace('/KarolineRocha_Portfolio/', '');
+        });
+      }
+    })();
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/svg+xml" href="/KarolineRocha_Portfolio/assets/KLogoSimple.svg">
   <link rel="icon" type="image/x-icon" href="/KarolineRocha_Portfolio/assets/favicon.ico">
@@ -39,13 +70,13 @@
   // When the single page app is loaded further down in this file,
   // the correct url will be waiting in the browser's history for
   // the single page app to route accordingly.
-  (function(l) {
-    if (l.search[1] === '/' ) {
-      var decoded = l.search.slice(1).split('&').map(function(s) { 
+  (function (l) {
+    if (l.search[1] === '/') {
+      var decoded = l.search.slice(1).split('&').map(function (s) {
         return s.replace(/~and~/g, '&')
       }).join('?');
       window.history.replaceState(null, null,
-          l.pathname.slice(0, -1) + decoded + l.hash
+        l.pathname.slice(0, -1) + decoded + l.hash
       );
     }
   }(window.location))
