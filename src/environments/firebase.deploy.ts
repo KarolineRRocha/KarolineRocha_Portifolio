@@ -3,6 +3,13 @@
  * This file is not ignored by .gitignore and can be used in CI/CD
  */
 
+// Declare global environment object
+declare global {
+  interface Window {
+    __env__: any;
+  }
+}
+
 // Helper function to get environment variables safely
 function getEnvVar(key: string, defaultValue: string = ''): string {
   // Try to get from window.__env__ first (for runtime injection)
