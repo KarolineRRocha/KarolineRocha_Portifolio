@@ -1,0 +1,27 @@
+<div class="environment-indicator" *ngIf="showIndicator">
+  <div class="indicator-container">
+    <!-- Environment Status -->
+    <div class="status-item environment">
+      <span class="status-icon">{{ getEnvironmentIcon() }}</span>
+      <span class="status-text">{{ getEnvironmentText() }}</span>
+    </div>
+
+    <!-- Sync Status -->
+    <div class="status-item sync">
+      <span class="status-icon">{{ getSyncStatusIcon() }}</span>
+      <span class="status-text">{{ getSyncStatusText() }}</span>
+    </div>
+
+    <!-- Cache Status -->
+    <div class="status-item cache">
+      <span class="status-icon">{{ getCacheStatusIcon() }}</span>
+      <span class="status-text">{{ getCacheStatusText() }}</span>
+    </div>
+
+    <!-- Admin Status -->
+    <div class="status-item admin">
+      <span class="status-icon">{{ getAdminStatusIcon() }}</span>
+      <span class="status-text">{{ getAdminStatusText() }}</span>
+    </div>
+  </div>
+</div>

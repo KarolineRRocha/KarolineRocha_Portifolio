@@ -5,16 +5,31 @@
       A showcase of my latest work, demonstrating frontend development skills,
       responsive design, and modern web technologies.
     </p>
-    <!-- Temporary debug buttons -->
-    <button (click)="forceRefresh()" style="margin-top: 10px; padding: 5px 10px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; margin-right: 10px;">
-      Force Refresh (Debug)
-    </button>
-    <button (click)="testUploadedImageChange()" style="margin-top: 10px; padding: 5px 10px; background: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; margin-right: 10px;">
-      Test Image Change (Debug)
-    </button>
-    <button (click)="forceUploadedImageRefresh()" style="margin-top: 10px; padding: 5px 10px; background: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer;">
-      Force Uploaded Image Refresh (Debug)
-    </button>
+    
+    <!-- Environment Status (only in development) -->
+    <div class="environment-status" *ngIf="showDevIndicators()">
+      <div class="status-badge">
+        <span class="status-icon">{{ getEnvironmentStatus().split(' ')[0] }}</span>
+        <span class="status-text">{{ getEnvironmentStatus().split(' ').slice(1).join(' ') }}</span>
+      </div>
+      <div class="status-badge">
+        <span class="status-icon">{{ getSyncStatus().split(' ')[0] }}</span>
+        <span class="status-text">{{ getSyncStatus().split(' ').slice(1).join(' ') }}</span>
+      </div>
+    </div>
+
+    <!-- Admin Controls (only when enabled) -->
+    <div class="admin-controls" *ngIf="showAdminControls()">
+      <button class="admin-btn primary" (click)="forceRefresh()">
+        🔄 Refresh Projects
+      </button>
+      <button class="admin-btn secondary" (click)="forceImageRefresh()">
+        🖼️ Refresh Images
+      </button>
+      <button class="admin-btn warning" (click)="testUploadedImageChange()">
+        🧪 Test Image Change
+      </button>
+    </div>
   </div>
 
   <div class="timeline-container" *ngIf="projects.length > 0">

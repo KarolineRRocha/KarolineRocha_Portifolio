@@ -4,6 +4,9 @@
 <app-footer></app-footer>
 <app-global-notifications></app-global-notifications>
 
+<!-- Environment Indicator - Shows development status -->
+<app-environment-indicator></app-environment-indicator>
+
 <!-- Admin Login Modal - Available on all pages -->
 <app-admin-login *ngIf="showLoginModal" (loginSuccess)="onLoginSuccess()" (loginCancel)="onLoginCancel()">
 </app-admin-login>

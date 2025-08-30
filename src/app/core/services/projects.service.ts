@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { FirebaseStorageService } from './firebase-storage.service';
+import { SmartFirebaseService } from './smart-firebase.service';
 
 export interface Project {
   id: string;
@@ -23,10 +23,11 @@ export interface NewProjectData {
   description: string;
   languages: string[];
   imageUrl: string;
-  uploadedImage?: string; // Base64 string for uploaded image
-  demoUrl: string;
-  projectUrl: string;
+  uploadedImage?: string;
+  demoUrl?: string;
+  projectUrl?: string;
   category: 'completed' | 'coming-soon';
+  featured?: boolean;
 }
 
 @Injectable({
@@ -36,83 +37,51 @@ export class ProjectsService {
   private projectsSubject = new BehaviorSubject<Project[]>([]);
   public projects$ = this.projectsSubject.asObservable();
 
-  constructor(private firebaseService: FirebaseStorageService) {
+  constructor(private smartFirebaseService: SmartFirebaseService) {
     console.log('📊 ProjectsService constructor called');
-    // Subscribe to Firebase data changes
-    this.firebaseService.projects$.subscribe(projects => {
-      console.log('📊 ProjectsService received projects from Firebase:', projects.length);
+    
+    // Subscribe to SmartFirebase data changes
+    this.smartFirebaseService.projects$.subscribe(projects => {
+      console.log('📊 ProjectsService received projects from SmartFirebase:', projects.length);
       this.projectsSubject.next(projects);
     });
   }
 
-  // Delegate all methods to Firebase service
+  // Delegate all methods to SmartFirebase service
   getProjects(): Project[] {
-    return this.firebaseService.getProjects();
+    return this.smartFirebaseService.getProjects();
   }
 
-  getCompletedProjects(): Project[] {
-    return this.firebaseService.getCompletedProjects();
+  async addProject(projectData: NewProjectData): Promise<boolean> {
+    return this.smartFirebaseService.addProject(projectData);
   }
 
-  getComingSoonProjects(): Project[] {
-    return this.firebaseService.getComingSoonProjects();
+  async updateProject(projectId: string, updates: Partial<Project>): Promise<boolean> {
+    return this.smartFirebaseService.updateProject(projectId, updates);
   }
 
-  getFeaturedProjects(): Project[] {
-    return this.firebaseService.getFeaturedProjects();
+  async deleteProject(projectId: string): Promise<boolean> {
+    return this.smartFirebaseService.deleteProject(projectId);
   }
 
-  async addProject(projectData: NewProjectData): Promise<Project> {
-    return await this.firebaseService.addProject(projectData);
+  // Utility methods
+  isLocalEnvironment(): boolean {
+    return this.smartFirebaseService.isLocalEnvironment();
   }
 
-  async updateProject(id: string, updates: Partial<Project>): Promise<Project | null> {
-    return await this.firebaseService.updateProject(id, updates);
+  isProductionEnvironment(): boolean {
+    return this.smartFirebaseService.isProductionEnvironment();
   }
 
-  async deleteProject(id: string): Promise<boolean> {
-    return await this.firebaseService.deleteProject(id);
+  isRealTimeSyncEnabled(): boolean {
+    return this.smartFirebaseService.isRealTimeSyncEnabled();
   }
 
-  async reorderProjects(projectIds: string[]): Promise<void> {
-    return await this.firebaseService.reorderProjects(projectIds);
+  isCacheEnabled(): boolean {
+    return this.smartFirebaseService.isCacheEnabled();
   }
 
-  async toggleFeatured(id: string): Promise<boolean> {
-    return await this.firebaseService.toggleFeatured(id);
+  isAdminFeaturesEnabled(): boolean {
+    return this.smartFirebaseService.isAdminFeaturesEnabled();
   }
-
-  async saveProjects(projects: Project[]): Promise<void> {
-    return await this.firebaseService.saveProjects(projects);
-  }
-
-  exportProjects(): string {
-    const projects = this.getProjects();
-    return JSON.stringify(projects, null, 2);
-  }
-
-  async importProjects(jsonData: string): Promise<boolean> {
-    try {
-      const projects = JSON.parse(jsonData);
-      await this.saveProjects(projects);
-      return true;
-    } catch (error) {
-      console.error('Error importing projects:', error);
-      return false;
-    }
-  }
-
-  getProjectStats() {
-    return this.firebaseService.getProjectStats();
-  }
-
-  searchProjects(query: string): Project[] {
-    return this.firebaseService.searchProjects(query);
-  }
-
-  // Force refresh projects from Firebase
-  async refreshProjects(): Promise<void> {
-    return await this.firebaseService.refreshProjects();
-  }
-
 }

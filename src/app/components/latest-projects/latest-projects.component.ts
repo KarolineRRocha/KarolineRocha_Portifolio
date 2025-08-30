@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { ProjectsService, Project } from '../../core/services/projects.service';
 import { Subscription } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-latest-projects',
@@ -63,6 +64,48 @@ export class LatestProjectsComponent implements OnInit, OnDestroy {
     if (this.projectsSubscription) {
       this.projectsSubscription.unsubscribe();
     }
+  }
+
+  // Environment detection methods
+  isLocalEnvironment(): boolean {
+    return this.projectsService.isLocalEnvironment();
+  }
+
+  isProductionEnvironment(): boolean {
+    return this.projectsService.isProductionEnvironment();
+  }
+
+  isRealTimeSyncEnabled(): boolean {
+    return this.projectsService.isRealTimeSyncEnabled();
+  }
+
+  isCacheEnabled(): boolean {
+    return this.projectsService.isCacheEnabled();
+  }
+
+  isAdminFeaturesEnabled(): boolean {
+    return this.projectsService.isAdminFeaturesEnabled();
+  }
+
+  showAdminControls(): boolean {
+    return environment.firebase.showAdminControls && this.isAdminFeaturesEnabled();
+  }
+
+  showDevIndicators(): boolean {
+    return environment.firebase.showDevIndicators && this.isLocalEnvironment();
+  }
+
+  getEnvironmentStatus(): string {
+    if (this.isLocalEnvironment()) {
+      return '🛠️ Development Mode';
+    } else if (this.isProductionEnvironment()) {
+      return '🚀 Production Mode';
+    }
+    return '❓ Unknown Mode';
+  }
+
+  getSyncStatus(): string {
+    return this.isRealTimeSyncEnabled() ? '🔄 Real-time Sync' : '💾 Cached Mode';
   }
 
   loadProjects() {
