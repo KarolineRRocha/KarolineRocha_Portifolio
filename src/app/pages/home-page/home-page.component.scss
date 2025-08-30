@@ -997,8 +997,8 @@
 
 .project-links {
   display: flex;
-  gap: var(--spacing-lg);
-  flex-wrap: wrap;
+  gap: var(--spacing-md);
+  flex-wrap: nowrap;
   justify-content: center;
 }
 

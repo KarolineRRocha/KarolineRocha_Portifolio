@@ -512,8 +512,8 @@
 
 .project-links {
   display: flex;
-  gap: var(--spacing-xl);
-  flex-wrap: wrap;
+  gap: var(--spacing-md);
+  flex-wrap: nowrap;
   justify-content: center;
   min-height: 44px;
   /* Ensure consistent button area height */
