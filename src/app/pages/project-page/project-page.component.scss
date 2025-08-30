@@ -536,6 +536,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: var(--spacing-xs);
   min-width: 120px;
   border: none;
   cursor: pointer;
