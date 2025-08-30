@@ -19,9 +19,9 @@ function getEnvVar(key: string, defaultValue: string = ''): string {
 export const APP_CONSTANTS = {
   // Email Configuration
   EMAIL: {
-    USER_ID: getEnvVar('PORTFOLIO_EMAILJS_USER_ID', 'ssxlTwO2Ygo7ZPE-0'),
-    SERVICE_ID: getEnvVar('PORTFOLIO_EMAILJS_SERVICE_ID', 'service_bmdnfpt'),
-    TEMPLATE_ID: getEnvVar('PORTFOLIO_EMAILJS_TEMPLATE_ID', 'template_285h8vc'),
+    USER_ID: getEnvVar('EMAILJS_USER_ID', 'ssxlTwO2Ygo7ZPE-0'),
+    SERVICE_ID: getEnvVar('EMAILJS_SERVICE_ID', 'service_bmdnfpt'),
+    TEMPLATE_ID: getEnvVar('EMAILJS_TEMPLATE_ID', 'template_285h8vc'),
     DEFAULT_TO_NAME: 'Karoline Rocha',
     DEFAULT_TO_EMAIL: 'emaildakarolineribeiro@gmail.com'
   },

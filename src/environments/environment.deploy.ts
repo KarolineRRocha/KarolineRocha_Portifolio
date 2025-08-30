@@ -23,26 +23,26 @@ export const environment = {
   production: true,
 
   // API Configuration
-  apiUrl: getEnvVar('PORTFOLIO_API_URL', 'https://your-production-api.com/api'),
+  apiUrl: getEnvVar('API_URL', 'https://your-production-api.com/api'),
 
   // GitHub Configuration
   github: {
-    username: getEnvVar('PORTFOLIO_GITHUB_USERNAME', 'KarolineRRocha'),
+    username: getEnvVar('GITHUB_USERNAME', 'KarolineRRocha'),
     apiUrl: 'https://api.github.com',
-    token: getEnvVar('PORTFOLIO_GITHUB_TOKEN', '')
+    token: getEnvVar('GITHUB_TOKEN', '')
   },
 
   // Email Configuration
   email: {
-    serviceId: getEnvVar('PORTFOLIO_EMAILJS_SERVICE_ID', ''),
-    templateId: getEnvVar('PORTFOLIO_EMAILJS_TEMPLATE_ID', ''),
-    userId: getEnvVar('PORTFOLIO_EMAILJS_USER_ID', '')
+    serviceId: getEnvVar('EMAILJS_SERVICE_ID', ''),
+    templateId: getEnvVar('EMAILJS_TEMPLATE_ID', ''),
+    userId: getEnvVar('EMAILJS_USER_ID', '')
   },
 
   // Admin Configuration
   admin: {
-    defaultUsername: getEnvVar('PORTFOLIO_ADMIN_USERNAME', ''),
-    defaultPassword: getEnvVar('PORTFOLIO_ADMIN_PASSWORD', '')
+    defaultUsername: getEnvVar('ADMIN_USERNAME', ''),
+    defaultPassword: getEnvVar('ADMIN_PASSWORD', '')
   },
 
   // App Configuration

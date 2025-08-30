@@ -1,14 +1,17 @@
 /**
- * Environment Variables Injection Script (Production)
- * Generated automatically by build script for GitHub Pages
- * Now uses PORTFOLIO_ prefix for all environment variables
+ * Environment Variables Injection Script (Development)
+ * Generated automatically from .env file
  */
 
-(function() {
+(function () {
   'use strict';
-  
+
+  // Create the global environment object
+  window.__env__ = window.__env__ || {};
+
+  // Development environment variables loaded from .env file
   window.__env__ = {
-    API_URL: 'https://your-production-api.com/api',
+    API_URL: 'http://localhost:3000/api',
     GITHUB_USERNAME: 'KarolineRRocha',
     GITHUB_TOKEN: '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',
     EMAILJS_SERVICE_ID: 'service_bmdnfpt',
@@ -25,6 +28,7 @@
     FIREBASE_APP_ID: '1:6738401934:web:5c5448d710cca1f90607df',
     FIREBASE_MEASUREMENT_ID: 'G-CCEDGQ16LQ'
   };
-  
-  console.log('Production environment variables loaded for GitHub Pages');
+
+  console.log('✅ Development environment variables loaded from .env');
+  console.log('🔒 Environment variables loaded successfully (credentials hidden for security)');
 })();
