@@ -51,7 +51,7 @@ export const APP_CONSTANTS = {
 
   // Routes
   ROUTES: {
-    HOME: '/home',
+    HOME: '/',
     ABOUT: '/about_me',
     TECHNOLOGIES: '/technologies',
     PROJECTS: '/projects',

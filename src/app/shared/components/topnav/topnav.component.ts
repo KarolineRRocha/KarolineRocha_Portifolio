@@ -26,17 +26,17 @@ export class TopnavComponent implements OnInit {
 
   isActiveRoute(route: string): boolean {
     if (route === 'home') {
-      return this.activeRoute === '/home' || this.activeRoute === '/';
+      return this.activeRoute === '/';
     }
     return this.activeRoute === `/${route}`;
   }
 
   hasActiveRoute(): boolean {
-    return this.activeRoute !== '/home' && this.activeRoute !== '/';
+    return this.activeRoute !== '/';
   }
 
   goToHome(): void {
-    this.router.navigate(['/home']).then(() => {
+    this.router.navigate(['/']).then(() => {
       // Scroll to top after navigation
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });

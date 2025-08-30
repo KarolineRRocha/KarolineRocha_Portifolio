@@ -11,7 +11,6 @@ import { TermsPageComponent } from './pages/terms-page/terms-page.component';
 
 const routes: Routes = [
   { path: '', component: HomePageComponent },
-  { path: 'home', component: HomePageComponent },
   { path: 'about_me', component: AboutPageComponent },
   { path: 'technologies', component: TechnologiesPageComponent },
   { path: 'projects', component: ProjectPageComponent },
