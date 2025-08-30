@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { AssetPathService } from '../../services/asset-path.service';
 
 @Component({
   selector: 'app-about-page',
@@ -9,7 +10,10 @@ import { Router } from '@angular/router';
 export class AboutPageComponent {
   showCvModal = false;
 
-  constructor(private router: Router) { }
+  constructor(
+    private router: Router,
+    private assetPathService: AssetPathService
+  ) { }
 
   openCvModal(): void {
     this.showCvModal = true;
@@ -94,7 +98,7 @@ export class AboutPageComponent {
 
   // Test method to verify CV file accessibility
   testCvAccess(): void {
-    const cvUrl = '/assets/cv/karoline-rocha-cv.pdf';
+    const cvUrl = this.assetPathService.getAssetPath('assets/cv/karoline-rocha-cv.pdf');
 
     fetch(cvUrl, { method: 'HEAD' })
       .then(response => {
@@ -114,7 +118,7 @@ export class AboutPageComponent {
   }
 
   downloadCv(): void {
-    const cvUrl = '/assets/cv/karoline-rocha-cv.pdf';
+    const cvUrl = this.assetPathService.getAssetPath('assets/cv/karoline-rocha-cv.pdf');
     const fileName = 'Karoline-Rocha-CV.pdf';
 
     // Method 1: Try fetch and blob download (most reliable)
