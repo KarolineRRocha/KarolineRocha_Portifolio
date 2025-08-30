@@ -38,46 +38,46 @@ jobs:
         echo "🔍 Validating environment variables..."
 
         # Check if optional secrets are set and provide warnings
-        if [ -z "${{ secrets.GITHUB_USERNAME }}" ]; then
-          echo "⚠️  GITHUB_USERNAME is not set (optional for portfolio)"
+        if [ -z "${{ secrets.PORTFOLIO_GITHUB_USERNAME }}" ]; then
+          echo "⚠️  PORTFOLIO_GITHUB_USERNAME is not set (optional for portfolio)"
         else
-          echo "✅ GITHUB_USERNAME is set"
+          echo "✅ PORTFOLIO_GITHUB_USERNAME is set"
         fi
 
-        if [ -z "${{ secrets.GITHUB_TOKEN }}" ]; then
-          echo "⚠️  GITHUB_TOKEN is not set (optional for portfolio)"
+        if [ -z "${{ secrets.PORTFOLIO_GITHUB_TOKEN }}" ]; then
+          echo "⚠️  PORTFOLIO_GITHUB_TOKEN is not set (optional for portfolio)"
         else
-          echo "✅ GITHUB_TOKEN is set"
+          echo "✅ PORTFOLIO_GITHUB_TOKEN is set"
         fi
 
-        if [ -z "${{ secrets.EMAILJS_SERVICE_ID }}" ]; then
-          echo "⚠️  EMAILJS_SERVICE_ID is not set (optional for portfolio)"
+        if [ -z "${{ secrets.PORTFOLIO_EMAILJS_SERVICE_ID }}" ]; then
+          echo "⚠️  PORTFOLIO_EMAILJS_SERVICE_ID is not set (optional for portfolio)"
         else
-          echo "✅ EMAILJS_SERVICE_ID is set"
+          echo "✅ PORTFOLIO_EMAILJS_SERVICE_ID is set"
         fi
 
-        if [ -z "${{ secrets.EMAILJS_TEMPLATE_ID }}" ]; then
-          echo "⚠️  EMAILJS_TEMPLATE_ID is not set (optional for portfolio)"
+        if [ -z "${{ secrets.PORTFOLIO_EMAILJS_TEMPLATE_ID }}" ]; then
+          echo "⚠️  PORTFOLIO_EMAILJS_TEMPLATE_ID is not set (optional for portfolio)"
         else
-          echo "✅ EMAILJS_TEMPLATE_ID is set"
+          echo "✅ PORTFOLIO_EMAILJS_TEMPLATE_ID is set"
         fi
 
-        if [ -z "${{ secrets.EMAILJS_USER_ID }}" ]; then
-          echo "⚠️  EMAILJS_USER_ID is not set (optional for portfolio)"
+        if [ -z "${{ secrets.PORTFOLIO_EMAILJS_USER_ID }}" ]; then
+          echo "⚠️  PORTFOLIO_EMAILJS_USER_ID is not set (optional for portfolio)"
         else
-          echo "✅ EMAILJS_USER_ID is set"
+          echo "✅ PORTFOLIO_EMAILJS_USER_ID is set"
         fi
 
-        if [ -z "${{ secrets.FIREBASE_API_KEY }}" ]; then
-          echo "⚠️  FIREBASE_API_KEY is not set (optional for portfolio)"
+        if [ -z "${{ secrets.PORTFOLIO_FIREBASE_API_KEY }}" ]; then
+          echo "⚠️  PORTFOLIO_FIREBASE_API_KEY is not set (optional for portfolio)"
         else
-          echo "✅ FIREBASE_API_KEY is set"
+          echo "✅ PORTFOLIO_FIREBASE_API_KEY is set"
         fi
 
-        if [ -z "${{ secrets.FIREBASE_PROJECT_ID }}" ]; then
-          echo "⚠️  FIREBASE_PROJECT_ID is not set (optional for portfolio)"
+        if [ -z "${{ secrets.PORTFOLIO_FIREBASE_PROJECT_ID }}" ]; then
+          echo "⚠️  PORTFOLIO_FIREBASE_PROJECT_ID is not set (optional for portfolio)"
         else
-          echo "✅ FIREBASE_PROJECT_ID is set"
+          echo "✅ PORTFOLIO_FIREBASE_PROJECT_ID is set"
         fi
 
         echo "✅ Environment validation completed - portfolio can deploy with optional features disabled"
@@ -87,30 +87,30 @@ jobs:
         echo "🔧 Creating environment file..."
         cat > .env << EOF
         # API Configuration
-        API_URL=${{ secrets.API_URL || 'https://your-production-api.com/api' }}
+        API_URL=${{ secrets.PORTFOLIO_API_URL || 'https://your-production-api.com/api' }}
 
         # GitHub Configuration
-        GITHUB_USERNAME=${{ secrets.GITHUB_USERNAME }}
-        GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
+        GITHUB_USERNAME=${{ secrets.PORTFOLIO_GITHUB_USERNAME }}
+        GITHUB_TOKEN=${{ secrets.PORTFOLIO_GITHUB_TOKEN }}
 
         # Email Configuration (EmailJS)
-        EMAILJS_SERVICE_ID=${{ secrets.EMAILJS_SERVICE_ID }}
-        EMAILJS_TEMPLATE_ID=${{ secrets.EMAILJS_TEMPLATE_ID }}
-        EMAILJS_USER_ID=${{ secrets.EMAILJS_USER_ID }}
+        EMAILJS_SERVICE_ID=${{ secrets.PORTFOLIO_EMAILJS_SERVICE_ID }}
+        EMAILJS_TEMPLATE_ID=${{ secrets.PORTFOLIO_EMAILJS_TEMPLATE_ID }}
+        EMAILJS_USER_ID=${{ secrets.PORTFOLIO_EMAILJS_USER_ID }}
 
         # Admin Configuration
-        ADMIN_USERNAME=${{ secrets.ADMIN_USERNAME || 'admin@example.com' }}
-        ADMIN_PASSWORD=${{ secrets.ADMIN_PASSWORD || 'secure_password' }}
+        ADMIN_USERNAME=${{ secrets.PORTFOLIO_ADMIN_USERNAME || 'admin@example.com' }}
+        ADMIN_PASSWORD=${{ secrets.PORTFOLIO_ADMIN_PASSWORD || 'secure_password' }}
 
         # Firebase Configuration
-        FIREBASE_API_KEY=${{ secrets.FIREBASE_API_KEY }}
-        FIREBASE_AUTH_DOMAIN=${{ secrets.FIREBASE_AUTH_DOMAIN }}
-        FIREBASE_DATABASE_URL=${{ secrets.FIREBASE_DATABASE_URL }}
-        FIREBASE_PROJECT_ID=${{ secrets.FIREBASE_PROJECT_ID }}
-        FIREBASE_STORAGE_BUCKET=${{ secrets.FIREBASE_STORAGE_BUCKET }}
-        FIREBASE_MESSAGING_SENDER_ID=${{ secrets.FIREBASE_MESSAGING_SENDER_ID }}
-        FIREBASE_APP_ID=${{ secrets.FIREBASE_APP_ID }}
-        FIREBASE_MEASUREMENT_ID=${{ secrets.FIREBASE_MEASUREMENT_ID }}
+        FIREBASE_API_KEY=${{ secrets.PORTFOLIO_FIREBASE_API_KEY }}
+        FIREBASE_AUTH_DOMAIN=${{ secrets.PORTFOLIO_FIREBASE_AUTH_DOMAIN }}
+        FIREBASE_DATABASE_URL=${{ secrets.PORTFOLIO_FIREBASE_DATABASE_URL }}
+        FIREBASE_PROJECT_ID=${{ secrets.PORTFOLIO_FIREBASE_PROJECT_ID }}
+        FIREBASE_STORAGE_BUCKET=${{ secrets.PORTFOLIO_FIREBASE_STORAGE_BUCKET }}
+        FIREBASE_MESSAGING_SENDER_ID=${{ secrets.PORTFOLIO_FIREBASE_MESSAGING_SENDER_ID }}
+        FIREBASE_APP_ID=${{ secrets.PORTFOLIO_FIREBASE_APP_ID }}
+        FIREBASE_MEASUREMENT_ID=${{ secrets.PORTFOLIO_FIREBASE_MEASUREMENT_ID }}
         EOF
 
         echo "✅ Environment file created successfully"
