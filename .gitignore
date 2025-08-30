@@ -49,9 +49,7 @@ typings/
 # Security - Sensitive Configuration Files
 # =============================================================================
 # Environment files with sensitive data
-src/environments/environment.ts
 src/environments/environment.prod.ts
-src/environments/firebase.config.ts
 
 # Configuration files with secrets
 config/secrets.json
