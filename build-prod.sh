@@ -55,15 +55,7 @@ EOF
 
 # Build the application for GitHub Pages
 echo "🔨 Building application for GitHub Pages..."
-
-# Temporarily change base href for production build
-sed -i '' 's|<base href="/">|<base href="/KarolineRocha_Portfolio/">|g' src/index.html
-
-# Build
 npm run build:prod
-
-# Restore base href for local development
-sed -i '' 's|<base href="/KarolineRocha_Portfolio/">|<base href="/">|g' src/index.html
 
 if [ $? -eq 0 ]; then
     echo "✅ Production build completed successfully!"
