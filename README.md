@@ -247,3 +247,4 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 ---
 
 **Made with Angular 16.2.12, TypeScript 4.9.5, and SCSS** 
+# Test deploy with PORTFOLIO_ variables configured
