@@ -8,28 +8,28 @@ on:
 jobs:
   validate-services:
     runs-on: ubuntu-latest
-    
+
     steps:
     - name: Checkout
       uses: actions/checkout@v4
-      
+
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
         node-version: '18'
         cache: 'npm'
-        
+
     - name: Install dependencies
       run: npm ci
-      
+
     - name: Validate GitHub API
       run: |
         echo "🔍 Validating GitHub API access..."
-        
+
         # Test GitHub API with token
-        response=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+        response=$(curl -s -H "Authorization: token ${{ secrets.PORTFOLIO_GITHUB_TOKEN }}" \
           "https://api.github.com/user" || echo "FAILED")
-        
+
         if [[ "$response" == *"login"* ]]; then
           echo "✅ GitHub API access validated"
         else
@@ -37,86 +37,86 @@ jobs:
           echo "Response: $response"
           exit 1
         fi
-        
+
     - name: Validate EmailJS Configuration
       run: |
         echo "🔍 Validating EmailJS configuration..."
-        
-        # Check if EmailJS credentials are properly formatted
-        if [[ "${{ secrets.EMAILJS_SERVICE_ID }}" =~ ^service_[a-zA-Z0-9]+$ ]]; then
+
+                # Check if EmailJS credentials are properly formatted
+        if [[ "${{ secrets.PORTFOLIO_EMAILJS_SERVICE_ID }}" =~ ^service_[a-zA-Z0-9]+$ ]]; then
           echo "✅ EmailJS Service ID format is valid"
         else
           echo "❌ EmailJS Service ID format is invalid"
           exit 1
         fi
-        
-        if [[ "${{ secrets.EMAILJS_TEMPLATE_ID }}" =~ ^template_[a-zA-Z0-9]+$ ]]; then
+
+        if [[ "${{ secrets.PORTFOLIO_EMAILJS_TEMPLATE_ID }}" =~ ^template_[a-zA-Z0-9]+$ ]]; then
           echo "✅ EmailJS Template ID format is valid"
         else
           echo "❌ EmailJS Template ID format is invalid"
           exit 1
         fi
-        
-        if [[ "${{ secrets.EMAILJS_USER_ID }}" =~ ^[a-zA-Z0-9_-]+$ ]]; then
+
+        if [[ "${{ secrets.PORTFOLIO_EMAILJS_USER_ID }}" =~ ^[a-zA-Z0-9_-]+$ ]]; then
           echo "✅ EmailJS User ID format is valid"
         else
           echo "❌ EmailJS User ID format is invalid"
           exit 1
         fi
-        
+
     - name: Validate Firebase Configuration
       run: |
         echo "🔍 Validating Firebase configuration..."
-        
-        # Check Firebase API key format
-        if [[ "${{ secrets.FIREBASE_API_KEY }}" =~ ^AIza[a-zA-Z0-9_-]{35}$ ]]; then
+
+                # Check Firebase API key format
+        if [[ "${{ secrets.PORTFOLIO_FIREBASE_API_KEY }}" =~ ^AIza[a-zA-Z0-9_-]{35}$ ]]; then
           echo "✅ Firebase API Key format is valid"
         else
           echo "❌ Firebase API Key format is invalid"
           exit 1
         fi
-        
+
         # Check Firebase Project ID
-        if [[ "${{ secrets.FIREBASE_PROJECT_ID }}" =~ ^[a-z0-9-]+$ ]]; then
+        if [[ "${{ secrets.PORTFOLIO_FIREBASE_PROJECT_ID }}" =~ ^[a-z0-9-]+$ ]]; then
           echo "✅ Firebase Project ID format is valid"
         else
           echo "❌ Firebase Project ID format is invalid"
           exit 1
         fi
-        
+
         # Test Firebase project access
-        response=$(curl -s "https://${{ secrets.FIREBASE_PROJECT_ID }}.firebaseio.com/.json" || echo "FAILED")
-        
+        response=$(curl -s "https://${{ secrets.PORTFOLIO_FIREBASE_PROJECT_ID }}.firebaseio.com/.json" || echo "FAILED")
+
         if [[ "$response" != "FAILED" ]]; then
           echo "✅ Firebase project access validated"
         else
           echo "⚠️  Firebase project access test failed (this might be normal for private projects)"
         fi
-        
+
     - name: Validate Environment Variables
       run: |
         echo "🔍 Validating all environment variables..."
-        
+
         # Create a test environment file
         cat > test.env << EOF
-        API_URL=${{ secrets.API_URL || 'https://your-production-api.com/api' }}
-        GITHUB_USERNAME=${{ secrets.GITHUB_USERNAME }}
-        GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
-        EMAILJS_SERVICE_ID=${{ secrets.EMAILJS_SERVICE_ID }}
-        EMAILJS_TEMPLATE_ID=${{ secrets.EMAILJS_TEMPLATE_ID }}
-        EMAILJS_USER_ID=${{ secrets.EMAILJS_USER_ID }}
-        ADMIN_USERNAME=${{ secrets.ADMIN_USERNAME || 'admin@example.com' }}
-        ADMIN_PASSWORD=${{ secrets.ADMIN_PASSWORD || 'secure_password' }}
-        FIREBASE_API_KEY=${{ secrets.FIREBASE_API_KEY }}
-        FIREBASE_AUTH_DOMAIN=${{ secrets.FIREBASE_AUTH_DOMAIN }}
-        FIREBASE_DATABASE_URL=${{ secrets.FIREBASE_DATABASE_URL }}
-        FIREBASE_PROJECT_ID=${{ secrets.FIREBASE_PROJECT_ID }}
-        FIREBASE_STORAGE_BUCKET=${{ secrets.FIREBASE_STORAGE_BUCKET }}
-        FIREBASE_MESSAGING_SENDER_ID=${{ secrets.FIREBASE_MESSAGING_SENDER_ID }}
-        FIREBASE_APP_ID=${{ secrets.FIREBASE_APP_ID }}
-        FIREBASE_MEASUREMENT_ID=${{ secrets.FIREBASE_MEASUREMENT_ID }}
+        API_URL=${{ secrets.PORTFOLIO_API_URL || 'https://your-production-api.com/api' }}
+        GITHUB_USERNAME=${{ secrets.PORTFOLIO_GITHUB_USERNAME }}
+        GITHUB_TOKEN=${{ secrets.PORTFOLIO_GITHUB_TOKEN }}
+        EMAILJS_SERVICE_ID=${{ secrets.PORTFOLIO_EMAILJS_SERVICE_ID }}
+        EMAILJS_TEMPLATE_ID=${{ secrets.PORTFOLIO_EMAILJS_TEMPLATE_ID }}
+        EMAILJS_USER_ID=${{ secrets.PORTFOLIO_EMAILJS_USER_ID }}
+        ADMIN_USERNAME=${{ secrets.PORTFOLIO_ADMIN_USERNAME || 'admin@example.com' }}
+        ADMIN_PASSWORD=${{ secrets.PORTFOLIO_ADMIN_PASSWORD || 'secure_password' }}
+        FIREBASE_API_KEY=${{ secrets.PORTFOLIO_FIREBASE_API_KEY }}
+        FIREBASE_AUTH_DOMAIN=${{ secrets.PORTFOLIO_FIREBASE_AUTH_DOMAIN }}
+        FIREBASE_DATABASE_URL=${{ secrets.PORTFOLIO_FIREBASE_DATABASE_URL }}
+        FIREBASE_PROJECT_ID=${{ secrets.PORTFOLIO_FIREBASE_PROJECT_ID }}
+        FIREBASE_STORAGE_BUCKET=${{ secrets.PORTFOLIO_FIREBASE_STORAGE_BUCKET }}
+        FIREBASE_MESSAGING_SENDER_ID=${{ secrets.PORTFOLIO_FIREBASE_MESSAGING_SENDER_ID }}
+        FIREBASE_APP_ID=${{ secrets.PORTFOLIO_FIREBASE_APP_ID }}
+        FIREBASE_MEASUREMENT_ID=${{ secrets.PORTFOLIO_FIREBASE_MEASUREMENT_ID }}
         EOF
-        
+
         # Check if all required variables are set
         required_vars=(
           "GITHUB_USERNAME"
@@ -127,7 +127,7 @@ jobs:
           "FIREBASE_API_KEY"
           "FIREBASE_PROJECT_ID"
         )
-        
+
         for var in "${required_vars[@]}"; do
           if grep -q "^${var}=" test.env; then
             value=$(grep "^${var}=" test.env | cut -d'=' -f2)
@@ -142,37 +142,37 @@ jobs:
             exit 1
           fi
         done
-        
+
         echo "✅ All required environment variables are properly configured"
-        
+
     - name: Test Build Process
       run: |
         echo "🔍 Testing build process..."
-        
+
         # Create environment file for build test
         cat > .env << EOF
-        API_URL=${{ secrets.API_URL || 'https://your-production-api.com/api' }}
-        GITHUB_USERNAME=${{ secrets.GITHUB_USERNAME }}
-        GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
-        EMAILJS_SERVICE_ID=${{ secrets.EMAILJS_SERVICE_ID }}
-        EMAILJS_TEMPLATE_ID=${{ secrets.EMAILJS_TEMPLATE_ID }}
-        EMAILJS_USER_ID=${{ secrets.EMAILJS_USER_ID }}
-        ADMIN_USERNAME=${{ secrets.ADMIN_USERNAME || 'admin@example.com' }}
-        ADMIN_PASSWORD=${{ secrets.ADMIN_PASSWORD || 'secure_password' }}
-        FIREBASE_API_KEY=${{ secrets.FIREBASE_API_KEY }}
-        FIREBASE_AUTH_DOMAIN=${{ secrets.FIREBASE_AUTH_DOMAIN }}
-        FIREBASE_DATABASE_URL=${{ secrets.FIREBASE_DATABASE_URL }}
-        FIREBASE_PROJECT_ID=${{ secrets.FIREBASE_PROJECT_ID }}
-        FIREBASE_STORAGE_BUCKET=${{ secrets.FIREBASE_STORAGE_BUCKET }}
-        FIREBASE_MESSAGING_SENDER_ID=${{ secrets.FIREBASE_MESSAGING_SENDER_ID }}
-        FIREBASE_APP_ID=${{ secrets.FIREBASE_APP_ID }}
-        FIREBASE_MEASUREMENT_ID=${{ secrets.FIREBASE_MEASUREMENT_ID }}
+        API_URL=${{ secrets.PORTFOLIO_API_URL || 'https://your-production-api.com/api' }}
+        GITHUB_USERNAME=${{ secrets.PORTFOLIO_GITHUB_USERNAME }}
+        GITHUB_TOKEN=${{ secrets.PORTFOLIO_GITHUB_TOKEN }}
+        EMAILJS_SERVICE_ID=${{ secrets.PORTFOLIO_EMAILJS_SERVICE_ID }}
+        EMAILJS_TEMPLATE_ID=${{ secrets.PORTFOLIO_EMAILJS_TEMPLATE_ID }}
+        EMAILJS_USER_ID=${{ secrets.PORTFOLIO_EMAILJS_USER_ID }}
+        ADMIN_USERNAME=${{ secrets.PORTFOLIO_ADMIN_USERNAME || 'admin@example.com' }}
+        ADMIN_PASSWORD=${{ secrets.PORTFOLIO_ADMIN_PASSWORD || 'secure_password' }}
+        FIREBASE_API_KEY=${{ secrets.PORTFOLIO_FIREBASE_API_KEY }}
+        FIREBASE_AUTH_DOMAIN=${{ secrets.PORTFOLIO_FIREBASE_AUTH_DOMAIN }}
+        FIREBASE_DATABASE_URL=${{ secrets.PORTFOLIO_FIREBASE_DATABASE_URL }}
+        FIREBASE_PROJECT_ID=${{ secrets.PORTFOLIO_FIREBASE_PROJECT_ID }}
+        FIREBASE_STORAGE_BUCKET=${{ secrets.PORTFOLIO_FIREBASE_STORAGE_BUCKET }}
+        FIREBASE_MESSAGING_SENDER_ID=${{ secrets.PORTFOLIO_FIREBASE_MESSAGING_SENDER_ID }}
+        FIREBASE_APP_ID=${{ secrets.PORTFOLIO_FIREBASE_APP_ID }}
+        FIREBASE_MEASUREMENT_ID=${{ secrets.PORTFOLIO_FIREBASE_MEASUREMENT_ID }}
         EOF
-        
+
         # Test build process
         chmod +x build-prod.sh
         ./build-prod.sh
-        
+
         # Verify build output
         if [ -d "dist/KarolineRocha_Portfolio" ] && [ -f "dist/KarolineRocha_Portfolio/index.html" ]; then
           echo "✅ Build process completed successfully"
@@ -180,7 +180,7 @@ jobs:
           echo "❌ Build process failed"
           exit 1
         fi
-        
+
     - name: Generate Validation Report
       run: |
         echo "📋 Generating validation report..."
@@ -196,9 +196,9 @@ jobs:
         echo "" >> validation-report.md
         echo "### 🌐 Deployment URL:" >> validation-report.md
         echo "https://karolinerrocha.github.io/KarolineRocha_Portfolio/" >> validation-report.md
-        
+
         echo "✅ Validation report generated"
-        
+
     - name: Upload Validation Report
       uses: actions/upload-artifact@v3
       with:

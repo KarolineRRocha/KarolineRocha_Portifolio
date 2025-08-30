@@ -1,6 +1,7 @@
 /**
  * Environment Variables Injection Script (Production)
  * Generated automatically by build script for GitHub Pages
+ * Now uses PORTFOLIO_ prefix for all environment variables
  */
 
 (function() {
