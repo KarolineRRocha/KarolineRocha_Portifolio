@@ -24,6 +24,7 @@ This portfolio demonstrates modern web development practices with a focus on:
 - **Contact Form Optimization**: Responsive input sizing and 100vh minimum height on mobile
 - **Cross-Component Consistency**: Unified navigation methods across all components
 - **Performance Optimizations**: Reduced CSS conflicts and improved build efficiency
+- **Deploy Configuration**: Local and deploy environments now work identically
 
 ### Design & User Experience
 - Animated floating elements and smooth transitions
