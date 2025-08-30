@@ -15,14 +15,14 @@ function getEnvVar(key: string, defaultValue: string = ''): string {
 }
 
 export const firebaseConfig = {
-  apiKey: getEnvVar('FIREBASE_API_KEY', ''),
-  authDomain: getEnvVar('FIREBASE_AUTH_DOMAIN', ''),
-  databaseURL: getEnvVar('FIREBASE_DATABASE_URL', ''),
-  projectId: getEnvVar('FIREBASE_PROJECT_ID', ''),
-  storageBucket: getEnvVar('FIREBASE_STORAGE_BUCKET', ''),
-  messagingSenderId: getEnvVar('FIREBASE_MESSAGING_SENDER_ID', ''),
-  appId: getEnvVar('FIREBASE_APP_ID', ''),
-  measurementId: getEnvVar('FIREBASE_MEASUREMENT_ID', '')
+  apiKey: getEnvVar('PORTFOLIO_FIREBASE_API_KEY', ''),
+  authDomain: getEnvVar('PORTFOLIO_FIREBASE_AUTH_DOMAIN', ''),
+  databaseURL: getEnvVar('PORTFOLIO_FIREBASE_DATABASE_URL', ''),
+  projectId: getEnvVar('PORTFOLIO_FIREBASE_PROJECT_ID', ''),
+  storageBucket: getEnvVar('PORTFOLIO_FIREBASE_STORAGE_BUCKET', ''),
+  messagingSenderId: getEnvVar('PORTFOLIO_FIREBASE_MESSAGING_SENDER_ID', ''),
+  appId: getEnvVar('PORTFOLIO_FIREBASE_APP_ID', ''),
+  measurementId: getEnvVar('PORTFOLIO_FIREBASE_MEASUREMENT_ID', '')
 };
 
 export const COLLECTIONS = {
