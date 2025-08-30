@@ -13,7 +13,7 @@ export class SmartFirebaseService {
   private db: any;
   private projectsSubject = new BehaviorSubject<Project[]>([]);
   public projects$ = this.projectsSubject.asObservable();
-  
+
   private cache: Project[] = [];
   private lastCacheUpdate = 0;
   private unsubscribe: (() => void) | null = null;
@@ -42,7 +42,7 @@ export class SmartFirebaseService {
     try {
       const app = initializeApp(firebaseConfig);
       this.db = getFirestore(app);
-      
+
       if (environment.firebase.enableDebugMode) {
         console.log('🔥 SmartFirebaseService: Firebase initialized successfully');
       }
@@ -68,11 +68,11 @@ export class SmartFirebaseService {
     }
 
     const q = query(collection(this.db, COLLECTIONS.PROJECTS), orderBy('order'));
-    
+
     this.unsubscribe = onSnapshot(q, (snapshot) => {
       const projects = this.processSnapshot(snapshot);
       this.projectsSubject.next(projects);
-      
+
       if (environment.firebase.enableDebugMode) {
         console.log('🔄 SmartFirebaseService: Real-time update received:', projects.length, 'projects');
       }
@@ -88,23 +88,23 @@ export class SmartFirebaseService {
     }
 
     const q = query(collection(this.db, COLLECTIONS.PROJECTS), orderBy('order'));
-    
+
     this.unsubscribe = onSnapshot(q, (snapshot) => {
       const projects = this.processSnapshot(snapshot);
-      
+
       // Aplicar cache inteligente
       if (this.shouldUpdateCache()) {
         this.cache = projects;
         this.lastCacheUpdate = Date.now();
         this.projectsSubject.next(projects);
-        
+
         if (environment.firebase.enableDebugMode) {
           console.log('💾 SmartFirebaseService: Cache updated:', projects.length, 'projects');
         }
       } else {
         // Usar cache existente
         this.projectsSubject.next(this.cache);
-        
+
         if (environment.firebase.enableDebugMode) {
           console.log('💾 SmartFirebaseService: Using cached data:', this.cache.length, 'projects');
         }
@@ -125,7 +125,7 @@ export class SmartFirebaseService {
 
     const cacheAge = Date.now() - this.lastCacheUpdate;
     const shouldUpdate = cacheAge > environment.firebase.cacheDuration;
-    
+
     if (environment.firebase.enableDebugMode) {
       console.log('💾 SmartFirebaseService: Cache age:', cacheAge, 'ms, should update:', shouldUpdate);
     }
@@ -135,10 +135,10 @@ export class SmartFirebaseService {
 
   private processSnapshot(snapshot: any): Project[] {
     const projects: Project[] = [];
-    
+
     snapshot.docs.forEach((doc: any) => {
       const data = doc.data();
-      
+
       if (environment.firebase.enableDebugMode) {
         console.log('🔥 SmartFirebaseService: Processing document:', doc.id, data);
       }
@@ -184,11 +184,15 @@ export class SmartFirebaseService {
     }
 
     try {
+      // Primeiro, deslocar todos os projetos existentes para dar espaço ao novo projeto
+      await this.shiftExistingProjects();
+
+      // Agora adicionar o novo projeto com ordem 0 (primeiro)
       const docRef = await addDoc(collection(this.db, COLLECTIONS.PROJECTS), {
         ...projectData,
         createdAt: new Date(),
         updatedAt: new Date(),
-        order: this.getNextOrder()
+        order: 0 // Novo projeto sempre fica primeiro
       });
 
       if (environment.firebase.enableDebugMode) {
@@ -199,6 +203,37 @@ export class SmartFirebaseService {
     } catch (error) {
       console.error('❌ SmartFirebaseService: Error adding project:', error);
       return false;
+    }
+  }
+
+  /**
+   * Desloca todos os projetos existentes para dar espaço ao novo projeto
+   * Novo projeto sempre fica com ordem 0 (primeiro)
+   */
+  private async shiftExistingProjects(): Promise<void> {
+    const projects = this.getProjects();
+    
+    if (projects.length === 0) {
+      return; // Não há projetos para deslocar
+    }
+
+    if (environment.firebase.enableDebugMode) {
+      console.log('🔄 SmartFirebaseService: Shifting existing projects to make room for new project');
+    }
+
+    // Deslocar todos os projetos existentes (ordem + 1)
+    const shiftPromises = projects.map(project => {
+      const newOrder = (project.order || 0) + 1;
+      if (environment.firebase.enableDebugMode) {
+        console.log(`🔄 Shifting project ${project.name} from order ${project.order} to ${newOrder}`);
+      }
+      return this.updateProject(project.id, { order: newOrder });
+    });
+
+    await Promise.all(shiftPromises);
+
+    if (environment.firebase.enableDebugMode) {
+      console.log('✅ SmartFirebaseService: All existing projects shifted successfully');
     }
   }
 
@@ -246,14 +281,6 @@ export class SmartFirebaseService {
       console.error('❌ SmartFirebaseService: Error deleting project:', error);
       return false;
     }
-  }
-
-  private getNextOrder(): number {
-    const projects = this.getProjects();
-    if (projects.length === 0) {
-      return 0;
-    }
-    return Math.max(...projects.map(p => p.order || 0)) + 1;
   }
 
   // Métodos de utilidade
