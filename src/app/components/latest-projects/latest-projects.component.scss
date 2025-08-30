@@ -344,10 +344,13 @@
 }
 
 @keyframes pulse {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: scale(1);
     opacity: 0.3;
   }
+
   50% {
     transform: scale(1.1);
     opacity: 0.1;
@@ -451,7 +454,6 @@
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-semibold);
   transition: all var(--transition-normal);
-  min-width: 120px;
   box-shadow: 0 2px 8px rgba(0, 212, 255, 0.3);
 
   svg {
