@@ -5,8 +5,8 @@ import { switchMap, tap, catchError, map } from 'rxjs/operators';
 import { FirebaseStorageService } from './firebase-storage.service';
 import { NotificationService } from '../../services/notification.service';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
-import { COLLECTIONS } from '../../../environments/firebase.deploy';
-import { environment } from '../../../environments/environment.deploy';
+import { COLLECTIONS } from '../../../environments/firebase.config';
+import { environment } from '../../../environments/environment';
 
 export interface GitHubRepo {
   id: number;

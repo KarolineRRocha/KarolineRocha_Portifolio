@@ -396,3 +396,4 @@ junit.xml
 
 # Quality assurance
 .quality/
+src/assets/env.js

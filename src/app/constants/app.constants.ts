@@ -11,7 +11,7 @@ function getEnvVar(key: string, defaultValue: string = ''): string {
   if (typeof window !== 'undefined' && window.__env__ && window.__env__[key]) {
     return window.__env__[key];
   }
-  
+
   // Fallback to default value
   return defaultValue;
 }
