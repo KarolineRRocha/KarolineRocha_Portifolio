@@ -234,10 +234,10 @@
 .intro-description {
   font-size: var(--font-size-lg);
   color: var(--color-gray-dark);
-  line-height: 1.9;
+  line-height: 1.8;
   margin: 0 auto;
   font-family: var(--font-family-sans);
-  font-weight: var(--font-weight-normal);
+  font-weight: var(--font-weight-medium);
   text-align: center;
   position: relative;
   max-width: 1200px;
@@ -329,6 +329,7 @@
   }
 
   .intro-description {
+    padding: 0 var(--spacing-lg);
     font-size: var(--font-size-base);
     line-height: 1.5;
     max-width: 100%;
@@ -361,6 +362,10 @@
     font-size: var(--font-size-sm);
     letter-spacing: 0.5px;
   }
+
+  .intro-description {
+    font-size: var(--font-size-md);
+  }
 }
 
 @media (max-width: 360px) {
@@ -382,6 +387,6 @@
   }
 
   .intro-description {
-    font-size: var(--font-size-xs);
+    font-size: var(--font-size-sm);
   }
 }
