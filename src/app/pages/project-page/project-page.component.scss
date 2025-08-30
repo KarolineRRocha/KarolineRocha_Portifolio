@@ -536,7 +536,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 4px;
+  gap: var(--spacing-xs);
+  min-width: 120px;
   border: none;
   cursor: pointer;
   position: relative;

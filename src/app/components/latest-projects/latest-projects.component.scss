@@ -444,25 +444,28 @@
 .project-link-btn {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  gap: 4px;
+  gap: var(--spacing-xs);
   padding: var(--spacing-sm) var(--spacing-md);
-  background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+  background: var(--gradient-neon);
   color: white;
   text-decoration: none;
   border-radius: var(--radius-md);
   font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-semibold);
+  font-weight: var(--font-weight-medium);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
   transition: all var(--transition-normal);
   box-shadow: 0 2px 8px rgba(0, 212, 255, 0.3);
 
-  svg {
-    transition: transform var(--transition-normal);
-  }
-
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(0, 212, 255, 0.4);
+    box-shadow: 0 4px 12px rgba(0, 212, 255, 0.4);
+    text-decoration: none;
+    color: white;
+  }
+
+  svg {
+    transition: transform var(--transition-normal);
   }
 
   &:hover svg {

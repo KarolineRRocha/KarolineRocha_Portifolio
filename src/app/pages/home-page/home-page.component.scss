@@ -1004,7 +1004,8 @@
 
 /* Button Styles - Mobile First */
 .btn-primary,
-.btn-secondary {
+.btn-secondary,
+.btn-disabled {
   margin-top: var(--spacing-sm);
   padding: var(--spacing-sm) var(--spacing-md);
   border-radius: 8px;
@@ -1015,7 +1016,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 4px;
+  gap: var(--spacing-xs);
+  min-width: 120px;
   border: none;
   cursor: pointer;
   position: relative;
