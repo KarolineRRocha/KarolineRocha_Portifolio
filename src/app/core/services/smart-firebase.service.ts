@@ -212,7 +212,7 @@ export class SmartFirebaseService {
    */
   private async shiftExistingProjects(): Promise<void> {
     const projects = this.getProjects();
-    
+
     if (projects.length === 0) {
       return; // Não há projetos para deslocar
     }
