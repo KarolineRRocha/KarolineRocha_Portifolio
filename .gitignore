@@ -188,8 +188,45 @@ start.sh
 setup-env.sh
 
 # =============================================================================
-# Documentation (keep important files)
+# Documentation and Development Files
 # =============================================================================
+# Development documentation (not needed in production)
+DYNAMIC_ASSETS.md
+ENVIRONMENT_SETUP.md
+GITHUB_SETUP.md
+QUICK_START.md
+SPA_ROUTING.md
+DEPLOYMENT.md
+
+# Development and test scripts
+dev-assets.sh
+test-assets.sh
+test-assets.html
+
+# Generated reports
+validation-report.md
+
+# Temporary and cache files
+*.cache
+.cache/
+.temp/
+.tmp/
+temp/
+tmp/
+
+# Backup files
+*.bak
+*.backup
+*.old
+*.orig
+
+# Local configuration files
+*.local.*
+*.local
+local.*
+local/
+
+# Keep important documentation
 !README.md
 !readme.md
 !CONTRIBUTING.md

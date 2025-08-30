@@ -5,42 +5,13 @@
   <meta charset="utf-8">
   <title>Karoline Rocha</title>
   <base href="/">
-  <script>
-    // Detect environment and adjust base href
-    (function () {
-      var isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-      var isGitHubPages = window.location.hostname === 'karolinerrocha.github.io';
-
-      if (isGitHubPages) {
-        // For GitHub Pages, change base href
-        var baseElement = document.querySelector('base');
-        baseElement.href = '/KarolineRocha_Portfolio/';
-
-        // Update image paths for GitHub Pages
-        var images = document.querySelectorAll('img[src^="/KarolineRocha_Portfolio/"]');
-        images.forEach(function (img) {
-          // Keep absolute paths for GitHub Pages
-        });
-      } else {
-        // For localhost, use relative paths
-        var images = document.querySelectorAll('img[src^="/KarolineRocha_Portfolio/"]');
-        images.forEach(function (img) {
-          img.src = img.src.replace('/KarolineRocha_Portfolio/', '');
-        });
-
-        // Update favicon paths for localhost
-        var favicons = document.querySelectorAll('link[href^="/KarolineRocha_Portfolio/"]');
-        favicons.forEach(function (link) {
-          link.href = link.href.replace('/KarolineRocha_Portfolio/', '');
-        });
-      }
-    })();
-  </script>
+  <!-- Dynamic Asset Path Management Script -->
+  <script src="assets/dynamic-assets.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/svg+xml" href="/KarolineRocha_Portfolio/assets/KLogoSimple.svg">
-  <link rel="icon" type="image/x-icon" href="/KarolineRocha_Portfolio/assets/favicon.ico">
-  <link rel="shortcut icon" href="/KarolineRocha_Portfolio/assets/favicon.ico">
-  <link rel="apple-touch-icon" href="/KarolineRocha_Portfolio/assets/KLogoSimple.svg">
+  <link rel="icon" type="image/svg+xml" href="assets/KLogoSimple.svg">
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+  <link rel="shortcut icon" href="assets/favicon.ico">
+  <link rel="apple-touch-icon" href="assets/KLogoSimple.svg">
   <link href='https://fonts.googleapis.com/css?family=Pompiere' rel='stylesheet'>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">

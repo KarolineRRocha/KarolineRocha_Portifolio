@@ -9,6 +9,9 @@ import { FooterComponent } from './components/footer/footer.component';
 import { TopnavComponent } from './components/topnav/topnav.component';
 import { ScrollTopComponent } from './components/scroll-top/scroll-top.component';
 
+// Shared Pipes
+import { AssetPathPipe } from './pipes/asset-path.pipe';
+
 
 
 @NgModule({
@@ -16,7 +19,8 @@ import { ScrollTopComponent } from './components/scroll-top/scroll-top.component
     HeaderComponent,
     FooterComponent,
     TopnavComponent,
-    ScrollTopComponent
+    ScrollTopComponent,
+    AssetPathPipe
   ],
   imports: [
     CommonModule,
@@ -29,6 +33,7 @@ import { ScrollTopComponent } from './components/scroll-top/scroll-top.component
     FooterComponent,
     TopnavComponent,
     ScrollTopComponent,
+    AssetPathPipe,
     ReactiveFormsModule,
     FormsModule,
     RouterModule,
