@@ -172,10 +172,17 @@ jobs:
 
         echo "✅ Build artifacts verified successfully"
 
-    - name: Deploy to GitHub Pages (gh-pages branch)
-      run: |
-        echo "🚀 Deploying to GitHub Pages using gh-pages branch..."
-        npm run deploy
+    - name: Setup Pages
+      uses: actions/configure-pages@v4
+
+    - name: Upload artifact
+      uses: actions/upload-pages-artifact@v3
+      with:
+        path: './dist/KarolineRocha_Portfolio'
+
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v4
 
     - name: Verify deployment
       run: |
