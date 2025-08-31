@@ -180,7 +180,7 @@
 .title-subtitle {
   display: block;
   font-size: var(--font-size-lg);
-  color: var(--color-primary);
+  color: var( --color-deep-blue);
   font-family: var(--font-family-mono);
   font-weight: var(--font-weight-semibold);
   text-transform: uppercase;
@@ -581,27 +581,52 @@
   .about-hero {
     grid-template-columns: 1fr;
     gap: var(--spacing-2xl);
-    padding: var(--spacing-2xl) 0;
+    padding: var(--spacing-3xl) var(--spacing-lg);
     min-height: 50vh;
+  }
+
+  .about-content {
+    gap: var(--spacing-2xl);
+    margin-bottom: 0;
+  }
+
+  .about-cta-section {
+    width: 95%;
+    margin: 0 auto;
+  }
+
+  .about-sections {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    width: 95%;
+    margin: 0 auto;
+    min-height: 70vh;
+    gap: var(--spacing-2xl);
+  }
+
+  .about-sections::before,
+  .about-sections::after {
+    display: none;
   }
 
   .hero-text {
     order: 1;
     align-items: center;
     text-align: center;
+    gap: var(--spacing-md);
   }
 
   .hero-image {
     order: 2;
+    margin: var(--spacing-3xl) 0;
+  }
+
+  .hero-description {
+    padding: 0 var(--spacing-xl) !important;
+    margin-bottom: var(--spacing-xl);
   }
 
   .image-container {
     max-width: 280px;
-  }
-
-  .about-sections {
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: var(--spacing-xl);
   }
 }
 
@@ -670,7 +695,7 @@
   }
 
   .hero-title {
-    font-size: var(--font-size-xl);
+    font-size: var(--font-size-2xl);
     text-align: center;
   }
 
@@ -691,7 +716,7 @@
 
   .about-sections {
     grid-template-columns: 1fr;
-    gap: var(--spacing-xl);
+    gap: var(--spacing-2xl);
     margin-top: var(--spacing-xl);
     width: 95%;
     margin: 0 auto;
@@ -729,7 +754,7 @@
   }
 
   .about-container {
-    padding: 0 var(--spacing-lg);
+    padding: var(--spacing-lg) var(--spacing-lg);
   }
 
   .about-title {
@@ -802,15 +827,10 @@
   .about-sections {
     gap: var(--spacing-xl);
     margin-top: var(--spacing-lg);
-    width: 100%;
-    max-width: 100%;
-    margin-left: 0;
-    margin-right: 0;
   }
 
   .section-card {
     width: 100%;
-    max-width: 100%;
   }
 
   .section-icon {
@@ -881,11 +901,6 @@
 
   .image-container {
     max-width: 180px;
-  }
-
-  .about-sections {
-    gap: var(--spacing-sm);
-    padding: var(--spacing-lg);
   }
 
   .about-cta-section {
