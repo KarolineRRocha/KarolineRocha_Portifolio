@@ -99,7 +99,7 @@
   position: relative;
   margin: 0 auto;
   padding: var(--spacing-lg) var(--spacing-md);
-  flex: 1;
+  min-height: 0;
 }
 
 /* Hero Text Section - Mobile First */
@@ -1598,6 +1598,7 @@
 
   .timeline-project {
     flex-direction: row;
+    min-height: auto;
     align-items: center;
     justify-content: space-between;
     text-align: left;
@@ -1703,10 +1704,12 @@
 
   .hero-content {
     flex-direction: row;
+    min-height: auto;
     align-items: center;
     justify-content: space-between;
     text-align: left;
     gap: var(--spacing-2xl);
+    min-height: auto;
   }
 
   .hero-text {
@@ -1771,6 +1774,7 @@
 
   .hero-content {
     flex-direction: row;
+    min-height: auto;
     align-items: center;
     justify-content: space-between;
     text-align: left;
@@ -1864,6 +1868,7 @@
 
   .timeline-project {
     flex-direction: row;
+    min-height: auto;
     align-items: center;
     justify-content: space-between;
     text-align: left;
@@ -2022,6 +2027,7 @@
 
   .hero-content {
     flex-direction: row;
+    min-height: auto;
     align-items: center;
     justify-content: space-between;
     text-align: left;
@@ -2096,6 +2102,7 @@
 
   .timeline-project {
     flex-direction: row;
+    min-height: auto;
     align-items: center;
     justify-content: space-between;
     text-align: left;
@@ -2134,6 +2141,7 @@
 
   .hero-content {
     flex-direction: row;
+    min-height: auto;
     align-items: center;
     justify-content: space-between;
     text-align: left;
