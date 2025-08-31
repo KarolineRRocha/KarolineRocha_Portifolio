@@ -14,7 +14,7 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   background: var(--gradient-primary);
   position: relative;
   overflow: hidden;
@@ -100,6 +100,7 @@
   margin: 0 auto;
   padding: var(--spacing-lg) var(--spacing-md);
   min-height: 0;
+  flex: 1;
 }
 
 /* Hero Text Section - Mobile First */
@@ -383,6 +384,7 @@
   position: relative;
   flex-wrap: wrap;
   padding: var(--spacing-xl) 0 var(--spacing-xl) 0;
+  margin-top: auto;
 }
 
 .link-divider {
@@ -1598,7 +1600,7 @@
 
   .timeline-project {
     flex-direction: row;
-    min-height: auto;
+    flex: 1;
     align-items: center;
     justify-content: space-between;
     text-align: left;
@@ -1704,12 +1706,12 @@
 
   .hero-content {
     flex-direction: row;
-    min-height: auto;
+    flex: 1;
     align-items: center;
     justify-content: space-between;
     text-align: left;
     gap: var(--spacing-2xl);
-    min-height: auto;
+    flex: 1;
   }
 
   .hero-text {
@@ -1774,7 +1776,7 @@
 
   .hero-content {
     flex-direction: row;
-    min-height: auto;
+    flex: 1;
     align-items: center;
     justify-content: space-between;
     text-align: left;
@@ -1868,7 +1870,7 @@
 
   .timeline-project {
     flex-direction: row;
-    min-height: auto;
+    flex: 1;
     align-items: center;
     justify-content: space-between;
     text-align: left;
@@ -2027,7 +2029,7 @@
 
   .hero-content {
     flex-direction: row;
-    min-height: auto;
+    flex: 1;
     align-items: center;
     justify-content: space-between;
     text-align: left;
@@ -2102,7 +2104,7 @@
 
   .timeline-project {
     flex-direction: row;
-    min-height: auto;
+    flex: 1;
     align-items: center;
     justify-content: space-between;
     text-align: left;
@@ -2141,7 +2143,7 @@
 
   .hero-content {
     flex-direction: row;
-    min-height: auto;
+    flex: 1;
     align-items: center;
     justify-content: space-between;
     text-align: left;
@@ -2343,7 +2345,7 @@
 /* Print Styles */
 @media print {
   .hero-section {
-    min-height: auto;
+    flex: 1;
     padding: var(--spacing-lg) 0;
   }
 
@@ -2361,7 +2363,7 @@
   }
 
   .projects-section {
-    min-height: auto;
+    flex: 1;
   }
 
   .timeline-line {
