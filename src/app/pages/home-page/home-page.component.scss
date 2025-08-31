@@ -14,7 +14,7 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   background: var(--gradient-primary);
   position: relative;
   overflow: hidden;
@@ -88,10 +88,11 @@
 
 /* Hero Content - Mobile First Layout */
 .hero-content {
+    flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   width: 95%;
   max-width: var(--container-max-width);
   gap: var(--spacing-2xl);
@@ -99,13 +100,12 @@
   position: relative;
   margin: 0 auto;
   padding: var(--spacing-lg) var(--spacing-md);
-  min-height: 0;
-  min-height: 70vh;
+  flex: 1;
 }
 
 /* Hero Text Section - Mobile First */
 .hero-text {
-  min-height: 70vh;
+  flex: 1;
   width: 100%;
   max-width: 100%;
   text-align: center;
@@ -231,7 +231,7 @@
 
 /* Hero Visual Section - Mobile First */
 .hero-visual {
-  min-height: 70vh;
+  flex: 1;
   width: 100%;
   max-width: 100%;
   max-height: fit-content;
@@ -384,8 +384,6 @@
   position: relative;
   flex-wrap: wrap;
   padding: var(--spacing-xl) 0 var(--spacing-xl) 0;
-  margin-top: auto;
-  width: 100%;
 }
 
 .link-divider {
@@ -460,7 +458,6 @@
   z-index: 2;
   position: relative;
   margin-top: calc(-1 * var(--spacing-xs));
-  width: 100%;
 }
 
 .scroll-text {
@@ -1010,7 +1007,7 @@
   margin: 0 0 var(--spacing-lg) 0;
 
   font-weight: var(--font-weight-medium);
-  min-height: 70vh;
+  flex: 1;
   min-height: 40px;
   overflow: hidden;
   display: -webkit-box;
@@ -1194,6 +1191,8 @@
 /* Extra Small Mobile (320px and up) */
 @media (min-width: 320px) {
   .hero-content {
+    flex: 1;
+    flex: 1;
     padding: var(--spacing-md) var(--spacing-sm);
     gap: var(--spacing-md);
   }
@@ -1255,6 +1254,8 @@
 /* Small Mobile (360px and up) */
 @media (min-width: 360px) {
   .hero-content {
+    flex: 1;
+    flex: 1;
     gap: var(--spacing-lg);
   }
 
@@ -1379,6 +1380,8 @@
 /* Small Mobile (412px and up) */
 @media (min-width: 412px) {
   .hero-content {
+    flex: 1;
+    flex: 1;
     gap: var(--spacing-xl);
   }
 
@@ -1450,9 +1453,10 @@
 /* Medium Mobile (640px and up) */
 @media (min-width: 640px) {
   .hero-content {
+    flex: 1;
+    flex: 1;
     gap: var(--spacing-3xl);
     padding: var(--spacing-xl) var(--spacing-lg);
-    justify-content: space-between;
   }
 
   .title-line {
@@ -1507,9 +1511,9 @@
   }
 
   .hero-content {
+    flex: 1;
     width: 90%;
     padding: var(--spacing-xl) var(--spacing-lg);
-    justify-content: space-between;
   }
 
   .title-line {
@@ -1604,7 +1608,6 @@
 
   .timeline-project {
     flex-direction: row;
-    min-height: 70vh;
     align-items: center;
     justify-content: space-between;
     text-align: left;
@@ -1709,13 +1712,13 @@
   }
 
   .hero-content {
+    flex: 1;
+    flex: 1;
     flex-direction: row;
-    min-height: 70vh;
     align-items: center;
     justify-content: space-between;
     text-align: left;
     gap: var(--spacing-2xl);
-    min-height: 70vh;
   }
 
   .hero-text {
@@ -1779,8 +1782,8 @@
   }
 
   .hero-content {
+    flex: 1;
     flex-direction: row;
-    min-height: 70vh;
     align-items: center;
     justify-content: space-between;
     text-align: left;
@@ -1874,7 +1877,6 @@
 
   .timeline-project {
     flex-direction: row;
-    min-height: 70vh;
     align-items: center;
     justify-content: space-between;
     text-align: left;
@@ -2032,8 +2034,8 @@
   }
 
   .hero-content {
+    flex: 1;
     flex-direction: row;
-    min-height: 70vh;
     align-items: center;
     justify-content: space-between;
     text-align: left;
@@ -2108,7 +2110,6 @@
 
   .timeline-project {
     flex-direction: row;
-    min-height: 70vh;
     align-items: center;
     justify-content: space-between;
     text-align: left;
@@ -2146,8 +2147,8 @@
   }
 
   .hero-content {
+    flex: 1;
     flex-direction: row;
-    min-height: 70vh;
     align-items: center;
     justify-content: space-between;
     text-align: left;
@@ -2241,6 +2242,7 @@
 /* Extra Large Desktop (1400px and up) */
 @media (min-width: 1400px) {
   .hero-content {
+    flex: 1;
     width: 85%;
   }
 
@@ -2349,7 +2351,7 @@
 /* Print Styles */
 @media print {
   .hero-section {
-    min-height: 70vh;
+    min-height: auto;
     padding: var(--spacing-lg) 0;
   }
 
@@ -2367,7 +2369,7 @@
   }
 
   .projects-section {
-    min-height: 70vh;
+    min-height: auto;
   }
 
   .timeline-line {

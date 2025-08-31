@@ -175,8 +175,10 @@
 
     <div class="timeline-container" *ngIf="projects.length > 0">
       <div class="timeline-line"></div>
+
       <div class="timeline-projects">
         <div class="timeline-project" *ngFor="let project of projects; let i = index" [class.left]="i % 2 === 0" [class.right]="i % 2 === 1">
+
           <div class="timeline-node">
             <div class="node-circle">
               <div class="node-dot"></div>
