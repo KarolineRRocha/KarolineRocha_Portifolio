@@ -643,10 +643,11 @@
 
 .section-subtitle {
   font-size: var(--font-size-lg);
-  color: var(--color-gray-dark);
+  color: var(--color-primary);
   line-height: 1.6;
   margin: 0;
-  margin-top: var(--spacing-sm);
+  margin-top: var(--spacing-lg);
+  text-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
 }
 
 /* Timeline Container - Mobile First */
@@ -2418,9 +2419,9 @@
     font-size: var(--font-size-lg);
     margin-bottom: var(--spacing-sm);
   }
-  
+ 
   .section-subtitle {
-    margin-top: var(--spacing-xs);
+    margin-top: var(--spacing-md);
   }
 }
 
@@ -2431,7 +2432,7 @@
   }
   
   .section-subtitle {
-    margin-top: var(--spacing-xs);
+    margin-top: var(--spacing-md);
   }
 
   .featured-projects-title::before,
