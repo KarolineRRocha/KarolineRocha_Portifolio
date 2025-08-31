@@ -143,33 +143,24 @@
 
 .title-line {
   font-family: "Monaco", "SF Mono", "Monaco", "Inconsolata", "Roboto Mono", "Source Code Pro", "Courier New", monospace;
-  display: inline-block;
-  margin-bottom: var(--spacing-sm);
+  display: block;
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-white);
+  line-height: 1.1;
+  margin-bottom: var(--spacing-md);
 }
 
 .code-bracket {
   color: var(--color-accent);
   font-weight: var(--font-weight-bold);
-  text-shadow: 0 0 12px rgba(255, 20, 147, 0.8);
-  animation: glow 2s ease-in-out infinite alternate;
-}
-
-@keyframes glow {
-  from {
-    text-shadow: 0 0 12px rgba(255, 20, 147, 0.8);
-  }
-
-  to {
-    text-shadow: 0 0 20px rgba(255, 20, 147, 1), 0 0 30px rgba(255, 20, 147, 0.6);
-  }
+  text-shadow: 0 0 10px rgba(255, 20, 147, 0.6);
 }
 
 .title-text {
-  color: var(--color-dark);
-  background: linear-gradient(135deg, var(--color-dark), var(--color-primary));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--color-primary);
+  text-shadow: 0 0 15px rgba(0, 212, 255, 0.8);
+  margin: 0 var(--spacing-sm);
 }
 
 .title-subtitle {
