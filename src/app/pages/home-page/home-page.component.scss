@@ -643,11 +643,23 @@
 
 .section-subtitle {
   font-size: var(--font-size-lg);
-  color: var(--color-primary);
+  color: var(--color-gray-dark);
   line-height: 1.6;
   margin: 0;
   margin-top: var(--spacing-lg);
-  text-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
+  position: relative;
+}
+
+.section-subtitle::before {
+  content: '';
+  position: absolute;
+  top: -var(--spacing-lg);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--color-primary), transparent);
+  border-radius: 1px;
 }
 
 /* Timeline Container - Mobile First */
@@ -2419,7 +2431,7 @@
     font-size: var(--font-size-lg);
     margin-bottom: var(--spacing-sm);
   }
- 
+
   .section-subtitle {
     margin-top: var(--spacing-md);
   }
@@ -2430,7 +2442,7 @@
     font-size: var(--font-size-lg);
     margin-bottom: var(--spacing-sm);
   }
-  
+
   .section-subtitle {
     margin-top: var(--spacing-md);
   }
