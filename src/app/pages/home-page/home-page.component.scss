@@ -2352,3 +2352,98 @@
     margin-bottom: var(--spacing-lg);
   }
 }
+
+/* Featured Projects Title Responsive Styles */
+@media (max-width: 1200px) {
+  .featured-projects-title {
+    font-size: var(--font-size-3xl);
+    letter-spacing: 1px;
+  }
+
+  .featured-projects-title::before,
+  .featured-projects-title::after {
+    width: 60px;
+  }
+
+  .featured-projects-title::before {
+    right: calc(100% + var(--spacing-lg));
+  }
+
+  .featured-projects-title::after {
+    left: calc(100% + var(--spacing-lg));
+  }
+}
+
+@media (max-width: 1024px) {
+  .featured-projects-title {
+    font-size: var(--font-size-3xl);
+    letter-spacing: 1px;
+  }
+
+  .featured-projects-title::before,
+  .featured-projects-title::after {
+    width: 60px;
+  }
+
+  .featured-projects-title::before {
+    right: calc(100% + var(--spacing-lg));
+  }
+
+  .featured-projects-title::after {
+    left: calc(100% + var(--spacing-lg));
+  }
+}
+
+@media (max-width: 768px) {
+  .featured-projects-title {
+    font-size: var(--font-size-2xl);
+  }
+
+  .featured-projects-title::before,
+  .featured-projects-title::after {
+    width: 40px;
+  }
+
+  .featured-projects-title::before {
+    right: calc(100% + var(--spacing-md));
+  }
+
+  .featured-projects-title::after {
+    left: calc(100% + var(--spacing-md));
+  }
+}
+
+@media (max-width: 480px) {
+  .featured-projects-title {
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--spacing-xs);
+  }
+}
+
+@media (max-width: 360px) {
+  .featured-projects-title {
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--spacing-xs);
+  }
+
+  .featured-projects-title::before,
+  .featured-projects-title::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 20px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+    box-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
+    border-radius: 2px;
+    transform: translateY(-50%);
+  }
+
+  .featured-projects-title::before {
+    right: calc(100% + 4px);
+  }
+
+  .featured-projects-title::after {
+    left: calc(100% + 4px);
+  }
+}
