@@ -127,6 +127,7 @@
 }
 
 .contact-link {
+  font-family: "Monaco", "SF Mono", "Monaco", "Inconsolata", "Roboto Mono", "Source Code Pro", "Courier New", monospace;
   color: var(--color-primary);
   text-decoration: none;
   transition: color var(--transition-normal);
@@ -155,10 +156,10 @@
 }
 
 .footer-link {
+  font-family: "Monaco", "SF Mono", "Monaco", "Inconsolata", "Roboto Mono", "Source Code Pro", "Courier New", monospace;
   color: var(--color-gray);
   text-decoration: none;
   font-size: var(--font-size-sm);
-
   transition: all var(--transition-normal);
   position: relative;
   outline: none !important;
