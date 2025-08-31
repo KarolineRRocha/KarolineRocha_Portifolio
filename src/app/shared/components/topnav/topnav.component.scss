@@ -37,6 +37,8 @@
   height: 3.5rem;
   width: auto;
   filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.5));
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
 }
 
 /* Navigation Links - Only for links inside .nav-links */
@@ -214,6 +216,10 @@
 
   .nav-logo img {
     height: 2.8rem;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   .nav-links {
@@ -235,6 +241,10 @@
 
   .nav-logo img {
     height: 2.6rem;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   .nav-links {
@@ -253,10 +263,16 @@
   .nav {
     height: var(--header-height);
     padding: 0 var(--spacing-md);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
 
   .nav-logo img {
     height: 2.8rem;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   /* Hide the regular navigation links */
@@ -280,7 +296,8 @@
     left: 0;
     right: 0;
     background: var(--gradient-primary);
-    backdrop-filter: blur(20px);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
     border-bottom: 1px solid rgba(0, 212, 255, 0.2);
     flex-direction: column;
     gap: 0;
@@ -323,10 +340,16 @@
   .nav {
     height: var(--header-height-mobile);
     padding: 0 var(--spacing-md);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
 
   .nav-logo img {
     height: 3rem;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   /* Hide the regular navigation links */
@@ -350,7 +373,8 @@
     left: 0;
     right: 0;
     background: var(--gradient-primary);
-    backdrop-filter: blur(20px);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
     border-bottom: 1px solid rgba(0, 212, 255, 0.2);
     flex-direction: column;
     gap: 0;
@@ -397,10 +421,16 @@
   .nav {
     height: var(--header-height-mobile);
     padding: 0 var(--spacing-sm);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
 
   .nav-logo img {
     height: 2.8rem;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   #nav-check:checked~.nav-links a {
