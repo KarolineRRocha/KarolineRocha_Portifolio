@@ -121,7 +121,6 @@
 
     <div class="social-links">
       <div class="link-divider"></div>
-
       <a href="https://github.com/KarolineRRocha" target="_blank" class="social-link github" aria-label="GitHub Profile">
         <div class="link-icon">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="white">
@@ -161,12 +160,17 @@
 
   <section class="projects-section" id="projects">
     <div class="section-header">
-      <h2 class="section-title">Featured Projects</h2>
+      <h2 class="section-title">
+        <span class="title-line">
+          <span class="code-bracket">&lt;</span>
+          <span class="title-text">Featured Projects</span>
+          <span class="code-bracket">/&gt;</span>
+        </span>
+      </h2>
       <p class="section-subtitle">
         A showcase of my latest work, demonstrating frontend development skills,
         responsive design, and modern web technologies.
       </p>
-
     </div>
 
     <div class="timeline-container" *ngIf="projects.length > 0">
@@ -226,7 +230,7 @@
                       View Code
                     </a>
                   </ng-container>
-                  
+
                   <!-- Show message when no links are available -->
                   <ng-template #noLinks>
                     <div class="no-links-message">
