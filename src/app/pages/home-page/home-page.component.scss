@@ -633,6 +633,14 @@
   left: calc(100% + var(--spacing-2xl));
 }
 
+.featured-projects-text {
+  color: var(--color-dark);
+  background: linear-gradient(135deg, var(--color-dark), var(--color-primary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
 .section-subtitle {
   font-size: var(--font-size-lg);
   color: var(--color-gray-dark);
