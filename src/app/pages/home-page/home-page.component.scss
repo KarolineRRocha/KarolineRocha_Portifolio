@@ -143,24 +143,33 @@
 
 .title-line {
   font-family: "Monaco", "SF Mono", "Monaco", "Inconsolata", "Roboto Mono", "Source Code Pro", "Courier New", monospace;
-  display: block;
-  font-size: var(--font-size-2xl);
-  font-weight: var(--font-weight-bold);
-  color: var(--color-white);
-  line-height: 1.1;
-  margin-bottom: var(--spacing-md);
+  display: inline-block;
+  margin-bottom: var(--spacing-sm);
 }
 
 .code-bracket {
   color: var(--color-accent);
   font-weight: var(--font-weight-bold);
-  text-shadow: 0 0 10px rgba(255, 20, 147, 0.6);
+  text-shadow: 0 0 12px rgba(255, 20, 147, 0.8);
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  from {
+    text-shadow: 0 0 12px rgba(255, 20, 147, 0.8);
+  }
+
+  to {
+    text-shadow: 0 0 20px rgba(255, 20, 147, 1), 0 0 30px rgba(255, 20, 147, 0.6);
+  }
 }
 
 .title-text {
-  color: var(--color-primary);
-  text-shadow: 0 0 15px rgba(0, 212, 255, 0.8);
-  margin: 0 var(--spacing-sm);
+  color: var(--color-dark);
+  background: linear-gradient(135deg, var(--color-dark), var(--color-primary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .title-subtitle {
@@ -570,15 +579,15 @@
 }
 
 .section-title {
-  font-family: "Monaco", "SF Mono", "Monaco", "Inconsolata", "Roboto Mono", "Source Code Pro", "Courier New", monospace;
-  font-size: var(--font-size-2xl);
+  font-size: var(--font-size-4xl);
   font-weight: var(--font-weight-bold);
   color: var(--color-dark);
   text-transform: uppercase;
   letter-spacing: 2px;
-  margin-bottom: var(--spacing-xl);
   position: relative;
   display: inline-block;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 0 !important;
 }
 
 .section-title::before,
@@ -586,18 +595,20 @@
   content: '';
   position: absolute;
   top: 50%;
-  width: 60px;
-  height: 2px;
+  width: 80px;
+  height: 3px;
   background: var(--gradient-neon);
   box-shadow: var(--shadow-glow);
+  border-radius: 2px;
+  transform: translateY(-50%);
 }
 
 .section-title::before {
-  right: calc(100% + var(--spacing-md));
+  right: calc(100% + var(--spacing-2xl));
 }
 
 .section-title::after {
-  left: calc(100% + var(--spacing-md));
+  left: calc(100% + var(--spacing-2xl));
 }
 
 .section-subtitle {
