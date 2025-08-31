@@ -45,6 +45,35 @@ export const environment = {
     defaultPassword: getEnvVar('PORTFOLIO_ADMIN_PASSWORD', '')
   },
 
+  // Firebase Configuration - Production Environment (Optimized Mode)
+  firebase: {
+    // Detecção de ambiente
+    isLocalEnvironment: false,
+    isProductionEnvironment: true,
+    
+    // Configurações de performance
+    enableRealTimeSync: false,       // ❌ Sem sincronização em tempo real (economiza recursos)
+    enableAdminFeatures: true,       // ✅ Interface admin disponível (para operações ocasionais)
+    enableGitHubSync: false,         // ❌ GitHub sync desabilitado (desnecessário em produção)
+    enableCache: true,               // ✅ Cache inteligente ativo
+    cacheDuration: 300000,          // Cache de 5 minutos (300.000ms)
+    
+    // Configurações de debug
+    enableDebugMode: false,          // ❌ Sem logs de debug (performance)
+    enablePerformanceLogs: false,    // ❌ Sem logs de performance (performance)
+    enableErrorLogs: true,           // ✅ Logs de erro básicos (para monitoramento)
+    
+    // Configurações de segurança
+    enableAdminAccess: true,         // ✅ Acesso admin disponível (para operações ocasionais)
+    enableWriteOperations: true,     // ✅ Operações de escrita (para adicionar projetos)
+    enableDeleteOperations: false,   // ❌ Operações de exclusão desabilitadas (segurança)
+    
+    // Configurações de interface
+    showAdminControls: true,         // ✅ Mostrar controles admin (para operações ocasionais)
+    showDevIndicators: false,        // ❌ Sem indicadores de desenvolvimento (interface limpa)
+    showDebugInfo: false             // ❌ Sem informações de debug (interface limpa)
+  },
+
   // App Configuration
   app: {
     name: 'Karoline Rocha Portfolio',
