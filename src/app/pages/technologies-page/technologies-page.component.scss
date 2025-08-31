@@ -89,7 +89,7 @@
 }
 
 .code-bracket {
-  font-family: var(--font-family-mono);
+
   font-size: 2rem;
   color: var(--color-primary);
   text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
@@ -126,7 +126,7 @@
 }
 
 .badge-text {
-  font-family: var(--font-family-mono);
+
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
   color: var(--color-primary);
@@ -135,7 +135,7 @@
 }
 
 .technologies-title {
-  font-family: var(--font-family-mono);
+
   font-size: var(--font-size-4xl);
   font-weight: var(--font-weight-bold);
   color: var(--color-dark);
@@ -169,6 +169,7 @@
 }
 
 .title-line {
+  font-family: "Monaco", "SF Mono", "Monaco", "Inconsolata", "Roboto Mono", "Source Code Pro", "Courier New", monospace;
   display: inline-block;
   margin-bottom: var(--spacing-sm);
 }
@@ -199,10 +200,10 @@
 }
 
 .title-subtitle {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   display: block;
   font-size: var(--font-size-lg);
   color: var(--color-primary);
-  font-family: var(--font-family-mono);
   font-weight: var(--font-weight-semibold);
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -236,7 +237,7 @@
   color: var(--color-gray-dark);
   line-height: 1.8;
   margin: 0 auto;
-  font-family: var(--font-family-sans);
+
   font-weight: var(--font-weight-medium);
   text-align: center;
   position: relative;

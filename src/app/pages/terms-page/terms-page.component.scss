@@ -51,7 +51,7 @@
   position: absolute;
   opacity: 0.15;
   animation: float 20s ease-in-out infinite;
-  font-family: var(--font-family-mono);
+  
   font-size: 2.5rem;
   color: var(--color-primary);
   text-shadow: 0 0 15px rgba(0, 212, 255, 0.6);
@@ -105,7 +105,7 @@
     font-size: var(--font-size-4-5xl);
     font-weight: var(--font-weight-bold);
     margin-bottom: var(--spacing-lg);
-    font-family: var(--font-family-mono);
+    
     text-transform: uppercase;
     letter-spacing: 2px;
     color: var(--color-dark);
@@ -130,7 +130,7 @@
     opacity: 0.6;
     font-style: italic;
     color: var(--color-gray-dark);
-    font-family: var(--font-family-sans);
+    
     margin-top: var(--spacing-md);
   }
 }
@@ -165,7 +165,7 @@
     font-size: var(--font-size-2xl);
     font-weight: var(--font-weight-bold);
     margin-bottom: var(--spacing-xl);
-    font-family: var(--font-family-mono);
+    
     text-transform: uppercase;
     letter-spacing: 1px;
     position: relative;
@@ -188,7 +188,7 @@
     font-size: var(--font-size-xl);
     font-weight: var(--font-weight-semibold);
     margin: var(--spacing-xl) 0 var(--spacing-md);
-    font-family: var(--font-family-mono);
+    
     text-transform: uppercase;
     letter-spacing: 1px;
     position: relative;
@@ -207,7 +207,7 @@
     line-height: 1.7;
     margin-bottom: var(--spacing-lg);
     color: #333;
-    font-family: var(--font-family-sans);
+    
     font-size: var(--font-size-base);
   }
 
@@ -219,7 +219,7 @@
       line-height: 1.7;
       margin-bottom: var(--spacing-md);
       color: #444;
-      font-family: var(--font-family-sans);
+      
       position: relative;
 
       &::before {
@@ -264,7 +264,7 @@
         color: #ff1493;
         text-decoration: none;
         transition: all var(--transition-normal);
-        font-family: var(--font-family-mono);
+        
         font-weight: var(--font-weight-medium);
         border-bottom: 1px solid transparent;
 
@@ -293,7 +293,7 @@
     text-decoration: none;
     border-radius: var(--radius-lg);
     font-weight: var(--font-weight-medium);
-    font-family: var(--font-family-mono);
+    
     text-transform: uppercase;
     letter-spacing: 1px;
     transition: all var(--transition-normal);

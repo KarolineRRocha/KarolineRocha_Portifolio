@@ -128,7 +128,6 @@ html {
 }
 
 body {
-  font-family: var(--font-family-sans);
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-normal);
   line-height: 1.6;
@@ -153,7 +152,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: var(--font-family-mono);
+  font-family: "Monaco", "SF Mono", "Monaco", "Inconsolata", "Roboto Mono", "Source Code Pro", "Courier New", monospace;
   font-weight: var(--font-weight-bold);
   line-height: 1.2;
   margin-bottom: var(--spacing-md);
@@ -208,7 +207,7 @@ a:hover {
   align-items: center;
   gap: var(--spacing-sm);
   padding: var(--spacing-md) var(--spacing-xl);
-  font-family: var(--font-family-mono);
+
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-semibold);
   text-transform: uppercase;

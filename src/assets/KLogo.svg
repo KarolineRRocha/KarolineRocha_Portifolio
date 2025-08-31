@@ -68,8 +68,8 @@
 
   <!-- Name with tech styling - KAROLINE ROCHA with K -->
   <g filter="url(#strongGlow)">
-    <text x="130" y="25" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white">KAROLINE ROCHA</text>
-    <text x="130" y="40" font-family="Arial, sans-serif" font-size="12" font-weight="500" fill="#00d4ff">DEVELOPER</text>
+    <text x="130" y="25" font-family="Inter, sans-serif" font-size="16" font-weight="bold" fill="white">KAROLINE ROCHA</text>
+    <text x="130" y="40" font-family="Inter, sans-serif" font-size="12" font-weight="500" fill="#00d4ff">DEVELOPER</text>
   </g>
 
   <!-- Animated data flow lines -->

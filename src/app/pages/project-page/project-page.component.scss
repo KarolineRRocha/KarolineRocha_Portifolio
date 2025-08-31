@@ -85,7 +85,7 @@
 }
 
 .code-bracket {
-  font-family: var(--font-family-mono);
+  
   font-size: 2rem;
   color: var(--color-primary);
   text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
@@ -111,7 +111,7 @@
 }
 
 .projects-title {
-  font-family: var(--font-family-mono);
+  
   font-size: var(--font-size-4xl);
   font-weight: var(--font-weight-bold);
   color: var(--color-dark);
@@ -145,6 +145,7 @@
 }
 
 .title-line {
+  font-family: "Monaco", "SF Mono", "Monaco", "Inconsolata", "Roboto Mono", "Source Code Pro", "Courier New", monospace;
   display: inline-block;
   margin-bottom: var(--spacing-sm);
 }
@@ -175,10 +176,10 @@
 }
 
 .title-subtitle {
+  font-family: "Monaco", "SF Mono", "Monaco", "Inconsolata", "Roboto Mono", "Source Code Pro", "Courier New", monospace;
   display: block;
   font-size: var(--font-size-lg);
   color: var(--color-primary);
-  font-family: var(--font-family-mono);
   font-weight: var(--font-weight-semibold);
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -274,7 +275,7 @@
   color: var(--color-gray-dark);
   line-height: 1.8;
   margin: 0 auto;
-  font-family: var(--font-family-sans);
+  
   font-weight: var(--font-weight-medium);
   text-align: center;
   position: relative;
@@ -444,7 +445,7 @@
 }
 
 .project-content h3 {
-  font-family: var(--font-family-mono);
+  
   font-size: var(--font-size-xl);
   font-weight: var(--font-weight-bold);
   color: var(--color-dark);
@@ -471,7 +472,7 @@
   line-height: 1.5;
   margin: 0 0 var(--spacing-lg) 0;
   /* Increased from var(--spacing-md) to add more spacing between description and tech stack */
-  font-family: var(--font-family-sans);
+  
   font-weight: var(--font-weight-medium);
   flex: 1;
   min-height: 40px;
@@ -1020,7 +1021,7 @@
   border-radius: var(--radius-lg);
   padding: var(--spacing-lg) var(--spacing-2xl);
   color: white;
-  font-family: var(--font-family-mono);
+  
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-bold);
   cursor: pointer;
@@ -1214,7 +1215,7 @@
 }
 
 .add-project-content h3 {
-  font-family: var(--font-family-mono);
+  
   font-size: var(--font-size-xl);
   font-weight: var(--font-weight-bold);
   color: var(--color-dark);
@@ -1259,7 +1260,7 @@
   font-size: var(--font-size-2xl);
   font-weight: var(--font-weight-bold);
   color: var(--color-primary);
-  font-family: var(--font-family-mono);
+  
 }
 
 .stat-label {
@@ -1321,7 +1322,7 @@
   font-weight: var(--font-weight-medium);
   cursor: pointer;
   transition: all 0.3s ease;
-  font-family: var(--font-family-mono);
+  
 }
 
 .quick-btn:hover {
@@ -1351,7 +1352,7 @@
   font-weight: var(--font-weight-medium);
   cursor: pointer;
   transition: all 0.3s ease;
-  font-family: var(--font-family-mono);
+  
   margin-right: var(--spacing-xs);
   margin-bottom: var(--spacing-xs);
 }
@@ -1441,7 +1442,7 @@
 }
 
 .github-header h4 {
-  font-family: var(--font-family-mono);
+  
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-bold);
   color: var(--color-dark);
@@ -1458,7 +1459,7 @@
   font-weight: var(--font-weight-medium);
   cursor: pointer;
   transition: all 0.3s ease;
-  font-family: var(--font-family-mono);
+  
 }
 
 .github-toggle-btn:hover {
@@ -1485,7 +1486,7 @@
 }
 
 .status-label {
-  font-family: var(--font-family-mono);
+  
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-medium);
   color: var(--color-dark);
@@ -1493,7 +1494,7 @@
 }
 
 .status-value {
-  font-family: var(--font-family-mono);
+  
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-bold);
   color: var(--color-primary);
@@ -1537,7 +1538,7 @@
   border: 1px solid rgba(0, 212, 255, 0.3);
   border-radius: var(--radius-sm);
   background: rgba(255, 255, 255, 0.9);
-  font-family: var(--font-family-sans);
+  
   font-size: var(--font-size-sm);
   color: var(--color-dark);
   transition: all 0.3s ease;
@@ -1562,7 +1563,7 @@
   border-radius: var(--radius-md);
   padding: var(--spacing-sm) var(--spacing-md);
   color: white;
-  font-family: var(--font-family-mono);
+  
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-bold);
   cursor: pointer;
@@ -1588,7 +1589,7 @@
   border-radius: var(--radius-md);
   padding: var(--spacing-sm) var(--spacing-md);
   color: var(--color-dark);
-  font-family: var(--font-family-mono);
+  
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-medium);
   cursor: pointer;
@@ -1626,7 +1627,7 @@
 }
 
 .user-details h5 {
-  font-family: var(--font-family-mono);
+  
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-bold);
   color: var(--color-dark);
@@ -1650,7 +1651,7 @@
   font-size: var(--font-size-xs);
   color: var(--color-primary);
   font-weight: var(--font-weight-medium);
-  font-family: var(--font-family-mono);
+  
   background: rgba(0, 212, 255, 0.1);
   padding: var(--spacing-xs) var(--spacing-sm);
   border-radius: var(--radius-sm);
@@ -1673,7 +1674,7 @@
   border: 1px solid rgba(0, 212, 255, 0.3);
   border-radius: var(--radius-md);
   background: rgba(255, 255, 255, 0.9);
-  font-family: var(--font-family-sans);
+  
   font-size: var(--font-size-sm);
   color: var(--color-dark);
   transition: all 0.3s ease;
@@ -1697,7 +1698,7 @@
 .form-textarea {
   min-height: 80px;
   resize: vertical;
-  font-family: var(--font-family-sans);
+  
   line-height: 1.5;
 }
 
@@ -1707,7 +1708,7 @@
   border-radius: var(--radius-lg);
   padding: var(--spacing-lg) var(--spacing-2xl);
   color: white;
-  font-family: var(--font-family-mono);
+  
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-bold);
   cursor: pointer;
@@ -1851,7 +1852,7 @@
 }
 
 .create-project-overlay h3 {
-  font-family: var(--font-family-mono);
+  
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-bold);
   color: var(--color-dark);
@@ -1891,7 +1892,7 @@
   color: white;
   padding: var(--spacing-sm) var(--spacing-xl);
   border-radius: var(--radius-md);
-  font-family: var(--font-family-mono);
+  
   font-weight: var(--font-weight-semibold);
   cursor: pointer;
   transition: all var(--transition-normal);
@@ -2214,7 +2215,7 @@
 }
 
 .sync-status-text {
-  font-family: var(--font-family-mono);
+  
   font-size: var(--font-size-sm);
   color: var(--color-dark);
   font-weight: var(--font-weight-medium);
@@ -2228,7 +2229,7 @@
   border-radius: var(--radius-md);
   padding: var(--spacing-sm) var(--spacing-lg);
   color: white;
-  font-family: var(--font-family-mono);
+  
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-semibold);
   cursor: pointer;
@@ -2274,7 +2275,7 @@
   border-radius: var(--radius-md);
   padding: var(--spacing-sm) var(--spacing-lg);
   color: var(--color-dark);
-  font-family: var(--font-family-mono);
+  
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-semibold);
   cursor: pointer !important;
@@ -2308,7 +2309,7 @@
   border-radius: var(--radius-md);
   padding: var(--spacing-sm) var(--spacing-lg);
   color: #28a745;
-  font-family: var(--font-family-mono);
+  
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-semibold);
   cursor: pointer;
@@ -2418,7 +2419,7 @@
   justify-content: center;
   gap: var(--spacing-sm);
   color: var(--color-primary);
-  font-family: var(--font-family-mono);
+  
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-semibold);
 }
@@ -2469,7 +2470,7 @@
   align-items: center;
   justify-content: center;
   color: white;
-  font-family: var(--font-family-mono);
+  
   font-weight: var(--font-weight-semibold);
 }
 
@@ -2550,7 +2551,7 @@
   }
 
   span {
-    font-family: var(--font-family-mono);
+    
     letter-spacing: 0.5px;
   }
 

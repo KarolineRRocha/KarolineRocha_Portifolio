@@ -89,7 +89,7 @@
 }
 
 .code-bracket {
-  font-family: var(--font-family-mono);
+
   font-size: 2rem;
   color: var(--color-primary);
   text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
@@ -114,7 +114,7 @@
 }
 
 .about-title {
-  font-family: var(--font-family-mono);
+
   font-size: var(--font-size-4xl);
   font-weight: var(--font-weight-bold);
   color: var(--color-dark);
@@ -148,6 +148,7 @@
 }
 
 .title-line {
+  font-family: "Monaco", "SF Mono", "Monaco", "Inconsolata", "Roboto Mono", "Source Code Pro", "Courier New", monospace;
   display: inline-block;
   margin-bottom: var(--spacing-sm);
 }
@@ -178,10 +179,10 @@
 }
 
 .title-subtitle {
+  font-family: "Monaco", "SF Mono", "Monaco", "Inconsolata", "Roboto Mono", "Source Code Pro", "Courier New", monospace;
   display: block;
   font-size: var(--font-size-lg);
-  color: var( --color-deep-blue);
-  font-family: var(--font-family-mono);
+  color: var(--color-deep-blue);
   font-weight: var(--font-weight-semibold);
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -206,7 +207,7 @@
   color: var(--color-gray-dark);
   line-height: 1.8;
   margin: 0;
-  font-family: var(--font-family-sans);
+
   font-weight: var(--font-weight-medium);
   text-align: center;
 }
@@ -284,7 +285,7 @@
 }
 
 .hero-title {
-  font-family: var(--font-family-mono);
+  font-family: "Monaco", "SF Mono", "Monaco", "Inconsolata", "Roboto Mono", "Source Code Pro", "Courier New", monospace;
   font-size: var(--font-size-3xl);
   font-weight: var(--font-weight-bold);
   color: var(--color-dark);
@@ -301,7 +302,7 @@
   color: var(--color-gray-dark);
   line-height: 1.8;
   margin: 0;
-  font-family: var(--font-family-sans);
+
   font-weight: var(--font-weight-medium);
 }
 
@@ -448,7 +449,7 @@
 }
 
 .section-title {
-  font-family: var(--font-family-mono);
+  font-family: "Monaco", "SF Mono", "Monaco", "Inconsolata", "Roboto Mono", "Source Code Pro", "Courier New", monospace;
   font-size: var(--font-size-xl);
   font-weight: var(--font-weight-bold);
   color: var(--color-dark);
@@ -462,11 +463,11 @@
   color: var(--color-gray-dark);
   line-height: 1.7;
   margin: 0;
-  font-family: var(--font-family-sans);
+
 }
 
 .section-heading {
-  font-family: var(--font-family-mono);
+
   font-size: var(--font-size-2xl);
   font-weight: var(--font-weight-bold);
   color: var(--color-dark);
@@ -486,7 +487,7 @@
 }
 
 .subsection-heading {
-  font-family: var(--font-family-mono);
+
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-semibold);
   color: var(--color-primary);
@@ -499,7 +500,7 @@
   color: var(--color-gray-dark);
   line-height: 1.7;
   margin: 0;
-  font-family: var(--font-family-sans);
+
 }
 
 /* About Image */
@@ -979,7 +980,7 @@
 }
 
 .about-cta-content h4 {
-  font-family: var(--font-family-mono);
+
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-bold);
   color: var(--color-primary);
@@ -1005,7 +1006,7 @@
   font-size: var(--font-size-sm);
   color: var(--color-gray);
   line-height: 1.4;
-  font-family: var(--font-family-sans);
+
   margin-bottom: var(--spacing-lg);
   margin-top: var(--spacing-md);
   white-space: nowrap;
@@ -1095,7 +1096,7 @@
 .about-status-text {
   font-size: var(--font-size-xs);
   color: var(--color-gray);
-  font-family: var(--font-family-mono);
+
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
@@ -1202,7 +1203,7 @@
 
 .cv-modal-header h3 {
   margin: 0;
-  font-family: var(--font-family-mono);
+
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-bold);
   color: var(--color-white);
@@ -1237,7 +1238,7 @@
   font-size: var(--font-size-lg);
   color: var(--color-gray-dark);
   margin-bottom: var(--spacing-xl);
-  font-family: var(--font-family-sans);
+
 }
 
 .cv-modal-buttons {
