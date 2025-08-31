@@ -138,6 +138,9 @@ body {
   margin: 0;
   padding: 0;
   min-height: 100vh;
+  /* Prevent pull-to-refresh issues on mobile */
+  overscroll-behavior: none;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* ==========================================================================
@@ -466,6 +469,31 @@ a:hover {
     --header-height: 3.25rem;
     /* 52px - Minimal but functional */
     --section-padding: var(--spacing-lg);
+  }
+}
+
+/* Mobile Pull-to-Refresh Fixes */
+@media (max-width: 768px) {
+  body {
+    overscroll-behavior: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  html {
+    overscroll-behavior: none;
+  }
+
+  /* Prevent unwanted spaces during pull-to-refresh */
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Ensure proper scrolling behavior */
+  .homePage,
+  .hero-section,
+  .projects-section {
+    overscroll-behavior: none;
+    -webkit-overflow-scrolling: touch;
   }
 }
 
