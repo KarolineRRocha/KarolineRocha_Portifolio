@@ -579,6 +579,37 @@
 }
 
 .section-title {
+  font-family: "Monaco", "SF Mono", "Monaco", "Inconsolata", "Roboto Mono", "Source Code Pro", "Courier New", monospace;
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-dark);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: var(--spacing-xl);
+  position: relative;
+  display: inline-block;
+}
+
+.section-title::before,
+.section-title::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 60px;
+  height: 2px;
+  background: var(--gradient-neon);
+  box-shadow: var(--shadow-glow);
+}
+
+.section-title::before {
+  right: calc(100% + var(--spacing-md));
+}
+
+.section-title::after {
+  left: calc(100% + var(--spacing-md));
+}
+
+.featured-projects-title {
   font-size: var(--font-size-4xl);
   font-weight: var(--font-weight-bold);
   color: var(--color-dark);
@@ -590,8 +621,8 @@
   margin-bottom: 0 !important;
 }
 
-.section-title::before,
-.section-title::after {
+.featured-projects-title::before,
+.featured-projects-title::after {
   content: '';
   position: absolute;
   top: 50%;
@@ -603,11 +634,11 @@
   transform: translateY(-50%);
 }
 
-.section-title::before {
+.featured-projects-title::before {
   right: calc(100% + var(--spacing-2xl));
 }
 
-.section-title::after {
+.featured-projects-title::after {
   left: calc(100% + var(--spacing-2xl));
 }
 
