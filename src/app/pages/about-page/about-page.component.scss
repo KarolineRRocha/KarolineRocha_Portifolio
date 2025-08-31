@@ -675,7 +675,7 @@
   }
 
   .hero-description {
-    font-size: var(--font-size-sm);
+    font-size: var(--font-size-md);
     text-align: center;
     padding: 0 var(--spacing-lg);
   }
@@ -693,10 +693,8 @@
     grid-template-columns: 1fr;
     gap: var(--spacing-xl);
     margin-top: var(--spacing-xl);
-    width: 100%;
-    max-width: 100%;
-    margin-left: 0;
-    margin-right: 0;
+    width: 95%;
+    margin: 0 auto;
   }
 
   .section-card {
@@ -715,6 +713,21 @@
 }
 
 @media (max-width: 480px) {
+  .about-cta-buttons {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: var(--spacing-md) !important;
+  }
+
+  .about-cta-section {
+    margin: var(--spacing-lg);
+  }
+
+  .about-cta-content {
+    padding: var(--spacing-xl) var(--spacing-md) !important;
+    gap: var(--spacing-sm) !important;
+  }
+
   .about-container {
     padding: 0 var(--spacing-lg);
   }
@@ -768,11 +781,6 @@
     text-align: center;
   }
 
-  .hero-description {
-    font-size: var(--font-size-md);
-    text-align: center;
-  }
-
   .greeting-icon {
     font-size: 1.8rem;
   }
@@ -801,7 +809,6 @@
   }
 
   .section-card {
-    padding: var(--spacing-md);
     width: 100%;
     max-width: 100%;
   }
@@ -868,11 +875,6 @@
     font-size: var(--font-size-base);
   }
 
-  .hero-description {
-    font-size: var(--font-size-xs);
-    padding: 0 var(--spacing-md);
-  }
-
   .greeting-icon {
     font-size: 1.5rem;
   }
@@ -883,11 +885,21 @@
 
   .about-sections {
     gap: var(--spacing-sm);
-    margin-top: var(--spacing-md);
+    padding: var(--spacing-lg);
   }
 
-  .section-card {
-    padding: var(--spacing-sm);
+  .about-cta-section {
+    margin: var(--spacing-lg);
+  }
+
+  .about-cta-content {
+    gap: var(--spacing-sm);
+  }
+
+  .about-cta-buttons {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: var(--spacing-md) !important;
   }
 
   .section-icon {
@@ -895,7 +907,7 @@
   }
 
   .section-title {
-    font-size: var(--font-size-sm);
+    font-size: var(--font-size-base);
   }
 
   .section-text {
@@ -1091,28 +1103,29 @@
 @media (max-width: 768px) {
   .about-cta-section {
     margin-top: var(--spacing-lg);
+    width: 95%;
+    margin: 0 auto;
   }
 
   .about-cta-content {
     max-width: 95%;
-    padding: var(--spacing-lg) var(--spacing-md);
     margin: 0 auto;
   }
 
   .about-cta-content h4 {
-    font-size: var(--font-size-base);
+    font-size: var(--font-size-lg);
   }
 
   .about-cta-description {
-    font-size: var(--font-size-xs);
+    font-size: var(--font-size-sm);
     white-space: normal;
-    line-height: 1.5;
+    line-height: 1.7;
   }
 
   .about-cta-buttons {
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
-    gap: var(--spacing-sm);
+    gap: var(--spacing-xl);
   }
 
   .about-cta-buttons .btn {

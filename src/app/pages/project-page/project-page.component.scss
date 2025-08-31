@@ -853,7 +853,7 @@
   }
 
   .project-content {
-    padding: var(--spacing-md);
+    padding: var(--spacing-lg);
     min-height: 160px;
   }
 
@@ -910,7 +910,6 @@
 
   .projects-grid {
     grid-template-columns: 1fr;
-    gap: var(--spacing-md);
     max-width: 90% !important;
     margin: 0 auto;
     justify-items: center;
@@ -935,7 +934,7 @@
   }
 
   .project-content {
-    padding: var(--spacing-md);
+    padding: var(--spacing-lg);
     min-height: 160px;
   }
 

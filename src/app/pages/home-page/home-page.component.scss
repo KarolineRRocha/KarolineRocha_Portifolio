@@ -1181,9 +1181,22 @@
     height: 80px;
   }
 
-  /* .project-title {
-    font-size: var(--font-size-base);
-  } */
+  .project-links {
+    gap: var(--spacing-md);
+  }
+
+  .btn-primary {
+    padding: var(--spacing-xs) var(--spacing-sm);
+  }
+
+  .timeline-project {
+    padding: var(--spacing-md);
+  }
+
+  .project-text-card {
+    padding: var(--spacing-lg);
+    min-height: 220px;
+  }
 }
 
 /* Small Mobile (360px and up) */
@@ -1304,6 +1317,10 @@
   .project-text-card {
     min-height: 240px;
   }
+
+  .btn-primary {
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
 }
 
 /* Small Mobile (412px and up) */
@@ -1370,6 +1387,10 @@
 
   .timeline-project {
     padding: var(--spacing-xl);
+  }
+
+  .btn-primary {
+    padding: var(--spacing-sm) var(--spacing-lg);
   }
 }
 
