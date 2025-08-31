@@ -609,7 +609,7 @@
   position: relative;
   display: inline-block;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin-bottom: 0 !important;
+  margin-bottom: var(--spacing-md);
 }
 
 .featured-projects-title::before,
@@ -645,8 +645,8 @@
   font-size: var(--font-size-lg);
   color: var(--color-gray-dark);
   line-height: 1.6;
-
   margin: 0;
+  margin-top: var(--spacing-sm);
 }
 
 /* Timeline Container - Mobile First */
@@ -2416,14 +2416,22 @@
 @media (max-width: 480px) {
   .featured-projects-title {
     font-size: var(--font-size-lg);
-    margin-bottom: var(--spacing-xs);
+    margin-bottom: var(--spacing-sm);
+  }
+  
+  .section-subtitle {
+    margin-top: var(--spacing-xs);
   }
 }
 
 @media (max-width: 360px) {
   .featured-projects-title {
     font-size: var(--font-size-lg);
-    margin-bottom: var(--spacing-xs);
+    margin-bottom: var(--spacing-sm);
+  }
+  
+  .section-subtitle {
+    margin-top: var(--spacing-xs);
   }
 
   .featured-projects-title::before,
